@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Two-Page Website</title>
+        <style>
+            body {
+                margin: 0;
+                padding: 0;
+                font-family: Arial, sans-serif;
+                font-size: 16px;
+                line-height: 1.5;
+                color: #333;
+            }
+
+            .page {
+                width: 50%;
+                float: left;
+                height: 100vh;
+                overflow-y: scroll;
+                scrollbar-width: none;
+                /* Hide default scrollbar in Firefox */
+                -ms-overflow-style: none;
+                /* Hide default scrollbar in IE and Edge */
+            }
+
+            .page::-webkit-scrollbar {
+                width: 0;
+                height: 0;
+            }
+
+            .page1 {
+                background-color: #f2f2f2;
+            }
+
+            .page2 {
+                background-color: #e6e6e6;
+            }
+
+            .content {
+                height: 2000px;
+                /* Set height to test scroll bar */
+                padding: 20px;
+            }
+
+            .content h1 {
+                margin-top: 0;
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <div class="page page1">
+            <div class="content">
+                <h1>Page 1</h1>
+                <p>Select an item to see details on the right:</p>
+                <ul id="list">
+                    <li><a href="#"
+                           data-details="Details for item 1">Item 1</a></li>
+                    <li><a href="#"
+                           data-details="Details for item 2">Item 2</a></li>
+                    <li><a href="#"
+                           data-details="Details for item 3">Item 3</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="page page2">
+            <div class="content"
+                 id="details">
+                <h1>Details</h1>
+                <p>Select an item on the left to see its details here.</p>
+            </div>
+        </div>
+        <script>
+            var list = document.getElementById("list");
+            var details = document.getElementById("details");
+
+            list.addEventListener("click", function (e) {
+                e.preventDefault();
+                var target = e.target;
+                if (target.nodeName === "A") {
+                    details.innerHTML = "<h1>Details for " + target.textContent + "</h1><p>" + target.getAttribute("data-details") + "</p>";
+                }
+            });
+        </script>
+    </body>
+
+</html>

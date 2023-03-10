@@ -1,0 +1,138 @@
+/* Reset default browser styles */
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+/* Style the header and navigation */
+header {
+	background-color: #fff;
+	border-bottom: 1px solid #ccc;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px 20px;
+}
+
+nav ul {
+	display: flex;
+	list-style-type: none;
+}
+
+nav ul li {
+	margin-right: 20px;
+}
+
+nav ul li a {
+	color: #333;
+	text-decoration: none;
+}
+
+/* Style the search bar */
+.search {
+	display: flex;
+}
+
+.search input[type="text"] {
+	flex: 1;
+	padding: 10px;
+	border: none;
+	border-radius: 5px 0 0 5px;
+}
+
+.search button[type="submit"] {
+	background-color: #f60;
+	color: #fff;
+	border: none;
+	padding: 10px;
+	border-radius: 0 5px 5px 0;
+	cursor: pointer;
+}
+
+/* Style the main content */
+main {
+	max-width: 1200px;
+	margin: 0 auto;
+	padding: 20px;
+}
+
+section {
+	margin-bottom: 40px;
+}
+
+h1 {
+	font-size: 3em;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+h2 {
+	font-size: 2em;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+p {
+	font-size: 1.2em;
+	line-height: 1.5;
+	margin-bottom: 20px;
+}
+
+.grid-container {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+	gap: 20px;
+}
+
+.card {
+	background-color: #fff;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+	border-radius: 5px;
+	overflow: hidden;
+	transition: transform 0.3s ease-in-out;
+}
+
+.card:hover {
+	transform: translateY(-10px);
+}
+
+.card img {
+	width: 100%;
+	height: 200px;
+	object-fit: cover;
+}
+
+.card h3 {
+	font-size: 1.5em;
+	font-weight: bold;
+	margin: 10px;
+}
+
+.card p {
+	font-size: 1.2em;
+	line-height: 1.5;
+	margin: 10px;
+}
+
+.card a {
+	background-color: #f60;
+	color: #fff;
+	display: block;
+	padding: 10px;
+	text-align: center;
+	text-decoration: none;
+	transition: background-color 0.3s ease-in-out;
+}
+
+.card a:hover {
+	background-color: #e54815;
+}
+/* Style the footer */
+footer {
+	background-color: #333;
+	color: #fff;
+	text-align: center;
+	padding: 10px;
+}

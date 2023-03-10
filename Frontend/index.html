@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>Ingredient Selection</title>
+        <link rel="stylesheet"
+              type="text/css"
+              href="style.css">
+    </head>
+
+    <body>
+        <div class="header">
+            <h1>My Recipe App</h1>
+        </div>
+        <div class="page page1">
+
+            <div class="content">
+                <h1>Ingredients</h1>
+                <div class="search">
+                    <input type="text"
+                           id="search-input"
+                           placeholder="Search ingredients...">
+                </div>
+
+                <div class="categories">
+                    <div class="category">
+                        <h2 class="category-name">Fruits</h2>
+                        <div class="category-ingredients">
+                            <div class="ingredient">Apple</div>
+                            <div class="ingredient">Banana</div>
+                            <div class="ingredient">Orange</div>
+                            <div class="ingredient">Grapes</div>
+                            <div class="ingredient">Pineapple</div>
+                        </div>
+                    </div>
+
+                    <div class="category">
+                        <h2 class="category-name">Vegetables</h2>
+                        <div class="category-ingredients">
+                            <div class="ingredient">Carrot</div>
+                            <div class="ingredient">Broccoli</div>
+                            <div class="ingredient">Tomato</div>
+                            <div class="ingredient">Spinach</div>
+                            <div class="ingredient">Potato</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="page page2">
+            <div class="content">
+                <div class="recipe-header">
+                    <h1>Recipes</h1>
+                    <div class="recipe-sort">
+                        <label for="sort-by">Sort by:</label>
+                        <select id="sort-by">
+                            <option value="num-selected-ingredients">Ingredients</option>
+                            <option value="servings">Servings</option>
+                            <option value="time">Time</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="selected-ingredients"></div>
+                <div class="recipe-card">
+                    <div class="recipe-image">
+                        <img src="https://via.placeholder.com/300x200"
+                             alt="Recipe Image">
+                    </div>
+                    <div class="recipe-info">
+                        <h2 class="recipe-name">Dummy Recipe Name</h2>
+                        <div class="recipe-details">
+                            <p class="prep-time"><i class="far fa-clock"></i> Prep Time: 20 min</p>
+                            <p class="servings"><i class="fas fa-utensils"></i> Servings: 4</p>
+                            <button class="view-recipe-btn">View Recipe</button>
+                        </div>
+                        <div class="recipe-ingredients">
+                            <div class="ingredient-set1">
+                                <span class="ingredient-bubble green">Ingredient 1</span>
+                                <span class="ingredient-bubble green">Ingredient 2</span>
+                                <span class="ingredient-bubble green">Ingredient 3</span>
+                                <span class="ingredient-bubble green">Ingredient 1</span>
+                                <span class="ingredient-bubble green">Ingredient 2</span>
+                                <span class="ingredient-bubble green">Ingredient 3</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-card">
+                    <div class="recipe-image">
+                        <img src="https://via.placeholder.com/300x200"
+                             alt="Recipe Image">
+                    </div>
+                    <div class="recipe-info">
+                        <h2 class="recipe-name">Dummy Recipe Name</h2>
+                        <div class="recipe-details">
+                            <p class="prep-time"><i class="far fa-clock"></i> Prep Time: 20 min</p>
+                            <p class="servings"><i class="fas fa-utensils"></i> Servings: 4</p>
+                            <button class="view-recipe-btn">View Recipe</button>
+                        </div>
+                        <div class="recipe-ingredients">
+                            <div class="ingredient-set1">
+                                <span class="ingredient-bubble green">Ingredient 1</span>
+                                <span class="ingredient-bubble green">Ingredient 2</span>
+                                <span class="ingredient-bubble green">Ingredient 3</span>
+                                <span class="ingredient-bubble green">Ingredient 1</span>
+                                <span class="ingredient-bubble green">Ingredient 2</span>
+                                <span class="ingredient-bubble green">Ingredient 3</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="recipe-card">
+                    <div class="recipe-image">
+                        <img src="https://via.placeholder.com/300x200"
+                             alt="Recipe Image">
+                    </div>
+                    <div class="recipe-info">
+                        <h2 class="recipe-name">Dummy Recipe Name</h2>
+                        <div class="recipe-details">
+                            <p class="prep-time"><i class="far fa-clock"></i> Prep Time: 20 min</p>
+                            <p class="servings"><i class="fas fa-utensils"></i> Servings: 4</p>
+                            <button class="view-recipe-btn">View Recipe</button>
+                        </div>
+                        <div class="recipe-ingredients">
+                            <div class="ingredient-set1">
+                                <span class="ingredient-bubble green">Ingredient 1</span>
+                                <span class="ingredient-bubble green">Ingredient 2</span>
+                                <span class="ingredient-bubble green">Ingredient 3</span>
+                                <span class="ingredient-bubble green">Ingredient 1</span>
+                                <span class="ingredient-bubble green">Ingredient 2</span>
+                                <span class="ingredient-bubble green">Ingredient 3</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://kit.fontawesome.com/12f77b715a.js"
+                crossorigin="anonymous"></script>
+        <script src="script.js"></script>
+    </body>
+
+</html>
