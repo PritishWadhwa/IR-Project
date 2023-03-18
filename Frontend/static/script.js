@@ -3,11 +3,27 @@ const categories = document.querySelectorAll('.category');
 const selectedIngredients = document.getElementById('selected-ingredients');
 const searchInput = document.getElementById('search-input');
 
+// function postData(input) {
+//     console.log(input)
+//     $.ajax({
+//         url: "/suggest-recipe",
+//         type: 'POST',
+//         data: { param: input},
+//         success: function(response) {
+//             // handle the response from Python
+//             console.log(response);
+//           },
+//           error: function(error) {
+//             console.log(error);
+//           }
+//     });
+// }
+
 ingredients.forEach(ingredient => {
     ingredient.addEventListener('click', () => {
         // Make the selected bubble green
         ingredient.classList.toggle('selected');
-
+        // const myArr = ["Orange", "Banana", "Mango", "Kiwi"];
         // Get the category name and selected ingredients for the selected bubble
         const category = ingredient.parentNode.parentNode.querySelector('.category-name').textContent;
         const ingredientName = ingredient.textContent;
@@ -18,6 +34,20 @@ ingredients.forEach(ingredient => {
 
         if (ingredient.classList.contains('selected')) {
             selectedIngredients.appendChild(selectedIngredientItem);
+            
+            $.ajax({
+                url: "/suggest-recipe",
+                type: 'POST',
+                data: { param: ingredientName, type: 'a'},
+                success: function(response) {
+                    // handle the response from Python
+                    console.log(response);
+                  },
+                  error: function(error) {
+                    console.log(error);
+                  }
+            });
+
         } else {
             const selectedIngredientItems = selectedIngredients.querySelectorAll('li');
             selectedIngredientItems.forEach(selectedIngredientItem => {
@@ -25,9 +55,31 @@ ingredients.forEach(ingredient => {
                     selectedIngredientItem.remove();
                 }
             });
+
+            $.ajax({
+                url: "/suggest-recipe",
+                type: 'POST',
+                data: { param: ingredientName, type: 'd'},
+                success: function(response) {
+                    // handle the response from Python
+                    console.log(response);
+                  },
+                  error: function(error) {
+                    console.log(error);
+                  }
+            });
         }
+        // postData.call("ingredientName");
+        
+        
+
+
     });
 });
+
+
+
+
 
 
 searchInput.addEventListener('input', () => {
