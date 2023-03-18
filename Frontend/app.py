@@ -1,35 +1,42 @@
 from flask import Flask, render_template, request
 import pickle
 
-list_ingredients=[]
+import sys
+sys.path.insert(0, '../Backend') # Add the path to the query python code
+import query
 
 app = Flask(__name__)
 
 with open('../Backend/Saved/ingredients_supercook_for_flask', 'rb') as f:
     categories = pickle.load(f)
 
+list_ingredients = [] # global list of ingredients chosen by the user
+
 # define the route for the home page
-
-
 @app.route('/')
 def home():
-    return render_template('index.html', categories=categories)
+    return render_template('index.html', categories = categories)
 
 # define the route for the recipe suggestion form submission
-
-
 @app.route('/suggest-recipe', methods=['POST'])
 def suggest_recipe():
-    print('hi')
-    selected_ingredients = request.form.get('param')
-    if(request.form.get('type')=='a'):
-        list_ingredients.append(selected_ingredients)
-    else:
-        list_ingredients.remove(selected_ingredients)
-    print(list_ingredients)
-    print('hi')
-    return ('success', True)
+    clicked_ingredient = request.form.get('param')
+    action = request.form.get('type')
 
+    if(action == 'a'):
+        list_ingredients.append(clicked_ingredient)
+    else:
+        list_ingredients.remove(clicked_ingredient)
+
+    # print("ingredient list: ", list_ingredients)
+    recipes = query.fetchRecipes(list_ingredients) # Querying database of recipes using index
+    # print(recipes)
+
+    # this recipes thingy needs to be sent to html where 
+    # there will be a loop {for recipe in recipes}:
+    # create div with name as recipe.Name and so on...
+
+    return ('success', True)
 
 if __name__ == '__main__':
     app.run(debug=True)
