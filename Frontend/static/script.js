@@ -3,27 +3,13 @@ const categories = document.querySelectorAll('.category');
 const selectedIngredients = document.getElementById('selected-ingredients');
 const searchInput = document.getElementById('search-input');
 
-// function postData(input) {
-//     console.log(input)
-//     $.ajax({
-//         url: "/suggest-recipe",
-//         type: 'POST',
-//         data: { param: input},
-//         success: function(response) {
-//             // handle the response from Python
-//             console.log(response);
-//           },
-//           error: function(error) {
-//             console.log(error);
-//           }
-//     });
-// }
-
+// selecting ingredients
 ingredients.forEach(ingredient => {
     ingredient.addEventListener('click', () => {
+
         // Make the selected bubble green
         ingredient.classList.toggle('selected');
-        // const myArr = ["Orange", "Banana", "Mango", "Kiwi"];
+
         // Get the category name and selected ingredients for the selected bubble
         const category = ingredient.parentNode.parentNode.querySelector('.category-name').textContent;
         const ingredientName = ingredient.textContent;
@@ -32,22 +18,10 @@ ingredients.forEach(ingredient => {
         const selectedIngredientItem = document.createElement('li');
         selectedIngredientItem.textContent = `${category}: ${ingredientName}`;
 
+        let typestr = "";
         if (ingredient.classList.contains('selected')) {
             selectedIngredients.appendChild(selectedIngredientItem);
-            
-            $.ajax({
-                url: "/suggest-recipe",
-                type: 'POST',
-                data: { param: ingredientName, type: 'a'},
-                success: function(response) {
-                    // handle the response from Python
-                    console.log(response);
-                  },
-                  error: function(error) {
-                    console.log(error);
-                  }
-            });
-
+            typestr = typestr.concat('a'); // ingredient added
         } else {
             const selectedIngredientItems = selectedIngredients.querySelectorAll('li');
             selectedIngredientItems.forEach(selectedIngredientItem => {
@@ -55,33 +29,25 @@ ingredients.forEach(ingredient => {
                     selectedIngredientItem.remove();
                 }
             });
-
-            $.ajax({
-                url: "/suggest-recipe",
-                type: 'POST',
-                data: { param: ingredientName, type: 'd'},
-                success: function(response) {
-                    // handle the response from Python
-                    console.log(response);
-                  },
-                  error: function(error) {
-                    console.log(error);
-                  }
-            });
+            typestr = typestr.concat('d'); // ingredient deleted
         }
-        // postData.call("ingredientName");
-        
-        
 
-
+        // send ingredient name and action (added/deleted) to python
+        $.ajax({
+            url: "/suggest-recipe",
+            type: 'POST',
+            data: { param: ingredientName, type: typestr},
+            success: function(response) {
+                console.log(response);
+              },
+              error: function(error) {
+                console.log(error);
+              }
+        });
     });
 });
 
-
-
-
-
-
+// search input
 searchInput.addEventListener('input', () => {
     const searchText = searchInput.value.toLowerCase().trim();
 
@@ -96,6 +62,7 @@ searchInput.addEventListener('input', () => {
     });
 });
 
+// search input
 searchInput.addEventListener('input', () => {
     const searchText = searchInput.value.toLowerCase().trim();
 
@@ -129,5 +96,3 @@ searchInput.addEventListener('input', () => {
         }
     });
 });
-
-
