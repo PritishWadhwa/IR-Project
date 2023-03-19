@@ -3,7 +3,7 @@ const categories = document.querySelectorAll('.category');
 const selectedIngredients = document.getElementById('selected-ingredients');
 const searchInput = document.getElementById('search-input');
 // const recipes = document.getElementById('recipes');
-let list2 = [];
+var list2 = [];
 // selecting ingredients
 ingredients.forEach(ingredient => {
     ingredient.addEventListener('click', () => {
@@ -41,23 +41,20 @@ ingredients.forEach(ingredient => {
             type: 'POST',
             data: { param: ingredientName, type: typestr},
             success: function(response) {
-                $("recipes").empty();
+                $("#recipes").empty();
                 console.log("here 2");
                 $.each(response, function(index, recipe) {
-                    const list1 = recipe.Ingredients;
-                    const list3 = list1.filter(ingredient => list2.includes(ingredient));
-                    console.log(index);
-                    // console.log(recipe);
+                    console.log(recipe)
                     var inner_list = 
                     `<div class="recipe-ingredients">
                         <div class="ingredient-set">`;
-                    $.each(list3, function(index, ing) {
+                    $.each(recipe.common, function(index, ing) {
                         inner_list+= '<span class="ingredient-bubble green">'+ing + '</span>';
                     });    
                     inner_list+=
                     `   </div>
                     </div>`;   
-                    $("recipes").append(                
+                    $("#recipes").append(                
                         `<div class="recipe-card">
                             <div class="recipe-image" id = "recipe-image">
                                 <img src= "` + recipe['Image Link']+ `"
@@ -66,8 +63,9 @@ ingredients.forEach(ingredient => {
                             <div class="recipe-info" >
                                 <h2 class="recipe-name" id = "recipe-name">`+ recipe.Name + `</h2>
                                 <div class="recipe-details">
-                                    <p class="prep-time" id = "prep-time"><i class="far fa-clock"></i> Prep Time: ` + recipe.Total + `</p>
+                                    <p class="prep-time" id = "prep-time"><i class="far fa-clock"></i> Prep Time: ` + recipe['Total:'] + `</p>
                                     <p class="servings" id = 'servings'><i class="fas fa-utensils"></i> Servings: `+ recipe.Yield + `</p>
+                                    <p class="level" id = 'level'><i class="fa-solid fa-layer-group"></i> Level: `+ recipe['Level:'] + `</p>
                                     <button class="view-recipe-btn">View Recipe</button>
                                 </div>` + 
                                 inner_list +

@@ -45,10 +45,10 @@ def fetchRecipes(queryIngs):
     with open('../Backend/Saved/unigramIndex.pickle', 'rb') as f:
         unigramIndex = pickle.load(f)
 
-    dataframe = pd.read_csv('../Backend/Saved/newDf.csv')
-    dataframe = dataframe.drop('fully_final_ingredients', axis=1)
-    images = pd.read_csv('../Backend/Saved/images_dataset.csv')
-
+    # dataframe = pd.read_csv('../Backend/Saved/newDf.csv')
+    # dataframe = dataframe.drop('fully_final_ingredients', axis=1)
+    # images = pd.read_csv('../Backend/Saved/images_dataset.csv')
+    dataframe = pd.read_csv('../Backend/Saved/finaldf.csv')
     # Take OR of all the postings lists
     ans = []
     for i in queryIngs:
@@ -74,11 +74,11 @@ def fetchRecipes(queryIngs):
     recipe_ids = list(zip(*finalAns))[0]
 
     # get detailed information from the document(recipe) id
-    dfnew = dataframe.iloc[list(recipe_ids)]
-    imnew = images.iloc[list(recipe_ids)]
+    finaldf = dataframe.iloc[list(recipe_ids)]
+    # imnew = images.iloc[list(recipe_ids)]
 
     # concatenating the two dfs in front of each other
-    finaldf = pd.concat([dfnew, imnew], axis=1)
+    # finaldf = pd.concat([dfnew, imnew], axis=1)
 
     # convert dataframe to list of dictionaries
     recipes_formatted = finaldf.to_dict('records')
@@ -86,5 +86,8 @@ def fetchRecipes(queryIngs):
         recipe['Nutrition Info'] = ast.literal_eval(recipe['Nutrition Info'])
         recipe['Method'] = ast.literal_eval(recipe['Method'])
         recipe['ingredients'] = recipe['ingredients'].split(", ")
+        recipe['common'] = list(
+            set(recipe['ingredients']).intersection(set(queryIngs)))
+        # print(recipe['Name'], recipe['Link'])
     # print(recipes_formatted)
     return recipes_formatted
