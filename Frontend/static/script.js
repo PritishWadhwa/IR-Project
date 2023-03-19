@@ -2,7 +2,8 @@ const ingredients = document.querySelectorAll('.ingredient');
 const categories = document.querySelectorAll('.category');
 const selectedIngredients = document.getElementById('selected-ingredients');
 const searchInput = document.getElementById('search-input');
-
+// const recipes = document.getElementById('recipes');
+let list2 = [];
 // selecting ingredients
 ingredients.forEach(ingredient => {
     ingredient.addEventListener('click', () => {
@@ -22,6 +23,7 @@ ingredients.forEach(ingredient => {
         if (ingredient.classList.contains('selected')) {
             selectedIngredients.appendChild(selectedIngredientItem);
             typestr = typestr.concat('a'); // ingredient added
+            list2.push(ingredientName);
         } else {
             const selectedIngredientItems = selectedIngredients.querySelectorAll('li');
             selectedIngredientItems.forEach(selectedIngredientItem => {
@@ -30,6 +32,7 @@ ingredients.forEach(ingredient => {
                 }
             });
             typestr = typestr.concat('d'); // ingredient deleted
+            list2.pop(ingredientName);
         }
 
         // send ingredient name and action (added/deleted) to python
@@ -38,7 +41,41 @@ ingredients.forEach(ingredient => {
             type: 'POST',
             data: { param: ingredientName, type: typestr},
             success: function(response) {
-                console.log(response);
+                $("recipes").empty();
+                console.log("here 2");
+                $.each(response, function(index, recipe) {
+                    const list1 = recipe.Ingredients;
+                    const list3 = list1.filter(ingredient => list2.includes(ingredient));
+                    console.log(index);
+                    // console.log(recipe);
+                    var inner_list = 
+                    `<div class="recipe-ingredients">
+                        <div class="ingredient-set">`;
+                    $.each(list3, function(index, ing) {
+                        inner_list+= '<span class="ingredient-bubble green">'+ing + '</span>';
+                    });    
+                    inner_list+=
+                    `   </div>
+                    </div>`;   
+                    $("recipes").append(                
+                        `<div class="recipe-card">
+                            <div class="recipe-image" id = "recipe-image">
+                                <img src= "` + recipe['Image Link']+ `"
+                                alt="Recipe Image">
+                            </div>
+                            <div class="recipe-info" >
+                                <h2 class="recipe-name" id = "recipe-name">`+ recipe.Name + `</h2>
+                                <div class="recipe-details">
+                                    <p class="prep-time" id = "prep-time"><i class="far fa-clock"></i> Prep Time: ` + recipe.Total + `</p>
+                                    <p class="servings" id = 'servings'><i class="fas fa-utensils"></i> Servings: `+ recipe.Yield + `</p>
+                                    <button class="view-recipe-btn">View Recipe</button>
+                                </div>` + 
+                                inner_list +
+                            `</div>
+                        </div>`);    
+              });
+                // resultsDiv.html(data.results);
+                console.log("Here");
               },
               error: function(error) {
                 console.log(error);
@@ -67,7 +104,7 @@ searchInput.addEventListener('input', () => {
     const searchText = searchInput.value.toLowerCase().trim();
 
     categories.forEach(category => {
-        console.log(category);
+        // console.log(category);
         const categoryName = category.querySelector('.category-name').textContent.toLowerCase();
         const ingredients = category.querySelectorAll('.ingredient');
         let isCategoryMatched = categoryName.includes(searchText);
