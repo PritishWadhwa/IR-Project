@@ -37,6 +37,19 @@ def sort_tuple(tup):
     return tup
 
 
+def fetchRecipe(recipe_id):
+    if (len(recipe_id) == 0):
+        return {}
+    dataframe = pd.read_csv('../Backend/Saved/finaldf.csv')
+    dataframe['id'] = dataframe.index
+
+    recipe = dataframe.loc[int(recipe_id)]
+    recipe['Nutrition Info'] = ast.literal_eval(recipe['Nutrition Info'])
+    recipe['Method'] = ast.literal_eval(recipe['Method'])
+    recipe['ingredients'] = recipe['ingredients'].split(", ")
+    return recipe.to_dict()
+
+
 def fetchRecipes(queryIngs):
 
     if (len(queryIngs) == 0):
@@ -45,10 +58,9 @@ def fetchRecipes(queryIngs):
     with open('../Backend/Saved/unigramIndex.pickle', 'rb') as f:
         unigramIndex = pickle.load(f)
 
-    # dataframe = pd.read_csv('../Backend/Saved/newDf.csv')
-    # dataframe = dataframe.drop('fully_final_ingredients', axis=1)
-    # images = pd.read_csv('../Backend/Saved/images_dataset.csv')
     dataframe = pd.read_csv('../Backend/Saved/finaldf.csv')
+    dataframe['id'] = dataframe.index
+
     # Take OR of all the postings lists
     ans = []
     for i in queryIngs:

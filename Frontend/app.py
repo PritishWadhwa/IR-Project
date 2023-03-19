@@ -45,5 +45,12 @@ def suggest_recipe():
     return jsonify(recipes)
 
 
+@app.route('/recipe', methods=['POST'])
+def recipe():
+    recipe_id = request.form.get('id')
+    recipe = query.fetchRecipe(recipe_id)
+    return jsonify(recipe)
+
+
 if __name__ == '__main__':
     app.run(debug=True)

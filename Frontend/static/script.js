@@ -2,6 +2,7 @@ const ingredients = document.querySelectorAll('.ingredient');
 const categories = document.querySelectorAll('.category');
 const selectedIngredients = document.getElementById('selected-ingredients');
 const searchInput = document.getElementById('search-input');
+const modal = document.getElementById("myModal");
 // const recipes = document.getElementById('recipes');
 var list2 = [];
 // selecting ingredients
@@ -44,7 +45,7 @@ ingredients.forEach(ingredient => {
                 $("#recipes").empty();
                 console.log("here 2");
                 $.each(response, function(index, recipe) {
-                    console.log(recipe)
+                    // console.log(recipe)
                     var inner_list = 
                     `<div class="recipe-ingredients">
                         <div class="ingredient-set">`;
@@ -66,22 +67,104 @@ ingredients.forEach(ingredient => {
                                     <p class="prep-time" id = "prep-time"><i class="far fa-clock"></i> Prep Time: ` + recipe['Total:'] + `</p>
                                     <p class="servings" id = 'servings'><i class="fas fa-utensils"></i> Servings: `+ recipe.Yield + `</p>
                                     <p class="level" id = 'level'><i class="fa-solid fa-layer-group"></i> Level: `+ recipe['Level:'] + `</p>
-                                    <button class="view-recipe-btn">View Recipe</button>
+                                    <button class="view-recipe-btn" id = 'view-recipe' onclick = "viewRecipeClicked(`+ recipe.id +`)"> View Recipe </button>
                                 </div>` + 
                                 inner_list +
                             `</div>
                         </div>`);    
-              });
-                // resultsDiv.html(data.results);
-                console.log("Here");
-              },
-              error: function(error) {
+                });
+            },
+            error: function(error) {
                 console.log(error);
-              }
+            }
         });
     });
 });
 
+
+function viewRecipeClicked (recipe_id)
+{
+    console.log("Button Clicked")
+    console.log(recipe_id)
+    $.ajax({
+        url: '/recipe' ,
+        method: 'POST',
+        data: { id: recipe_id},
+        success: function(response) {
+            console.log(response)
+            let ingredientHtml = "";
+            $.each(response.ingredients, function(index, ingredient) {
+                ingredientHtml+= '<li>' + ingredient + '</li>'
+            });
+            let methodHtml = "";
+            $.each(response.Method, function(index, method) {
+                methodHtml+= '<li>' + method + '</li>'
+            });
+            $("#myModalShit").append(
+            `<div class="modal-header">
+                <h5 class="recipe-title-modal" id="modal-title">`+ response.Name +`</h5>
+            </div>
+            <div class="modal-body" id = 'modal-body'>
+                <div class="row">
+                    <div class="col-md-6">
+                        <img id = 'recipe-image' src="`+ response['Image Link']+ `" alt="" class="recipe-image-modal">
+                    </div>
+                    <div class="col-md-6">
+                        <div class = "recipe-details-modal"> 
+                            <table class="table">
+                                <tbody>
+                                <tr>
+                                    <td>Cooking Time</td>
+                                    <td id = 'cooking-time'>`+response['Total:'] + `</td>
+                                </tr>
+                                <tr>
+                                    <td>Yield</td>
+                                    <td id = 'yield'>`+response['Yield'] + `</td>
+                                </tr>
+                                <tr>
+                                    <td>Recipe Level</td>
+                                    <td id = "recipe-level">`+response['Level:'] + `</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class = "ingredient-list-modal">
+                            <h2>Ingredients</h2>
+                            <ul id ='ingredients'>`+ ingredientHtml + `</ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class = "method-details-modal">
+                            <h2>Method</h2>
+                            <ol id = 'methods'>`+ methodHtml + `</ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <span class="close" id = 'close'>&times;</span>
+                </div>
+            </div>`);
+            // When the user clicks the button, open the modal 
+            modal.style.display = 'block';
+            
+        },
+        error: function(xhr, status, error) {
+        alert('Error fetching recipe data');
+        }
+    });
+}   
+
+const span = document.getElementById("close");
+span.onclick = function() {
+    modal.style.display = "none";
+    modal.innerHTML = "";
+  }
 // search input
 searchInput.addEventListener('input', () => {
     const searchText = searchInput.value.toLowerCase().trim();

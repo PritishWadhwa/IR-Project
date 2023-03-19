@@ -37,6 +37,21 @@
             </div>
         </div>
         <div class="page page2">
+
+
+            <link rel="stylesheet"
+                      type="text/css"
+                      href="{{ url_for('static',filename='styles/modal.css') }}">
+            <div id="myModal" class="modal" style="display: none">
+                <!-- Modal content -->
+                <div class="modal-content">
+                    <span class="close" id = 'close'>&times;</span>
+                    <div id = 'myModalShit'></div>
+                </div>
+              
+              </div>
+
+
             <div class="content">
                 <div class="recipe-header">
                     <h1>Recipes</h1>
@@ -50,6 +65,7 @@
                     </div>
                 </div>
                 
+
                 <div id="selected-ingredients"></div>
 
                 <div id = 'recipes'></div>
