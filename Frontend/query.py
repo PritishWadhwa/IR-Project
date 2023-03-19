@@ -7,6 +7,12 @@ import pandas as pd
 import os
 import ast
 
+with open('../Backend/Saved/unigramIndex.pickle', 'rb') as f:
+    unigramIndex = pickle.load(f)
+
+dataframe = pd.read_csv('../Backend/Saved/finaldf.csv')
+dataframe['id'] = dataframe.index
+
 
 def OR(list1, list2):
     i = 0
@@ -40,8 +46,6 @@ def sort_tuple(tup):
 def fetchRecipe(recipe_id):
     if (len(recipe_id) == 0):
         return {}
-    dataframe = pd.read_csv('../Backend/Saved/finaldf.csv')
-    dataframe['id'] = dataframe.index
 
     recipe = dataframe.loc[int(recipe_id)]
     recipe['Nutrition Info'] = ast.literal_eval(recipe['Nutrition Info'])
@@ -50,16 +54,10 @@ def fetchRecipe(recipe_id):
     return recipe.to_dict()
 
 
-def fetchRecipes(queryIngs):
+def fetchRecipes(queryIngs, page):
 
     if (len(queryIngs) == 0):
         return []
-
-    with open('../Backend/Saved/unigramIndex.pickle', 'rb') as f:
-        unigramIndex = pickle.load(f)
-
-    dataframe = pd.read_csv('../Backend/Saved/finaldf.csv')
-    dataframe['id'] = dataframe.index
 
     # Take OR of all the postings lists
     ans = []
@@ -80,7 +78,8 @@ def fetchRecipes(queryIngs):
 
     # get only the first 50 recipes
     # pagination/ infinite scroll ??
-    finalAns = finalAns[:50]  # format: [(51789, 3), (2334, 3), (46643, 2) ...]
+    # format: [(51789, 3), (2334, 3), (46643, 2) ...]
+    finalAns = finalAns[(int(page)-1)*10:int(page)*10]
 
     # get first elements of the tuples
     recipe_ids = list(zip(*finalAns))[0]
@@ -91,15 +90,20 @@ def fetchRecipes(queryIngs):
 
     # concatenating the two dfs in front of each other
     # finaldf = pd.concat([dfnew, imnew], axis=1)
+    queryset = set(queryIngs)
+
+    # Convert to a list
+    finaldf['ingredients'] = finaldf['ingredients'].apply(
+        lambda x: x.split(', '))
+
+    # Find common ingredients
+    finaldf['common'] = finaldf['ingredients'].apply(
+        lambda x: list(set(x).intersection(queryset)))
+
+    # Drop the columns not neede to reduce the size of the response
+    finaldf = finaldf.drop(
+        columns=['Link', 'ingredients', 'Nutrition Info', 'Method'])
 
     # convert dataframe to list of dictionaries
     recipes_formatted = finaldf.to_dict('records')
-    for recipe in recipes_formatted:
-        recipe['Nutrition Info'] = ast.literal_eval(recipe['Nutrition Info'])
-        recipe['Method'] = ast.literal_eval(recipe['Method'])
-        recipe['ingredients'] = recipe['ingredients'].split(", ")
-        recipe['common'] = list(
-            set(recipe['ingredients']).intersection(set(queryIngs)))
-        # print(recipe['Name'], recipe['Link'])
-    # print(recipes_formatted)
     return recipes_formatted

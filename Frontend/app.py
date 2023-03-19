@@ -27,21 +27,18 @@ def home():
 def suggest_recipe():
     clicked_ingredient = request.form.get('param')
     action = request.form.get('type')
-
-    if (action == 'a'):
-        list_ingredients.append(clicked_ingredient)
+    page = request.form.get('page')
+    if clicked_ingredient == "":
+        # For pagination, do not check anything, continue with the same list of ingredients
+        recipes = query.fetchRecipes(list_ingredients, page)
     else:
-        list_ingredients.remove(clicked_ingredient)
+        if (action == 'a'):
+            list_ingredients.append(clicked_ingredient)
+        else:
+            list_ingredients.remove(clicked_ingredient)
 
-    # print("ingredient list: ", list_ingredients)
-    # Querying database of recipes using index
-    recipes = query.fetchRecipes(list_ingredients)
-    # print(recipes)
-
-    # this recipes thingy needs to be sent to html where
-    # there will be a loop {for recipe in recipes}:
-    # create div with name as recipe.Name and so on...
-
+        # Querying database of recipes using index
+        recipes = query.fetchRecipes(list_ingredients, page)
     return jsonify(recipes)
 
 
