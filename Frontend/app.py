@@ -11,6 +11,12 @@ app = Flask(__name__)
 with open('../Backend/Saved/ingredients_supercook_for_flask', 'rb') as f:
     categories = pickle.load(f)
 
+for cat_dict in categories:
+    for ing in cat_dict['ingredients']:
+        if ing not in query.unigramIndex:
+            cat_dict['ingredients'].remove(ing)
+
+
 list_ingredients = set([])  # global list of ingredients chosen by the user
 
 # define the route for the home page

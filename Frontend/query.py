@@ -14,6 +14,10 @@ dataframe = pd.read_csv('../Backend/Saved/finaldf.csv')
 dataframe['id'] = dataframe.index
 
 
+with open('../Backend/Saved/ingredients_supercook_for_flask', 'rb') as f:
+    categories = pickle.load(f)
+
+
 def OR(list1, list2):
     i = 0
     j = 0
@@ -62,7 +66,10 @@ def fetchRecipes(queryIngs, page):
     # Take OR of all the postings lists
     ans = []
     for i in queryIngs:
-        ans = OR(unigramIndex[i][1], ans)
+        posting_list = []
+        if i in unigramIndex:
+            posting_list = unigramIndex[i][1]
+        ans = OR(posting_list, ans)
 
     # get all ingredients of the matched documents to count number of ingredients matched with query ingredients
     finalAns = []
