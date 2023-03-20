@@ -6,17 +6,17 @@ import pickle
 import pandas as pd
 import os
 import ast
+import numpy as np
 
 with open('../Backend/Saved/unigramIndex.pickle', 'rb') as f:
     unigramIndex = pickle.load(f)
 
-dataframe = pd.read_csv('../Backend/Saved/finaldf.csv')
-dataframe['id'] = dataframe.index
+with open('../Backend/Saved/finaldf.pickle', 'rb') as f:
+    dataframe = pickle.load(f)
 
-
+dataframe.to_csv("hello.csv",index = False)
 with open('../Backend/Saved/ingredients_supercook_for_flask', 'rb') as f:
     categories = pickle.load(f)
-
 
 def OR(list1, list2):
     i = 0
@@ -50,13 +50,15 @@ def sort_tuple(tup):
 def fetchRecipe(recipe_id):
     if (len(recipe_id) == 0):
         return {}
-
-    recipe = dataframe.loc[int(recipe_id)]
+    recipe_id = int(recipe_id)
+    recipe = dataframe[dataframe['id'] == recipe_id].to_dict(orient='records')[0]
     recipe['Nutrition Info'] = ast.literal_eval(recipe['Nutrition Info'])
     recipe['Method'] = ast.literal_eval(recipe['Method'])
+    recipe['ingredients_phrase'] = ast.literal_eval(recipe['ingredients_phrase'])
     recipe['ingredients'] = recipe['ingredients'].split(", ")
-    return recipe.to_dict()
+    return recipe
 
+# print(fetchRecipe(2))
 
 def fetchRecipes(queryIngs, page):
 
@@ -74,7 +76,7 @@ def fetchRecipes(queryIngs, page):
     # get all ingredients of the matched documents to count number of ingredients matched with query ingredients
     finalAns = []
     for i in ans:
-        ings = dataframe.loc[i]['ingredients']
+        ings = dataframe[dataframe['id'] == i].reset_index(drop = True).loc[0]['ingredients']
         ings = ings.split(', ')
         query = set(queryIngs)
         ings = set(ings)
@@ -92,8 +94,7 @@ def fetchRecipes(queryIngs, page):
     recipe_ids = list(zip(*finalAns))[0]
 
     # get detailed information from the document(recipe) id
-    finaldf = dataframe.iloc[list(recipe_ids)]
-    # imnew = images.iloc[list(recipe_ids)]
+    finaldf = dataframe[dataframe['id'].isin(recipe_ids)]
 
     # concatenating the two dfs in front of each other
     # finaldf = pd.concat([dfnew, imnew], axis=1)
@@ -109,7 +110,7 @@ def fetchRecipes(queryIngs, page):
 
     # Drop the columns not neede to reduce the size of the response
     finaldf = finaldf.drop(
-        columns=['Link', 'ingredients', 'Nutrition Info', 'Method'])
+        columns=['ingredients', 'Nutrition Info', 'Method'])
 
     # convert dataframe to list of dictionaries
     recipes_formatted = finaldf.to_dict('records')
