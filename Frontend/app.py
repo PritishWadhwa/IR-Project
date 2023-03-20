@@ -11,7 +11,7 @@ app = Flask(__name__)
 with open('../Backend/Saved/ingredients_supercook_for_flask', 'rb') as f:
     categories = pickle.load(f)
 
-list_ingredients = []  # global list of ingredients chosen by the user
+list_ingredients = set([])  # global list of ingredients chosen by the user
 
 # define the route for the home page
 
@@ -33,7 +33,7 @@ def suggest_recipe():
         recipes = query.fetchRecipes(list_ingredients, page)
     else:
         if (action == 'a'):
-            list_ingredients.append(clicked_ingredient)
+            list_ingredients.add(clicked_ingredient)
         else:
             list_ingredients.remove(clicked_ingredient)
 
