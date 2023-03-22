@@ -47,6 +47,7 @@
   
   .recipe-details-modal ul li {
 	font-size: 18px;
+  
   }
   
   /* Ingredient List */
@@ -55,7 +56,7 @@
   }
   
   .ingredient-list-modal ul {
-	list-style: none;
+  list-style-type: upper-roman;
 	margin: 0;
 	padding: 0;
   }

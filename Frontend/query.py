@@ -14,9 +14,10 @@ with open('../Backend/Saved/unigramIndex.pickle', 'rb') as f:
 with open('../Backend/Saved/finaldf.pickle', 'rb') as f:
     dataframe = pickle.load(f)
 
-dataframe.to_csv("hello.csv",index = False)
+dataframe.to_csv("hello.csv", index=False)
 with open('../Backend/Saved/ingredients_supercook_for_flask', 'rb') as f:
     categories = pickle.load(f)
+
 
 def OR(list1, list2):
     i = 0
@@ -51,14 +52,17 @@ def fetchRecipe(recipe_id):
     if (len(recipe_id) == 0):
         return {}
     recipe_id = int(recipe_id)
-    recipe = dataframe[dataframe['id'] == recipe_id].to_dict(orient='records')[0]
+    recipe = dataframe[dataframe['id'] == recipe_id].to_dict(orient='records')[
+        0]
     recipe['Nutrition Info'] = ast.literal_eval(recipe['Nutrition Info'])
     recipe['Method'] = ast.literal_eval(recipe['Method'])
-    recipe['ingredients_phrase'] = ast.literal_eval(recipe['ingredients_phrase'])
+    recipe['ingredients_phrase'] = ast.literal_eval(
+        recipe['ingredients_phrase'])
     recipe['ingredients'] = recipe['ingredients'].split(", ")
     return recipe
 
 # print(fetchRecipe(2))
+
 
 def fetchRecipes(queryIngs, page):
 
@@ -76,7 +80,8 @@ def fetchRecipes(queryIngs, page):
     # get all ingredients of the matched documents to count number of ingredients matched with query ingredients
     finalAns = []
     for i in ans:
-        ings = dataframe[dataframe['id'] == i].reset_index(drop = True).loc[0]['ingredients']
+        ings = dataframe[dataframe['id'] == i].reset_index(
+            drop=True).loc[0]['ingredients']
         ings = ings.split(', ')
         query = set(queryIngs)
         ings = set(ings)

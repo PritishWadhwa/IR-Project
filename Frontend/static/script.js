@@ -97,7 +97,7 @@ function viewRecipeClicked (recipe_id)
         success: function(response) {
             console.log(response)
             let ingredientHtml = "";
-            $.each(response.ingredients, function(index, ingredient) {
+            $.each(response.ingredients_phrase, function(index, ingredient) {
                 ingredientHtml+= '<li>' + ingredient + '</li>'
             });
             let methodHtml = "";
@@ -150,9 +150,6 @@ function viewRecipeClicked (recipe_id)
                             <ol id = 'methods'>`+ methodHtml + `</ol>
                         </div>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <span class="close" id = 'close'>&times;</span>
                 </div>
             </div>`;
             $("#myModalShit").append(modalShit);
