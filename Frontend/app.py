@@ -42,7 +42,6 @@ def suggest_recipe():
             list_ingredients.add(clicked_ingredient)
         else:
             list_ingredients.remove(clicked_ingredient)
-
         # Querying database of recipes using index
         recipes = query.fetchRecipes(list_ingredients, page)
     return jsonify(recipes)
