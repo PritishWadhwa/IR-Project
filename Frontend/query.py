@@ -17,7 +17,7 @@ with open('../Backend/Saved/finaldf.pickle', 'rb') as f:
 dataframe['ingredients'] = dataframe['ingredients'].apply(
     lambda x: x.split(", "))
 
-dataframe.to_csv("hello.csv", index=False)
+# dataframe.to_csv("hello.csv", index=False)
 with open('../Backend/Saved/ingredients_supercook_for_flask', 'rb') as f:
     categories = pickle.load(f)
 

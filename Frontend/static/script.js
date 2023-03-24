@@ -35,6 +35,7 @@ ingredients.forEach(ingredient => {
             typestr = typestr.concat('d'); // ingredient deleted
             list2.pop(ingredientName);
         }
+        currentPage = 1
         getRecipes(ingredientName, typestr, currentPage);
         
     });
