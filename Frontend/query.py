@@ -14,6 +14,9 @@ with open('../Backend/Saved/unigramIndex.pickle', 'rb') as f:
 with open('../Backend/Saved/finaldf.pickle', 'rb') as f:
     dataframe = pickle.load(f)
 
+dataframe = dataframe.drop_duplicates(
+    subset=dataframe.columns.difference(['id']), keep='first')
+
 dataframe['ingredients'] = dataframe['ingredients'].apply(
     lambda x: x.split(", "))
 
