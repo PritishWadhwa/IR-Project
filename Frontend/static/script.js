@@ -71,9 +71,9 @@ function getRecipes(ingredientName, typestr ,currentPage)
                         <div class="recipe-info" >
                             <h2 class="recipe-name" id = "recipe-name">`+ recipe.Name + `</h2>
                             <div class="recipe-details">
-                                <p class="prep-time" id = "prep-time"><i class="far fa-clock"></i> Prep Time: ` + recipe['Total:'] + `</p>
-                                <p class="servings" id = 'servings'><i class="fas fa-utensils"></i> Servings: `+ recipe.Yield + `</p>
-                                <p class="level" id = 'level'><i class="fa-solid fa-layer-group"></i> Level: `+ recipe['Level:'] + `</p>
+                                <p class="prep-time" id = "prep-time"><i class="fas fa-clock"></i> Prep Time:<br>`+ recipe['Total:'] + `</p>
+                                <p class="servings" id = 'servings'><i class="fas fa-utensils"></i> Servings:<br>`+ recipe.Yield + `</p>
+                                <p class="level" id = 'level'><i class="fas fa-star"></i> Level:<br>`+ recipe['Level:'] + `</p>
                                 <button class="view-recipe-btn" id = 'view-recipe' onclick = "viewRecipeClicked(`+ recipe.id +`)"> View Recipe </button>
                             </div>` + 
                             inner_list +
