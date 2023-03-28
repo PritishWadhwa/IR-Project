@@ -1,9 +1,12 @@
+import sys
 import query
 from flask import Flask, render_template, request
 from flask import request, jsonify
+from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 import pickle
+imported = None
 
-import sys
+
 sys.path.insert(0, '../Backend')  # Add the path to the query python code
 
 app = Flask(__name__)
@@ -17,11 +20,7 @@ for cat_dict in categories:
             cat_dict['ingredients'].remove(ing)
 
 
-list_ingredients = set([])  # global list of ingredients chosen by the user
-
 # define the route for the home page
-
-
 @app.route('/')
 def home():
     return render_template('index.html', categories=categories)
@@ -29,21 +28,26 @@ def home():
 # define the route for the recipe suggestion form submission
 
 
+@app.route('/generate/', methods=['POST'])
+def generate():
+    global imported
+    data = request.get_json()
+    list_ingredients = data['ingredients']
+    if (imported == None):
+        import generation
+        imported = "Done!"
+    generationResult = generation.generate_recipe(list_ingredients)
+    return jsonify(generationResult)
+
+
 @app.route('/suggest-recipe', methods=['POST'])
 def suggest_recipe():
-    clicked_ingredient = request.form.get('param')
-    action = request.form.get('type')
-    page = request.form.get('page')
-    if clicked_ingredient == "":
-        # For pagination, do not check anything, continue with the same list of ingredients
-        recipes = query.fetchRecipes(list_ingredients, page)
-    else:
-        if (action == 'a'):
-            list_ingredients.add(clicked_ingredient)
-        else:
-            list_ingredients.remove(clicked_ingredient)
-        # Querying database of recipes using index
-        recipes = query.fetchRecipes(list_ingredients, page)
+    data = request.get_json()
+    list_ingredients = data['ingredients']
+    page = data['page']
+    # For pagination, do not check anything, continue with the same list of ingredients
+    # Querying database of recipes using index
+    recipes = query.fetchRecipes(list_ingredients, page)
     return jsonify(recipes)
 
 

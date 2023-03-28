@@ -22,8 +22,8 @@ const paginationLinksNext = document.getElementById("pagination-link-next");
 
 
 let max = 1;
-// const recipes = document.getElementById('recipes');
-var list2 = [];
+let query_ingredients = [];
+
 // selecting ingredients
 ingredients.forEach(ingredient => {
     ingredient.addEventListener('click', () => {
@@ -39,11 +39,10 @@ ingredients.forEach(ingredient => {
         const selectedIngredientItem = document.createElement('li');
         selectedIngredientItem.textContent = `${category}: ${ingredientName}`;
 
-        let typestr = "";
         if (ingredient.classList.contains('selected')) {
             selectedIngredients.appendChild(selectedIngredientItem);
-            typestr = typestr.concat('a'); // ingredient added
-            list2.push(ingredientName);
+            query_ingredients.push(ingredientName);
+            // console.log(query_ingredients)
         } else {
             const selectedIngredientItems = selectedIngredients.querySelectorAll('li');
             selectedIngredientItems.forEach(selectedIngredientItem => {
@@ -51,22 +50,24 @@ ingredients.forEach(ingredient => {
                     selectedIngredientItem.remove();
                 }
             });
-            typestr = typestr.concat('d'); // ingredient deleted
-            list2.pop(ingredientName);
+            query_ingredients.pop(ingredientName);
+            // console.log(query_ingredients)
         }
         currentPage = 1
-        getRecipes(ingredientName, typestr, currentPage);
+        getRecipes();
         
     });
 });
 
-function getRecipes(ingredientName, typestr ,currentPage)
+function getRecipes()
 {
     // send ingredient name and action (added/deleted) to python
     $.ajax({
         url: "/suggest-recipe",
         type: 'POST',
-        data: { param: ingredientName, type: typestr , page: currentPage},
+        data: JSON.stringify({ingredients: query_ingredients, page: currentPage}),
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
         success: function(response) {
             $("#recipes").empty();
             
@@ -90,11 +91,11 @@ function getRecipes(ingredientName, typestr ,currentPage)
                 paginationLinksPrev.disabled = false;
             }
             response = response['results']
-            console.log(max)
+            // console.log(max)
             $.each(response, function(index, recipe) {
 
                 // console.log(recipe)
-                var inner_list = 
+                let inner_list = 
                 `<div class="recipe-ingredients">
                     <div class="ingredient-set">`;
                 $.each(recipe.common, function(index, ing) {
@@ -129,15 +130,12 @@ function getRecipes(ingredientName, typestr ,currentPage)
 }
 
 function viewRecipeClicked (recipe_id)
-{
-    console.log("Button Clicked")
-    console.log(recipe_id)
+{    
     $.ajax({
         url: '/recipe' ,
         method: 'POST',
         data: { id: recipe_id},
         success: function(response) {
-            console.log(response)
             let ingredientHtml = "";
             $.each(response.ingredients_phrase, function(index, ingredient) {
                 ingredientHtml+= '<li>' + ingredient + '</li>'
@@ -208,8 +206,8 @@ function viewRecipeClicked (recipe_id)
 const span = document.getElementById("close");
 span.onclick = function() {
     modal.style.display = "none";
-    // modal.innerHTML = "";
-  }
+}
+
 // search input
 searchInput.addEventListener('input', () => {
     const searchText = searchInput.value.toLowerCase().trim();
@@ -230,7 +228,6 @@ searchInput.addEventListener('input', () => {
     const searchText = searchInput.value.toLowerCase().trim();
 
     categories.forEach(category => {
-        // console.log(category);
         const categoryName = category.querySelector('.category-name').textContent.toLowerCase();
         const ingredients = category.querySelectorAll('.ingredient');
         let isCategoryMatched = categoryName.includes(searchText);
@@ -260,28 +257,73 @@ searchInput.addEventListener('input', () => {
     });
 });
 
+function openCity(evt, cityName) {
+    // Declare all variables
+    let i, tabcontent, tablinks;
+  
+    // Get all elements with class="tabcontent" and hide them
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+      tabcontent[i].style.display = "none";
+    }
+  
+    // Get all elements with class="tablinks" and remove the class "active"
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+      tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+  
+    // Show the current tab, and add an "active" class to the button that opened the tab
+    document.getElementById(cityName).style.display = "block";
+    evt.currentTarget.className += " active";
+  }
+  
+const generatedRecipes = document.getElementById('generated-recipes');
+function generation() {
 
-
-
+    console.log("generation");
+    $.ajax({
+        url: '/generate' ,
+        method: 'POST',
+        data: JSON.stringify({ingredients: query_ingredients}),
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function(response) {
+            console.log(response);
+            let generatedText = "";
+            generatedText += "<h2>Generated Recipes</h2>";
+            generatedText += "<div class='row'>";
+            let element = response;
+            // for (const element of response) {
+                generatedText += "<div class='col-md-4'>";
+                generatedText += "<h2 class='card-title'>" + element['TITLE'] + "</h2>";
+                generatedText += "<p class='card-text'>" + element['INGREDIENTS'] + "</p>";
+                let methodHtml = "";
+                $.each(element.METHOD, function(index, method) {
+                    methodHtml+= '<li>' + method + '</li>'
+                });
+                generatedText += "<ul>" + methodHtml + "</ul>";
+                generatedText += "</div>";
+            // }
+            generatedText += "/<div>";
+            generatedRecipes.innerHTML = generatedText
+        }
+    });
+}
 function prev(){
     currentPage = currentPage - 1;
     currentPage = Math.max(currentPage, 1);
-    
-    
     scrollSmoothTo();
     // Call your function to display the items for the current page
-    getRecipes("", "", currentPage);
-    // paginationLinks.textContent = currentPage;
+    getRecipes();
 }
 
 function next(){
     currentPage = currentPage + 1; 
     currentPage = Math.min(currentPage, max);
-    
     scrollSmoothTo();
     // Call your function to display the items for the current page
-    getRecipes("", "", currentPage);
-    // paginationLinks.textContent = currentPage;
+    getRecipes();
     
 }
 

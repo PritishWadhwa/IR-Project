@@ -38,39 +38,50 @@
         </div>
         <div class="page page2">
 
-
-            <link rel="stylesheet"
+            <div class="tab">
+                <button class="tablinks" onclick="openCity(event, 'Retrieval')">Retrieval</button>
+                <button class="tablinks" onclick="openCity(event, 'Generation')">Generation</button>
+            </div>
+            
+            <!-- Tab content -->
+            <div id="Retrieval" class="tabcontent">
+                <link rel="stylesheet"
                       type="text/css"
                       href="{{ url_for('static',filename='styles/modal.css') }}">
-            <div id="myModal" class="modal" style="display: none">
-                <!-- Modal content -->
-                <div class="modal-content">
-                    <span class="close" id = 'close'>&times;</span>
-                    <div id = 'myModalShit'></div>
-                </div>
-              
-              </div>
 
-
-            <div class="content" id = "TOP_OF_PAGE">
-                <div class="recipe-header">
-                    <h1>Recipes</h1>
-                    <div class="recipe-sort">
-                        <label for="sort-by">Sort by:</label>
-                        <select id="sort-by">
-                            <option value="num-selected-ingredients">Ingredients</option>
-                            <option value="servings">Servings</option>
-                            <option value="time">Time</option>
-                        </select>
+                <div id="myModal" class="modal" style="display: none">
+                    <!-- Modal content -->
+                    <div class="modal-content">
+                        <span class="close" id = 'close'>&times;</span>
+                        <div id = 'myModalShit'></div>
                     </div>
                 </div>
-                
 
-                <div id="selected-ingredients"></div>
-
-                <div id = 'recipes'></div>
-                <div id="pagination"></div>
+                <div class="content" id = "TOP_OF_PAGE">
+                    <div class="recipe-header">
+                        <h1>Recipes</h1>
+                        <div class="recipe-sort">
+                            <label for="sort-by">Sort by:</label>
+                            <select id="sort-by">
+                                <option value="num-selected-ingredients">Ingredients</option>
+                                <option value="servings">Servings</option>
+                                <option value="time">Time</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div id="selected-ingredients"></div>
+                    <div id ='recipes'></div>
+                    <div id="pagination"></div>
+                </div>
             </div>
+            
+            <div id="Generation" class="tabcontent">
+
+                <button onclick="generation()">Start the Generation</button>
+                <div id="generated-recipes"></div>
+            </div>
+
+            
         </div>
         <!-- <script src="https://kit.fontawesome.com/12f77b715a.js"
                 crossorigin="anonymous"></script> -->

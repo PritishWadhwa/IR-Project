@@ -21,7 +21,6 @@ dataframe['ingredients'] = dataframe['ingredients'].apply(
     lambda x: x.split(", "))
 
 dataframe.fillna(fn, inplace=True)
-print(dataframe.isna().sum())
 
 # dataframe.to_csv("hello.csv", index=False)
 with open('../Backend/Saved/ingredients_supercook_for_flask', 'rb') as f:
