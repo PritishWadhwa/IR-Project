@@ -3,6 +3,25 @@ const categories = document.querySelectorAll('.category');
 const selectedIngredients = document.getElementById('selected-ingredients');
 const searchInput = document.getElementById('search-input');
 const modal = document.getElementById("myModal");
+
+// Set the number of items per page and the initial page
+const itemsPerPage = 10;
+let currentPage = 1;
+
+// Create the pagination links
+let paginationHTML = "<div class = 'row' class = 'paginations'>";
+paginationHTML += `<button href = "#TOP_OF_PAGE" id="pagination-link-prev" onclick = 'prev()'>Prev</button>`;
+paginationHTML += `<button  id="pagination-link-next" onclick = 'next()'>Next</button>`;
+paginationHTML += "</div>";
+// Add the pagination links to the page
+document.getElementById("pagination").innerHTML = paginationHTML;
+
+// Add event listeners to the pagination links
+const paginationLinksPrev = document.getElementById("pagination-link-prev");
+const paginationLinksNext = document.getElementById("pagination-link-next");
+
+
+let max = 1;
 // const recipes = document.getElementById('recipes');
 var list2 = [];
 // selecting ingredients
@@ -50,8 +69,30 @@ function getRecipes(ingredientName, typestr ,currentPage)
         data: { param: ingredientName, type: typestr , page: currentPage},
         success: function(response) {
             $("#recipes").empty();
-            console.log("here 2");
+            
+            max = parseInt(response['total']/itemsPerPage) + 1
+            
+            if(currentPage==max)
+            {
+                // Disable the next button
+                paginationLinksNext.disabled = true;
+            }
+            else
+            {
+                paginationLinksNext.disabled = false;
+            }
+            if(currentPage==1)
+            {
+                // Disable the previous button
+                paginationLinksPrev.disabled = true;
+            }
+            else{
+                paginationLinksPrev.disabled = false;
+            }
+            response = response['results']
+            console.log(max)
             $.each(response, function(index, recipe) {
+
                 // console.log(recipe)
                 var inner_list = 
                 `<div class="recipe-ingredients">
@@ -219,41 +260,28 @@ searchInput.addEventListener('input', () => {
     });
 });
 
-// Set the number of items per page and the initial page
-const itemsPerPage = 10;
-let currentPage = 1;
 
-// Create the pagination links
-let paginationHTML = "<div class = 'row' class = 'paginations'>";
-paginationHTML += `<button href = "#TOP_OF_PAGE" id="pagination-link-prev" onclick = 'prev()'>Prev</button>`;
-paginationHTML += `<button id="pagination-link"> ${currentPage} </button>`;
-paginationHTML += `<button  id="pagination-link-next" onclick = 'next()'>Next</button>`;
-paginationHTML += "</div>";
-// Add the pagination links to the page
-document.getElementById("pagination").innerHTML = paginationHTML;
 
-// Add event listeners to the pagination links
-const paginationLinks = document.getElementById(".pagination-link");
-const paginationLinksPrev = document.getElementById(".pagination-link-prev");
-const paginationLinksNext = document.getElementById(".pagination-link-next");
 
 function prev(){
     currentPage = currentPage - 1;
     currentPage = Math.max(currentPage, 1);
-    scrollSmoothTo()
+    
+    
+    scrollSmoothTo();
     // Call your function to display the items for the current page
     getRecipes("", "", currentPage);
-    paginationLinks.textContent = currentPage;
+    // paginationLinks.textContent = currentPage;
 }
 
 function next(){
-    currentPage = currentPage + 1;
-    //  !!!!!!!!!! ChANGE THIS TO THE NUMBER OF PAGES !!!!!!!!!!    
-    currentPage = Math.min(currentPage, 1000);
-    scrollSmoothTo()
+    currentPage = currentPage + 1; 
+    currentPage = Math.min(currentPage, max);
+    
+    scrollSmoothTo();
     // Call your function to display the items for the current page
     getRecipes("", "", currentPage);
-    paginationLinks.textContent = currentPage;
+    // paginationLinks.textContent = currentPage;
     
 }
 

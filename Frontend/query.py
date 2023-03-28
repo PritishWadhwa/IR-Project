@@ -7,7 +7,7 @@ import pandas as pd
 import os
 import ast
 import numpy as np
-
+fn = "https://food.fnr.sndimg.com/content/dam/images/food/editorial/homepage/fn-feature.jpg.rend.hgtvcom.826.620.suffix/1474463768097.jpeg"
 with open('../Backend/Saved/unigramIndex.pickle', 'rb') as f:
     unigramIndex = pickle.load(f)
 
@@ -19,6 +19,9 @@ dataframe = dataframe.drop_duplicates(
 
 dataframe['ingredients'] = dataframe['ingredients'].apply(
     lambda x: x.split(", "))
+
+dataframe.fillna(fn, inplace=True)
+print(dataframe.isna().sum())
 
 # dataframe.to_csv("hello.csv", index=False)
 with open('../Backend/Saved/ingredients_supercook_for_flask', 'rb') as f:
@@ -102,10 +105,10 @@ def fetchRecipes(queryIngs, page):
 
     # Reset the index
     finalAns = finalAns.reset_index(drop=True)
-
+    # print(finalAns)
     # Get the the values (int(page)-1)*10 to int(page)*10
     recipe_ids = finalAns['id'].values[(int(page)-1)*10:int(page)*10]
-    print()
+    # print(recipe_ids)
     # print(recipe_ids)
     # get detailed information from the document(recipe) id
     finaldf = dataframe[dataframe['id'].isin(
@@ -126,7 +129,9 @@ def fetchRecipes(queryIngs, page):
         columns=['ingredients', 'Nutrition Info', 'Method', 'number'])
 
     # convert dataframe to list of dictionaries
-    recipes_formatted = finaldf.to_dict('records')
+    recipes_formatted = {}
+    recipes_formatted['results'] = finaldf.to_dict('records')
+    recipes_formatted['total'] = finalAns.shape[0]
     # print(recipes_formatted)
     return recipes_formatted
 
