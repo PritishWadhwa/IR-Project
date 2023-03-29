@@ -2,7 +2,7 @@ import sys
 import query
 from flask import Flask, render_template, request
 from flask import request, jsonify
-from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
+import generation
 import pickle
 imported = None
 
@@ -33,9 +33,6 @@ def generate():
     global imported
     data = request.get_json()
     list_ingredients = data['ingredients']
-    if (imported == None):
-        import generation
-        imported = "Done!"
     generationResult = generation.generate_recipe(list_ingredients)
     return jsonify(generationResult)
 

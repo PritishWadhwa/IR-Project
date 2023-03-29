@@ -3,7 +3,7 @@ const categories = document.querySelectorAll('.category');
 const selectedIngredients = document.getElementById('selected-ingredients');
 const searchInput = document.getElementById('search-input');
 const modal = document.getElementById("myModal");
-
+document.getElementById("default").click();
 // Set the number of items per page and the initial page
 const itemsPerPage = 10;
 let currentPage = 1;
@@ -42,7 +42,7 @@ ingredients.forEach(ingredient => {
         if (ingredient.classList.contains('selected')) {
             selectedIngredients.appendChild(selectedIngredientItem);
             query_ingredients.push(ingredientName);
-            // console.log(query_ingredients)
+            console.log(query_ingredients)
         } else {
             const selectedIngredientItems = selectedIngredients.querySelectorAll('li');
             selectedIngredientItems.forEach(selectedIngredientItem => {
@@ -50,8 +50,8 @@ ingredients.forEach(ingredient => {
                     selectedIngredientItem.remove();
                 }
             });
-            query_ingredients.pop(ingredientName);
-            // console.log(query_ingredients)
+            query_ingredients.splice(query_ingredients.indexOf(ingredientName), 1);
+            console.log(query_ingredients)
         }
         currentPage = 1
         getRecipes();
@@ -279,8 +279,11 @@ function openCity(evt, cityName) {
   }
   
 const generatedRecipes = document.getElementById('generated-recipes');
+const generateButton = document.getElementById('gen-button');
 function generation() {
-
+    generateButton.visibility = 'hidden';   
+    // generateButton.textContent = "Generating...";
+    generatedRecipes.innerHTML = '<img src = "./static/Loading.gif", alt = "Loading....">';
     console.log("generation");
     $.ajax({
         url: '/generate' ,
@@ -289,6 +292,8 @@ function generation() {
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: function(response) {
+            generateButton.visibility = 'visible';
+            // generateButton.textContent = "Start the Generations";
             console.log(response);
             let generatedText = "";
             generatedText += "<h2>Generated Recipes</h2>";

@@ -2,7 +2,8 @@
 <html>
     
     <head>
-        <title>Ingredient Selection</title>
+        <title>DISH DETECTIVE</title>
+        <link rel="icon" href="{{ url_for('static',filename='saved.svg') }}">
         <link rel="stylesheet"
               type="text/css"
               href="{{ url_for('static',filename='styles/style.css') }}">
@@ -39,7 +40,7 @@
         <div class="page page2">
 
             <div class="tab">
-                <button class="tablinks" onclick="openCity(event, 'Retrieval')">Retrieval</button>
+                <button id = "default" class="tablinks" onclick="openCity(event, 'Retrieval')">Retrieval</button>
                 <button class="tablinks" onclick="openCity(event, 'Generation')">Generation</button>
             </div>
             
@@ -77,7 +78,7 @@
             
             <div id="Generation" class="tabcontent">
 
-                <button onclick="generation()">Start the Generation</button>
+                <button id = "gen-button" class = "button-17" onclick="generation()">Start the Generation</button>
                 <div id="generated-recipes"></div>
             </div>
 
