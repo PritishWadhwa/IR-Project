@@ -37,6 +37,18 @@ ingredients.forEach(ingredient => {
 
         // Add or remove selected ingredients from the right-hand side
         const selectedIngredientItem = document.createElement('li');
+        selectedIngredientItem.addEventListener('click', ()=> {
+            ingredient.classList.toggle('selected');
+            const selectedIngredientItems = selectedIngredients.querySelectorAll('li');
+            selectedIngredientItems.forEach(selectedIngredientItem => {
+                if (selectedIngredientItem.textContent === `${category}: ${ingredientName}`) {
+                    selectedIngredientItem.remove();
+                }
+            });
+            query_ingredients.splice(query_ingredients.indexOf(ingredientName), 1);
+            
+            console.log(query_ingredients)
+        });
         selectedIngredientItem.textContent = `${category}: ${ingredientName}`;
 
         if (ingredient.classList.contains('selected')) {
