@@ -51,6 +51,7 @@ ingredients.forEach(ingredient => {
                 }
             });
             query_ingredients.splice(query_ingredients.indexOf(ingredientName), 1);
+            
             console.log(query_ingredients)
         }
         currentPage = 1
@@ -256,6 +257,22 @@ searchInput.addEventListener('input', () => {
         }
     });
 });
+
+function clearAll(){
+    const selectedIngredientItems = selectedIngredients.querySelectorAll('li');
+    selectedIngredientItems.forEach(selectedIngredientItem => {
+        selectedIngredientItem.remove();
+    });
+    ingredients.forEach(ingredient => {
+        if(ingredient.classList.contains('selected')){
+            ingredient.classList.toggle('selected');
+        }
+        else{
+            query_ingredients.splice(query_ingredients.indexOf(ingredient.textContent), 1);
+        }
+    });
+
+}
 
 function openCity(evt, cityName) {
     // Declare all variables
