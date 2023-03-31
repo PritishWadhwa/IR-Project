@@ -73,6 +73,23 @@ body {
 	cursor: pointer;
 }
 
+.view-more-btn {
+	display: inline-block;
+	padding: 5px 10px;
+	border: 1px solid #ccc;
+	border-radius: 20px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	cursor: pointer;
+
+	background-color: #c1c9ca;
+
+	font-family: Tahoma, sans-serif;
+	font-size: 16px;
+	line-height: 1.5;
+	color: #333;
+}
+
 .selected {
 	background-color: green;
 	color: white;

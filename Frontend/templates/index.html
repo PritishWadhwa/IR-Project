@@ -27,9 +27,16 @@
                     <div class="category">
                         <h2 class="category-name">{{ category.name }}</h2>
                         <div class="category-ingredients">
-                            {% for ingredient in category.ingredients %}
-                            <div class="ingredient">{{ ingredient }}</div>
+                            {% for ingredient in category.ingredients[:5] %}
+                                <div class="ingredient">{{ ingredient }}</div>
                             {%endfor%}
+
+                            {% for ingredient in category.ingredients[5:] %}
+                                <div class="ingredient" style="display: none;">{{ ingredient }}</div>
+                            {%endfor%}
+
+                            <button class="view-more-btn">View More   <i class="fas fa-angle-right"></i></button>
+
                         </div>
                     </div>
                 </div>

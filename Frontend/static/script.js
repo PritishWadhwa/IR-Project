@@ -3,6 +3,7 @@ const categories = document.querySelectorAll('.category');
 const selectedIngredients = document.getElementById('selected-ingredients');
 const searchInput = document.getElementById('search-input');
 const modal = document.getElementById("myModal");
+const vmbuttons = document.querySelectorAll('.view-more-btn');
 document.getElementById("default").click();
 // Set the number of items per page and the initial page
 const itemsPerPage = 10;
@@ -23,6 +24,32 @@ const paginationLinksNext = document.getElementById("pagination-link-next");
 
 let max = 1;
 let query_ingredients = [];
+
+// View More buttons
+vmbuttons.forEach(function(button){
+    button.addEventListener('click', function(){
+        const parentDiv = button.parentNode;
+        if(button.textContent === "View More   "){
+            const childDivs = parentDiv.querySelectorAll('.ingredient');
+            const extras = Array.prototype.slice.call(childDivs, 5); // get all except the first 5
+
+            extras.forEach(function(childDiv){
+                childDiv.style.display = 'inline-block'; // Make visible
+            });
+            button.innerHTML = '<i class="fas fa-angle-left"></i>   View Less';
+            
+        }
+        else{
+            const childDivs = parentDiv.querySelectorAll('.ingredient');
+            const extras = Array.prototype.slice.call(childDivs, 5); // get all except the first 5
+
+            extras.forEach(function(childDiv){
+                childDiv.style.display = 'none'; // Make invisible
+            });            
+            button.innerHTML = 'View More   <i class="fas fa-angle-right"></i>';
+        }
+    });
+});
 
 // selecting ingredients
 ingredients.forEach(ingredient => {
