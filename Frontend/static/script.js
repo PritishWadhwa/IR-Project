@@ -153,7 +153,7 @@ function getRecipes()
                         <div class="recipe-info" >
                             <h2 class="recipe-name" id = "recipe-name">`+ recipe.Name + `</h2>
                             <div class="recipe-details">
-                                <p class="prep-time" id = "prep-time"><i class="fas fa-clock"></i> Prep Time:<br>`+ recipe['Total:'] + `</p>
+                                <p class="prep-time" id = "prep-time"><i class="fas fa-clock"></i> Total Time:<br>`+ recipe['Total:'] + `</p>
                                 <p class="servings" id = 'servings'><i class="fas fa-utensils"></i> Servings:<br>`+ recipe.Yield + `</p>
                                 <p class="level" id = 'level'><i class="fas fa-star"></i> Level:<br>`+ recipe['Level:'] + `</p>
                                 <button class="view-recipe-btn" id = 'view-recipe' onclick = "viewRecipeClicked(`+ recipe.id +`)"> View Recipe </button>
@@ -184,6 +184,10 @@ function viewRecipeClicked (recipe_id)
             $.each(response.Method, function(index, method) {
                 methodHtml+= '<li>' + method + '</li>'
             });
+            let nutritionHtml = "";
+            for (const key in response.NutritionInfo) {
+                nutritionHtml += '<li>' + `${key}: ${response.NutritionInfo[key]}` + '</li>'
+            }
             $("#myModalShit").empty();
             let modalShit ="";
             modalShit+=`<div class="modal-header">
@@ -194,24 +198,19 @@ function viewRecipeClicked (recipe_id)
                     <div class="col-md-6">
                         <img id = 'recipe-image' src="`+ response['Image Link']+ `" alt="" class="recipe-image-modal">
                     </div>
+                    <br>
                     <div class="col-md-6">
-                        <div class = "recipe-details-modal"> 
-                            <table class="table">
-                                <tbody>
-                                <tr>
-                                    <td>Cooking Time</td>
-                                    <td id = 'cooking-time'>`+response['Total:'] + `</td>
-                                </tr>
-                                <tr>
-                                    <td>Yield</td>
-                                    <td id = 'yield'>`+response['Yield'] + `</td>
-                                </tr>
-                                <tr>
-                                    <td>Recipe Level</td>
-                                    <td id = "recipe-level">`+response['Level:'] + `</td>
-                                </tr>
-                                </tbody>
-                            </table>
+                        <p><strong>Total Time:</strong> `+response['Total:'] + `</p>
+                        <p><strong>Yield:</strong> `+response['Yield'] + `</p> 
+                        <p><strong>Difficulty Level:</strong> `+response['Level:'] + `</p>
+                    </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class = "nutrition-list-modal">
+                            <h2>Nutritional Information</h2>
+                            <ul id ='nutrition'>`+ nutritionHtml + `</ul>
                         </div>
                     </div>
                 </div>
@@ -225,7 +224,7 @@ function viewRecipeClicked (recipe_id)
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <div class = "method-details-modal">
+                        <div class = "method-list-modal">
                             <h2>Method</h2>
                             <ol id = 'methods'>`+ methodHtml + `</ol>
                         </div>

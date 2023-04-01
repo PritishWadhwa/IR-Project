@@ -62,7 +62,7 @@ def fetchRecipe(recipe_id):
     recipe_id = int(recipe_id)
     recipe = dataframe[dataframe['id'] == recipe_id].to_dict(orient='records')[
         0]
-    recipe['Nutrition Info'] = ast.literal_eval(recipe['Nutrition Info'])
+    recipe['NutritionInfo'] = ast.literal_eval(recipe['Nutrition Info'])
     recipe['Method'] = ast.literal_eval(recipe['Method'])
     recipe['ingredients_phrase'] = ast.literal_eval(
         recipe['ingredients_phrase'])

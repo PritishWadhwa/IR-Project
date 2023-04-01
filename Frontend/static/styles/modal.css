@@ -13,9 +13,12 @@
 }
 
 .recipe-image-modal {
-	width: 100%;
+	width: 50%;
 	height: auto;
 	margin-bottom: 20px;
+  border: 1px solid black;
+  display: block;
+  margin: auto;
   }
   
   /* Recipe Title */
@@ -50,20 +53,36 @@
   
   }
   
-  /* Ingredient List */
-  .ingredient-list-modal {
-	margin-bottom: 20px;
+/* Nutrition List */
+.nutrition-list-modal {
+	margin-bottom: 10px;
+  }
+
+  .nutrition-list-modal ul {
+    list-style-type: circle;
+	margin: 0;
+	padding: 7;
   }
   
+  .nutrition-list-modal ul li {
+	font-size: 18px;
+	margin-bottom: 5px;
+  }
+
+  /* Ingredient List */
+  .ingredient-list-modal {
+	margin-bottom: 10px;
+  }
+
   .ingredient-list-modal ul {
-  list-style-type: upper-roman;
+    list-style-type: circle;
 	margin: 0;
-	padding: 0;
+	padding: 7;
   }
   
   .ingredient-list-modal ul li {
 	font-size: 18px;
-	margin-bottom: 10px;
+	margin-bottom: 5px;
   }
   
   /* Method List */
@@ -72,11 +91,11 @@
   }
   
   .method-list-modal ol {
-	list-style-type: decimal;
-	margin: 0;
-	padding: 0;
-  }
-  
+    list-style-type: decimal;
+    margin: 0;
+    padding: 10;
+    }
+
   .method-list-modal ol li {
 	font-size: 18px;
 	margin-bottom: 10px;
