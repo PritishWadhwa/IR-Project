@@ -6,7 +6,6 @@ import generation
 import pickle
 imported = None
 
-
 sys.path.insert(0, '../Backend')  # Add the path to the query python code
 
 app = Flask(__name__)
