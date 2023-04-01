@@ -22,6 +22,14 @@
                            id="search-input"
                            placeholder="Search ingredients...">
                 </div>
+
+                <div id = "sel">
+                    <div class="category-ingredients" id="selectedings">
+                        <h2>Selected Ingredients</h2>
+                    </div>
+                    <button class="clear-all-button" onclick="clearAll(event, 'Generation')">Clear All <i class="far fa-trash-can"></i></button>
+                </div>
+
                 {% for category in categories %}
                 <div class="categories">
                     <div class="category">
@@ -49,8 +57,6 @@
             <div class="tab">
                 <button id = "default" class="tablinks" onclick="openCity(event, 'Retrieval')">Retrieval</button>
                 <button class="tablinks" onclick="openCity(event, 'Generation')">Generation</button>
-                <button onclick="clearAll(event, 'Generation')">Clear All</button>
-
             </div>
             
             <!-- Tab content -->
@@ -79,7 +85,6 @@
                             </select>
                         </div>
                     </div>
-                    <div id="selected-ingredients"></div>
                     <div id ='recipes'></div>
                     <div id="pagination"></div>
                 </div>

@@ -1,9 +1,10 @@
 const ingredients = document.querySelectorAll('.ingredient');
 const categories = document.querySelectorAll('.category');
-const selectedIngredients = document.getElementById('selected-ingredients');
+const selectedIngredients = document.getElementById('selectedings');
 const searchInput = document.getElementById('search-input');
 const modal = document.getElementById("myModal");
 const vmbuttons = document.querySelectorAll('.view-more-btn');
+const selsel = document.getElementById("sel");
 document.getElementById("default").click();
 // Set the number of items per page and the initial page
 const itemsPerPage = 10;
@@ -63,29 +64,37 @@ ingredients.forEach(ingredient => {
         const ingredientName = ingredient.textContent;
 
         // Add or remove selected ingredients from the right-hand side
-        const selectedIngredientItem = document.createElement('li');
+        const selectedIngredientItem = document.createElement('div');
+        selectedIngredientItem.classList.add("ingredient", "selected", "selected-ingredients");
         selectedIngredientItem.addEventListener('click', ()=> {
             ingredient.classList.toggle('selected');
-            const selectedIngredientItems = selectedIngredients.querySelectorAll('li');
+            const selectedIngredientItems = selectedIngredients.querySelectorAll('div');
             selectedIngredientItems.forEach(selectedIngredientItem => {
-                if (selectedIngredientItem.textContent === `${category}: ${ingredientName}`) {
+                if (selectedIngredientItem.textContent === ingredientName) {
                     selectedIngredientItem.remove();
                 }
             });
             query_ingredients.splice(query_ingredients.indexOf(ingredientName), 1);
             
+            if(query_ingredients.length == 0) {
+                selsel.style.display = 'none'; 
+            }
+
+            currentPage = 1
+            getRecipes();
+
             console.log(query_ingredients)
         });
-        selectedIngredientItem.textContent = `${category}: ${ingredientName}`;
+        selectedIngredientItem.textContent =  ingredientName;
 
         if (ingredient.classList.contains('selected')) {
             selectedIngredients.appendChild(selectedIngredientItem);
             query_ingredients.push(ingredientName);
             console.log(query_ingredients)
         } else {
-            const selectedIngredientItems = selectedIngredients.querySelectorAll('li');
+            const selectedIngredientItems = selectedIngredients.querySelectorAll('div');
             selectedIngredientItems.forEach(selectedIngredientItem => {
-                if (selectedIngredientItem.textContent === `${category}: ${ingredientName}`) {
+                if (selectedIngredientItem.textContent === ingredientName) {
                     selectedIngredientItem.remove();
                 }
             });
@@ -93,6 +102,14 @@ ingredients.forEach(ingredient => {
             
             console.log(query_ingredients)
         }
+
+        if(query_ingredients.length == 0) {
+            selsel.style.display = 'none';
+        }
+        else{
+            selsel.style.display = 'inline-block';
+        }
+
         currentPage = 1
         getRecipes();
         
@@ -210,7 +227,7 @@ function viewRecipeClicked (recipe_id)
                     <div class="col-md-12">
                         <div class = "nutrition-list-modal">
                             <h2>Nutritional Information</h2>
-                            <ul id ='nutrition'>`+ nutritionHtml + `</ul>
+                            <ul id ='nutrition' style="column-count: 2;">`+ nutritionHtml + `</ul>
                         </div>
                     </div>
                 </div>
@@ -218,7 +235,7 @@ function viewRecipeClicked (recipe_id)
                     <div class="col-md-12">
                         <div class = "ingredient-list-modal">
                             <h2>Ingredients</h2>
-                            <ul id ='ingredients'>`+ ingredientHtml + `</ul>
+                            <ul id ='ingredients' style="column-count: 2;">`+ ingredientHtml + `</ul>
                         </div>
                     </div>
                 </div>
@@ -297,7 +314,7 @@ searchInput.addEventListener('input', () => {
 });
 
 function clearAll(){
-    const selectedIngredientItems = selectedIngredients.querySelectorAll('li');
+    const selectedIngredientItems = selectedIngredients.querySelectorAll('div');
     selectedIngredientItems.forEach(selectedIngredientItem => {
         selectedIngredientItem.remove();
     });
@@ -310,6 +327,12 @@ function clearAll(){
         }
     });
 
+    if(query_ingredients.length == 0) {
+        selsel.style.display = 'none';
+    }
+
+    currentPage = 1;
+    getRecipes();
 }
 
 function openCity(evt, cityName) {

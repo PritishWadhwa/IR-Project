@@ -12,6 +12,18 @@
   background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
+.table {
+  border: 1px solid black;
+  padding: 5;
+  margin-bottom: 10px;
+}
+
+tr, td {
+  border: 1px solid black;
+  padding: 5;
+  margin-bottom: 10px;
+}
+
 .recipe-image-modal {
 	width: 50%;
 	height: auto;
@@ -58,7 +70,7 @@
 	margin-bottom: 10px;
   }
 
-  .nutrition-list-modal ul {
+ .nutrition-list-modal ul {
     list-style-type: circle;
 	margin: 0;
 	padding: 7;

@@ -11,7 +11,7 @@ body {
 .header {
 	background-color: #82bddd;
 	color: #fff;
-	padding: 5px;
+	padding: 1px;
 	padding-left: 10px;
 }
 
@@ -83,6 +83,23 @@ body {
 	cursor: pointer;
 
 	background-color: #c1c9ca;
+
+	font-family: Tahoma, sans-serif;
+	font-size: 16px;
+	line-height: 1.5;
+	color: #333;
+}
+
+.clear-all-button {
+	display: inline-block;
+	padding: 5px 10px;
+	border: 1px solid #ccc;
+	border-radius: 20px;
+	margin-right: 10px;
+	margin-bottom: 10px;
+	cursor: pointer;
+
+	background-color: #bcecd4;
 
 	font-family: Tahoma, sans-serif;
 	font-size: 16px;
@@ -311,14 +328,27 @@ select:focus {
 #sort-by {
 	width: 150px;
 }
+
+#sel {
+	display: none;
+}
+
+#sel {
+	background-color: #d1d6d7;
+	margin: 0% auto; /* 15% from the top and centered */
+	padding: 15px;
+	border: 1px solid #6f6f6f;
+	width: 90%; /* Could be more or less, depending on screen size */
+}
   
   /* Modal Content/Box */
 .modal-content {
-	background-color: #fefefe;
+	display: inline-block;
+	background-color: #eef6f6;
 	margin: 15% auto; /* 15% from the top and centered */
 	padding: 20px;
-	border: 1px solid #888;
-	width: 80%; /* Could be more or less, depending on screen size */
+	border: 2px solid #585757;
+	width: 60%; /* Could be more or less, depending on screen size */
 }
   
   /* The Close Button */
