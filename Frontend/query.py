@@ -26,6 +26,14 @@ dataframe.fillna(fn, inplace=True)
 with open('../Backend/Saved/ingredients_supercook_for_flask', 'rb') as f:
     categories = pickle.load(f)
 
+for cat_dict in categories:
+    to_remove = []
+    for ing in cat_dict['ingredients']:
+        if ing not in set(unigramIndex.keys()):
+            to_remove.append(ing)
+    for ing in to_remove:
+        cat_dict['ingredients'].remove(ing)
+
 
 def OR(list1, list2):
     i = 0
