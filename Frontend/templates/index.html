@@ -3,7 +3,7 @@
     
     <head>
         <title>DISH DETECTIVE</title>
-        <link rel="icon" href="{{ url_for('static',filename='saved.svg') }}">
+        <link rel="icon" href="{{ url_for('static',filename='logo.png') }}">
         <link rel="stylesheet"
               type="text/css"
               href="{{ url_for('static',filename='styles/style.css') }}">
@@ -73,7 +73,10 @@
                     </div>
                 </div>
 
-                <div class="content" id = "TOP_OF_PAGE">
+                <div class = "content" id = "zero_recipes" style="display: block">
+                    <h1>Sorry, no recipes found!</h1>
+                </div>
+                <div class="content" id = "TOP_OF_PAGE" style="display: none">
                     <div class="recipe-header">
                         <h1>Recipes</h1>
                         <div class="recipe-sort">
@@ -92,10 +95,12 @@
             
             <div id="Generation" class="tabcontent">
 
+                <div>
                 <button id = "gen-button" class = "button-17" onclick="generation()">Start the Generation</button>
+                </div>
                 <div id="generated-recipes"></div>
             </div>
-
+            
             
         </div>
         <!-- <script src="https://kit.fontawesome.com/12f77b715a.js"

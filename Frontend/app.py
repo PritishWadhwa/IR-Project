@@ -4,6 +4,7 @@ from flask import Flask, render_template, request
 from flask import request, jsonify
 import generation
 import pickle
+import audio
 imported = None
 
 sys.path.insert(0, '../Backend')  # Add the path to the query python code
@@ -34,6 +35,14 @@ def generate():
     list_ingredients = data['ingredients']
     generationResult = generation.generate_recipe(list_ingredients)
     return jsonify(generationResult)
+
+
+@app.route('/text-to-audio', methods=['POST'])
+def text_to_audio():
+    text = request.form.get('text')
+    print("In app.py", text)
+    url = audio.text_to_audio(text)
+    return jsonify(url)
 
 
 @app.route('/suggest-recipe', methods=['POST'])

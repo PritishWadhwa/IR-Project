@@ -1,11 +1,13 @@
 const ingredients = document.querySelectorAll('.ingredient');
-const categories = document.querySelectorAll('.category');
+const categories = document.querySelectorAll('.categories');
 const selectedIngredients = document.getElementById('selectedings');
 const searchInput = document.getElementById('search-input');
 const modal = document.getElementById("myModal");
 const vmbuttons = document.querySelectorAll('.view-more-btn');
 const selsel = document.getElementById("sel");
 document.getElementById("default").click();
+const generatedRecipes = document.getElementById('generated-recipes');
+const generateButton = document.getElementById('gen-button');
 // Set the number of items per page and the initial page
 const itemsPerPage = 10;
 let currentPage = 1;
@@ -78,6 +80,12 @@ ingredients.forEach(ingredient => {
             
             if(query_ingredients.length == 0) {
                 selsel.style.display = 'none'; 
+                document.getElementById("zero_recipes").style.display = "block";
+                document.getElementById("TOP_OF_PAGE").style.display = "none";
+            }
+            else{
+                document.getElementById("zero_recipes").style.display = "None";
+                document.getElementById("TOP_OF_PAGE").style.display = "block";
             }
 
             currentPage = 1
@@ -105,9 +113,13 @@ ingredients.forEach(ingredient => {
 
         if(query_ingredients.length == 0) {
             selsel.style.display = 'none';
+            document.getElementById("zero_recipes").style.display = "block";
+            document.getElementById("TOP_OF_PAGE").style.display = "none";
         }
         else{
             selsel.style.display = 'inline-block';
+            document.getElementById("zero_recipes").style.display = "None";
+            document.getElementById("TOP_OF_PAGE").style.display = "block";
         }
 
         currentPage = 1
@@ -329,6 +341,13 @@ function clearAll(){
 
     if(query_ingredients.length == 0) {
         selsel.style.display = 'none';
+        document.getElementById("zero_recipes").style.display = "block";
+        document.getElementById("TOP_OF_PAGE").style.display = "none";
+
+    }
+    else{
+        document.getElementById("zero_recipes").style.display = "None";
+        document.getElementById("TOP_OF_PAGE").style.display = "block";
     }
 
     currentPage = 1;
@@ -354,15 +373,44 @@ function openCity(evt, cityName) {
     // Show the current tab, and add an "active" class to the button that opened the tab
     document.getElementById(cityName).style.display = "block";
     evt.currentTarget.className += " active";
-  }
-  
-const generatedRecipes = document.getElementById('generated-recipes');
-const generateButton = document.getElementById('gen-button');
+    if(cityName == "Generation")
+    {
+        generatedRecipes.innerHTML = "";
+    }
+}
+
+
+function text_to_audio(text){
+    $.ajax({
+        url: '/text-to-audio' ,
+        method: 'POST',
+        data: {text: text},
+        success: function(response) {
+            console.log("Doneee!!!");
+            console.log(response);
+            if(response == "Error"){
+                alert("Error");
+            }
+            else{
+                var audio = new Audio(response);
+                audio.play();
+            }
+        },
+    
+        });
+    }
+
+
+
 function generation() {
-    generateButton.visibility = 'hidden';   
-    // generateButton.textContent = "Generating...";
-    generatedRecipes.innerHTML = '<img src = "./static/Loading.gif", alt = "Loading....">';
-    console.log("generation");
+    generateButton.style.display= 'None';   
+    generatedRecipes.innerHTML = '<img class = "loading" src = "./static/Loading.gif", alt = "Loading....">';
+    if(query_ingredients.length == 0){
+        alert("Please Select Ingredients");
+        generateButton.style.display = 'block';
+        generatedRecipes.innerHTML = "";
+        return;
+    }
     $.ajax({
         url: '/generate' ,
         method: 'POST',
@@ -370,26 +418,44 @@ function generation() {
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: function(response) {
-            generateButton.visibility = 'visible';
-            // generateButton.textContent = "Start the Generations";
-            console.log(response);
-            let generatedText = "";
-            generatedText += "<h2>Generated Recipes</h2>";
-            generatedText += "<div class='row'>";
             let element = response;
-            // for (const element of response) {
+            generateButton.style.display = 'block';
+            generatedRecipes.innerHTML = "";
+            if (element == "Error"){             
+                alert("OOPS! Could Not Generate Recipe. Please Try Again!");
+            }
+            else{
+            let method_text = "";
+            $.each(element.METHOD, function(index, method) {
+                method_text+=  method + ". "
+            });
+
+            // let audio_text = "TITLE " + element['TITLE'] + ". INGREDIENTS " + element['INGREDIENTS'] + ". METHOD " + method_text;
+            // console.log(audio_text)
+            // let audiobutton =  `<button onclick="text_to_audio('`+ audio_text+`')"><i src = "https://fontawesome.com/icons/audio-description?f=classic&s=solid&pc=%23000000"></i></button>`
+            
+            let audiobutton = ""
+            console.log(response);
+            let generatedText = audiobutton + "";
+            generatedText += "<h1>Generated Recipe</h1>";
+            generatedText += "<div class='generated-recipe'>";
+            generatedText += "<div class='row'>";
+            
                 generatedText += "<div class='col-md-4'>";
-                generatedText += "<h2 class='card-title'>" + element['TITLE'] + "</h2>";
-                generatedText += "<p class='card-text'>" + element['INGREDIENTS'] + "</p>";
+                generatedText += "<h2 class='card-title'>"+ "TITLE: "+ element['TITLE'] + "</h2>";
+                generatedText += "<h3 class='card-title'>"+ "INGREDIENTS"+"</h2>";
+                generatedText += "<h4 class='card-text'>"+ element['INGREDIENTS'] + "</h4>";
                 let methodHtml = "";
                 $.each(element.METHOD, function(index, method) {
                     methodHtml+= '<li>' + method + '</li>'
                 });
+                generatedText += "<h3 class='card-title'>"+ "METHOD"+"</h2>";
                 generatedText += "<ul>" + methodHtml + "</ul>";
                 generatedText += "</div>";
-            // }
-            generatedText += "/<div>";
-            generatedRecipes.innerHTML = generatedText
+            generatedText += "</div>";
+            generatedText += "</div>";
+            generatedRecipes.innerHTML = generatedText;
+            }
         }
     });
 }
@@ -416,4 +482,4 @@ function scrollSmoothTo() {
       block: 'start',
       behavior: 'smooth'
     });
-  }
+}
