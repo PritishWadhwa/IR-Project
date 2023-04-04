@@ -4,7 +4,7 @@ from flask import Flask, render_template, request
 from flask import request, jsonify
 import generation
 import pickle
-import audio
+import image
 imported = None
 
 sys.path.insert(0, '../Backend')  # Add the path to the query python code
@@ -46,6 +46,14 @@ def suggest_recipe():
     # Querying database of recipes using index
     recipes = query.fetchRecipes(list_ingredients, page)
     return jsonify(recipes)
+
+
+@app.route('/generate_image', methods=['POST'])
+def generate_image():
+    data = request.get_json()
+    text = data['text']
+    url = image.get_image_url(text)
+    return jsonify(url)
 
 
 @app.route('/recipe', methods=['POST'])
