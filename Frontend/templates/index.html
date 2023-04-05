@@ -13,6 +13,21 @@
         <div class="header">
             <h1>Dish Detective</h1>
         </div>
+
+        <link rel="stylesheet"
+            type="text/css"
+            href="{{ url_for('static',filename='styles/modal.css') }}">
+
+        <div id="myModal" class="modal" style="display: none">
+            <!-- Modal content -->
+            <div class="modal-content">
+                <div class = "col-md-2">
+                    <span class="close" id = 'close'>&times;</span>
+                    <div id = 'myModalShit'></div>
+                </div>
+            </div>
+        </div>
+
         <div class="page page1">
 
             <div class="content">
@@ -61,20 +76,7 @@
             
             <!-- Tab content -->
             <div id="Retrieval" class="tabcontent">
-                <link rel="stylesheet"
-                      type="text/css"
-                      href="{{ url_for('static',filename='styles/modal.css') }}">
-
-                <div id="myModal" class="modal" style="display: none">
-                    <!-- Modal content -->
-                    <div class="modal-content">
-                        <div class = "col-md-2">
-                            <span class="close" id = 'close'>&times;</span>
-                            <div id = 'myModalShit'></div>
-                        </div>
-                    </div>
-                </div>
-
+            
                 <div class = "content" id = "zero_recipes" style="display: block">
                     <h1>Sorry, no recipes found!</h1>
                 </div>
