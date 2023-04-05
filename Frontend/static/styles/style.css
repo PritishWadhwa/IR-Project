@@ -364,7 +364,14 @@ select:focus {
 	padding: 20px;
 	border: 2px solid #585757;
 }
-  
+
+.speak-button{
+	border-radius: 12px;
+	background-color:  green;
+	color: white;
+	border:  green;
+	font-family: Arial, sans-serif;
+}
   /* The Close Button */
 .close {
 	color: #aaa;

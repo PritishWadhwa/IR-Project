@@ -8,6 +8,13 @@ const selsel = document.getElementById("sel");
 document.getElementById("default").click();
 const generatedRecipes = document.getElementById('generated-recipes');
 const generateButton = document.getElementById('gen-button');
+// Create an audio element and set its src attribute to the MediaSource URL
+const audio = document.createElement('audio');
+// Add the audio element to the HTML page
+document.body.appendChild(audio);
+
+
+
 // Set the number of items per page and the initial page
 const itemsPerPage = 10;
 let currentPage = 1;
@@ -206,30 +213,44 @@ function viewRecipeClicked (recipe_id)
         data: { id: recipe_id},
         success: function(response) {
             let ingredientHtml = "";
+            let ingredient_speak = ""
             $.each(response.ingredients_phrase, function(index, ingredient) {
-                ingredientHtml+= '<li>' + ingredient + '</li>'
+                ingredientHtml+= '<li>' + ingredient + '</li>';
+                ingredient_speak += ingredient + ". ";
             });
             let methodHtml = "";
+            let method_speak = ""
             $.each(response.Method, function(index, method) {
                 methodHtml+= '<li>' + method + '</li>'
+                method_speak += method + ". ";
             });
             let nutritionHtml = "";
             for (const key in response.NutritionInfo) {
                 nutritionHtml += '<li>' + `${key}: ${response.NutritionInfo[key]}` + '</li>'
             }
 
-            let audio_text = response.Name;
-            audio_text = encodeURIComponent(audio_text)
-            audio_text = audio_text.replace("'", "");
+            // The title audio-button
+            let audio_text1 = response.Name;
+            audio_text1 = encodeURIComponent(audio_text1)
+            audio_text1 = audio_text1.replace("'", "");
+            let audiobutton1 =  `<button class ="speak-button" onclick="text_to_audio(this,'`+ audio_text1+`')">Speak  <i class = "fas fa-play"></i></button>`
 
-            console.log(audio_text);
-            let audiobutton =  `<button onclick="text_to_audio(this,'`+ audio_text+`')">Speak  <i class = "fas fa-play"></i></button>`
+            let audio_text2 = ingredient_speak;
+            audio_text2 = encodeURIComponent(audio_text2)
+            audio_text2 = audio_text2.replace("'", "");
+            let audiobutton2 =  `<button class ="speak-button" onclick="text_to_audio(this,'`+ audio_text2+`')">Speak  <i class = "fas fa-play"></i></button>`
+
+            let audio_text3 = method_speak;
+            audio_text3 = encodeURIComponent(audio_text3)
+            audio_text3 = audio_text3.replace("'", "");
+            let audiobutton3 =  `<button class ="speak-button" onclick="text_to_audio(this,'`+ audio_text3+`')">Speak  <i class = "fas fa-play"></i></button>`
+
 
             $("#myModalShit").empty();
             let modalShit ="";
             modalShit+=`<div class="modal-header">
                 <h5 class="recipe-title-modal" id="modal-title">`+ response.Name +`</h5>`
-                +audiobutton+
+                +audiobutton1+
                 `
             </div>
             <div class="modal-body" id = 'modal-body'>
@@ -256,7 +277,7 @@ function viewRecipeClicked (recipe_id)
                 <div class="row">
                     <div class="col-md-12">
                         <div class = "ingredient-list-modal">
-                            <h2>Ingredients</h2>
+                            <h2>Ingredients</h2> `+audiobutton2+`
                             <ul id ='ingredients' style="column-count: 2;">`+ ingredientHtml + `</ul>
                         </div>
                     </div>
@@ -264,7 +285,7 @@ function viewRecipeClicked (recipe_id)
                 <div class="row">
                     <div class="col-md-12">
                         <div class = "method-list-modal">
-                            <h2>Method</h2>
+                            <h2>Method</h2> `+audiobutton3+`
                             <ol id = 'methods'>`+ methodHtml + `</ol>
                         </div>
                     </div>
@@ -393,10 +414,9 @@ function openCity(evt, cityName) {
 
 function text_to_audio(button, text){
 
-    console.log("Here "+text);
-    console.log(button)
     button.innerHTML = "Loading...";
-    fetch("https://voicerss-text-to-speech.p.rapidapi.com?key=d6ac55a8d1864495bee3b68a22f214d0&src=" + text +"&hl=en-us&r=0&c=mp3&f=8khz_8bit_stereo",
+    button.disabled = true;
+    fetch("https://voicerss-text-to-speech.p.rapidapi.com?key=d6ac55a8d1864495bee3b68a22f214d0&src=" + text +"&hl=en-us&r=0&c=mp3&v=Nancy&f=8khz_8bit_stereo",
     {
     "method": "GET",
     "headers": {
@@ -409,12 +429,10 @@ function text_to_audio(button, text){
         // Create a new MediaSource object
         const mediaSource = new MediaSource();
       
-        // Create an audio element and set its src attribute to the MediaSource URL
-        const audio = document.createElement('audio');
+        
         audio.src = URL.createObjectURL(mediaSource);
       
-        // Add the audio element to the HTML page
-        document.body.appendChild(audio);
+        
       
         // Wait for the MediaSource to open
         mediaSource.addEventListener('sourceopen', () => {
@@ -438,16 +456,14 @@ function text_to_audio(button, text){
             });
           }
           read();
-            console.log("here");
-            console.log(button);
-            button.innerHTML = "Speak " + '<i class = "fas fa-play"></i>';
-            console.log("here2");
-            console.log(button);
 
+            button.innerHTML = "Speak " + '<i class = "fas fa-play"></i>';
+            button.disabled = false;
         });
       })
       .catch(err => {
         console.log(err);
+        alert("Error: " + err);
       });
       
       
@@ -500,8 +516,12 @@ async function generation() {
             });
             
 
-            // let audio_text = "TITLE " + element['TITLE'] + ". INGREDIENTS " + element['INGREDIENTS'] + ". METHOD " + method_text;
-            // console.log(audio_text)
+            let audio_text = "TITLE " + element['TITLE'] + ". INGREDIENTS " + element['INGREDIENTS'] + ". METHOD " + method_text;
+            audio_text = encodeURIComponent(audio_text)
+            audio_text = audio_text.replace("'", "");
+
+            let audiobutton =  `<button class ="speak-button" onclick="text_to_audio(this,'`+ audio_text+`')">Speak  <i class = "fas fa-play"></i></button>`
+
             
             let generatedText = "";
             generatedText += "<h1>Generated Recipe</h1>";
@@ -509,7 +529,7 @@ async function generation() {
             let methodHtml = "";
             $.each(element.METHOD, function(index, method) {
                 methodHtml+= '<li>' + method + '</li>'});
-            
+            generatedText += audiobutton;
             let generationPrompt = "'" + element['TITLE'] + "'";
             generatedText+= `<div class="recipe-card">
                                 <div class="recipe-image" id = "generated-image">
@@ -527,6 +547,7 @@ async function generation() {
             generatedRecipes.innerHTML = generatedText;
             
             const result = await get_image(generationPrompt);
+
             }
         }
     });
