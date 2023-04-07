@@ -173,7 +173,7 @@ function getRecipes()
                 // console.log(recipe)
                 let inner_list = 
                 `<div class="recipe-ingredients">
-                    <div class="ingredient-set">`;
+                    <div class="ingredient-set"> <p style = 'display: inline-block; color: rgb(100, 100, 100);'>Matched Ingredients:&nbsp;&nbsp;</p>`;
                 $.each(recipe.common, function(index, ing) {
                     inner_list+= '<span class="ingredient-bubble green">'+ing + '</span>';
                 });    
@@ -189,9 +189,9 @@ function getRecipes()
                         <div class="recipe-info" >
                             <h2 class="recipe-name" id = "recipe-name">`+ recipe.Name + `</h2>
                             <div class="recipe-details">
-                                <p class="prep-time" id = "prep-time"><i class="fas fa-clock"></i> Total Time:<br>`+ recipe['Total:'] + `</p>
-                                <p class="servings" id = 'servings'><i class="fas fa-utensils"></i> Servings:<br>`+ recipe.Yield + `</p>
-                                <p class="level" id = 'level'><i class="fas fa-star"></i> Level:<br>`+ recipe['Level:'] + `</p>
+                                <p style = 'color: rgb(100, 100, 100);' class="prep-time" id = "prep-time"><i class="fas fa-clock"></i> Total Time:<br>`+ recipe['Total:'] + `</p>
+                                <p style = 'color: rgb(100, 100, 100);' class="servings" id = 'servings'><i class="fas fa-utensils"></i> Servings:<br>`+ recipe.Yield + `</p>
+                                <p style = 'color: rgb(100, 100, 100);' class="level" id = 'level'><i class="fas fa-star"></i> Level:<br>`+ recipe['Level:'] + `</p>
                                 <button class="view-recipe-btn" id = 'view-recipe' onclick = "viewRecipeClicked(`+ recipe.id +`)"> View Recipe </button>
                             </div>` + 
                             inner_list +
@@ -308,52 +308,81 @@ span.onclick = function() {
 }
 
 // search input
-searchInput.addEventListener('input', () => {
-    const searchText = searchInput.value.toLowerCase().trim();
+// searchInput.addEventListener('input', () => {
+//     const searchText = searchInput.value.toLowerCase().trim();
 
-    ingredients.forEach(ingredient => {
-        const ingredientName = ingredient.textContent.toLowerCase();
+//     ingredients.forEach(ingredient => {
+//         const ingredientName = ingredient.textContent.toLowerCase();
 
-        if (ingredientName.includes(searchText)) {
-            ingredient.style.display = 'inline-block';
-        } else {
-            ingredient.style.display = 'none';
-        }
-    });
-});
+//         if (ingredientName.includes(searchText)) {
+//             ingredient.style.display = 'inline-block';
+//         } else {
+//             ingredient.style.display = 'none';
+//         }
+//     });
+
+
+// });
 
 // search input
 searchInput.addEventListener('input', () => {
     const searchText = searchInput.value.toLowerCase().trim();
 
-    categories.forEach(category => {
-        const categoryName = category.querySelector('.category-name').textContent.toLowerCase();
-        const ingredients = category.querySelectorAll('.ingredient');
-        let isCategoryMatched = categoryName.includes(searchText);
-        let isIngredientMatched = false;
+    if(searchText == '') { // go back to default display
+        categories.forEach(category => {
+            const ingredients = category.querySelectorAll('.ingredient');
+            const firstfive = Array.prototype.slice.call(ingredients, 0, 5); // get the first five
+            const extras = Array.prototype.slice.call(ingredients, 5); // get all except the first 5
 
-        ingredients.forEach(ingredient => {
-            const ingredientName = ingredient.textContent.toLowerCase();
-            if (ingredientName.includes(searchText)) {
-                isIngredientMatched = true;
-                ingredient.style.display = 'inline-block';
+            firstfive.forEach(function(childDiv){
+                childDiv.style.display = 'inline-block'; // Make visible
+            }); 
+
+            extras.forEach(function(childDiv){
+                childDiv.style.display = 'none'; // Make invisible
+            }); 
+        });
+
+        vmbuttons.forEach(button => {
+            button.innerHTML = 'View More   <i class="fas fa-angle-right"></i>';
+            button.style.display = 'inline-block';
+        });
+
+    }
+    else {
+        categories.forEach(category => {
+            const categoryName = category.querySelector('.category-name').textContent.toLowerCase();
+            const ingredients = category.querySelectorAll('.ingredient');
+            let isCategoryMatched = categoryName.includes(searchText);
+            let isIngredientMatched = false;
+    
+            ingredients.forEach(ingredient => {
+                const ingredientName = ingredient.textContent.toLowerCase();
+                if (ingredientName.includes(searchText)) {
+                    isIngredientMatched = true;
+                    ingredient.style.display = 'inline-block';
+                } else {
+                    ingredient.style.display = 'none';
+                }
+            });
+    
+            if (isCategoryMatched || isIngredientMatched) {
+                category.style.display = 'block';
             } else {
-                ingredient.style.display = 'none';
+                category.style.display = 'none';
+            }
+            if (categoryName.includes(searchText)) {
+                category.style.display = 'block';
+                ingredients.forEach(ingredient => {
+                    ingredient.style.display = 'inline-block';
+                });
             }
         });
 
-        if (isCategoryMatched || isIngredientMatched) {
-            category.style.display = 'block';
-        } else {
-            category.style.display = 'none';
-        }
-        if (categoryName.includes(searchText)) {
-            category.style.display = 'block';
-            ingredients.forEach(ingredient => {
-                ingredient.style.display = 'inline-block';
-            });
-        }
-    });
+        vmbuttons.forEach(button => { // make all View More buttons invisible
+            button.style.display = 'none';
+        });
+    }
 });
 
 function clearAll(){

@@ -12,11 +12,11 @@ body {
 .header {
 	background-color: #82bddd;
 	background-image: url('../banner.jpeg');
-
+	border-bottom: 2px solid #4b4b4b;
 	
 	align-items: center;
 	padding: 1px;
-	padding-left: 10px;
+	padding-left: 20px;
 }
 .header h1 {
 	align-self: center;
@@ -45,7 +45,7 @@ body {
 .page1 {
 	width: 30%;
 	float: left;
-	background-color: #f2f2f2;
+	background-color: #c2b1a0;
 }
 
 .page2 {
@@ -55,7 +55,7 @@ body {
 }
 
 .content {
-	padding: 20px;
+	padding: 10px;
 }
 
 .content h1 {
@@ -67,7 +67,7 @@ body {
 	flex-direction: column;
 	background-color: #ffffff;
 	border-radius: 15px;
-	border: 1px solid #d4d1d1;
+	border: 1px solid #4b4b4b;
 	padding: 10px;
 	margin-bottom: 10px;
 }
@@ -82,8 +82,8 @@ body {
 
 .ingredient {
 	display: inline-block;
-	padding: 5px 10px;
-	border: 1px solid #ccc;
+	padding: 5px 7px;
+	border: 1px solid #8f8d8d;
 	border-radius: 20px;
 	margin-right: 10px;
 	margin-bottom: 10px;
@@ -92,8 +92,8 @@ body {
 
 .view-more-btn {
 	display: inline-block;
-	padding: 5px 10px;
-	border: 1px solid #ccc;
+	padding: 2px 5px;
+	border: 1px solid #8f8d8d;
 	border-radius: 20px;
 	margin-right: 10px;
 	margin-bottom: 10px;
@@ -102,24 +102,25 @@ body {
 	background-color: #c1c9ca;
 
 	font-family: Tahoma, sans-serif;
-	font-size: 16px;
+	font-size: 12px;
 	line-height: 1.5;
 	color: #333;
 }
 
 .clear-all-button {
 	display: inline-block;
-	padding: 5px 10px;
-	border: 1px solid #ccc;
+	padding: 2px 5px;
+	border: 1px solid #8f8d8d;
 	border-radius: 20px;
-	margin-right: 10px;
-	margin-bottom: 10px;
+	margin-right: 1px;
+	margin-bottom: 5px;
 	cursor: pointer;
 
-	background-color: #bcecd4;
+	width: 80px;
+	background-color: #c1c9ca;
 
 	font-family: Tahoma, sans-serif;
-	font-size: 16px;
+	font-size: 12px;
 	line-height: 1.5;
 	color: #333;
 }
@@ -140,7 +141,7 @@ body {
 
 #search-input {
 	width: 100%;
-	padding: 10px;
+	padding: 7px;
 	font-size: 16px;
 	border: 1px solid #ccc;
 	border-radius: 20px;
@@ -152,8 +153,9 @@ body {
 	align-items: center;
 	background-color: #fff;
 	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-	margin-bottom: 20px;
-	padding: 20px;
+	margin: 1% 0% 0% 0%;
+	padding: 0px;
+	border: 1px solid #ccc;
 }
 
 .recipe-image {
@@ -161,13 +163,14 @@ body {
 }
 
 .recipe-image img {
-	width: 100%;
+	width: 70%;
 	height: auto;
+	margin-left: 30px;
 }
 
 .recipe-info {
 	flex: 2;
-	margin-left: 20px;
+	margin-left: 2px;
 }
 
 .recipe-name {
@@ -183,7 +186,7 @@ body {
 
 .recipe-time-servings p {
 	margin-right: 20px;
-	font-size: 16px;
+	font-size: 10px;
 }
 
 .recipe-time-servings i {
@@ -204,11 +207,11 @@ body {
 
 .ingredient-bubble {
 	display: inline-block;
-	padding: 5px 10px;
+	padding: 5px 7px;
 	border-radius: 20px;
 	margin-right: 10px;
 	margin-bottom: 10px;
-	font-size: 14px;
+	font-size: 10px;
 	font-weight: bold;
 	text-transform: uppercase;
 	letter-spacing: 1px;
@@ -231,12 +234,12 @@ body {
 	color: #fff;
 	border-radius: 20px;
 	text-decoration: none;
-	font-size: 16px;
+	font-size: 1px;
 	transition: background-color 0.3s ease;
 }
 
 .view-recipe-btn:hover {
-	background-color: pink;
+	background-color: #706926;
 }
 
 .recipe-details {
@@ -246,13 +249,15 @@ body {
 }
 
 .view-recipe-btn {
-	background-color: green;
+	background-color: #a1b330;
 	color: white;
 	border: none;
-	padding: 8px 16px;
-	font-size: 16px;
+	padding: 5px 7px;
+	font-size: 14px;
+	border-radius: 4px;
 	cursor: pointer;
-	margin-left: 20px;
+	margin-left: 10px;
+	margin-right: 20px;
 }
 
 label {
@@ -348,10 +353,10 @@ select:focus {
 
 #sel {
 	display: none;
-	/* flex-direction: row; */
-	background-color: #ffffff;
+/* 	flex-direction: column; */
+	background-color: #e6e6e6;
 	border-radius: 15px;
-	border: 1px solid #d4d1d1;
+	border: 1px solid #4b4b4b;
 	padding: 10px;
 	margin-bottom: 10px;
 }
@@ -359,9 +364,9 @@ select:focus {
 /* Modal Content/Box */
 .modal-content {
 	display: inline-block;
-	background-color: #eef6f6;
+	background-color: #f3efeb;
 	margin: 8% 8% 8% 8%;
-	padding: 20px;
+	padding: 10px;
 	border: 2px solid #585757;
 }
 
@@ -389,7 +394,7 @@ select:focus {
 /* Style the tab */
 .tab {
 	overflow: hidden;
-	background-color: #006f13a1;
+	background-color: #7db180;
 }
   
   /* Style the buttons that are used to open the tab content */
@@ -401,7 +406,7 @@ select:focus {
 	border: none;
 	outline: none;
 	cursor: pointer;
-	padding: 14px 16px;
+	padding: 10px 10px;
 	transition: 0.3s;
 }
   
@@ -425,7 +430,7 @@ select:focus {
   /* Style the tab content */
 .tabcontent {
 	display: none;
-	padding: 6px 12px;
+	padding: 5px 5px;
 	border: 1px solid #ccc;
 	border-top: none;
 	animation: fadeEffect 0.5s; /* Fading effect takes 0.5s second */
@@ -504,4 +509,3 @@ select:focus {
 	margin: 10px;
 	border-width: 1px;
 }
-
