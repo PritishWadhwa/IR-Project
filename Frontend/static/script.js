@@ -189,9 +189,9 @@ function getRecipes()
                         <div class="recipe-info" >
                             <h2 class="recipe-name" id = "recipe-name">`+ recipe.Name + `</h2>
                             <div class="recipe-details">
-                                <p style = 'color: rgb(100, 100, 100);' class="prep-time" id = "prep-time"><i class="fas fa-clock"></i> Total Time:<br>`+ recipe['Total:'] + `</p>
-                                <p style = 'color: rgb(100, 100, 100);' class="servings" id = 'servings'><i class="fas fa-utensils"></i> Servings:<br>`+ recipe.Yield + `</p>
-                                <p style = 'color: rgb(100, 100, 100);' class="level" id = 'level'><i class="fas fa-star"></i> Level:<br>`+ recipe['Level:'] + `</p>
+                                <p style = 'color: rgb(100, 100, 100);' class="prep-time" id = "prep-time"><i class="fas fa-clock"></i> Total Time:<br>&nbsp&nbsp&nbsp&nbsp`+ recipe['Total:'] + `</p>
+                                <p style = 'color: rgb(100, 100, 100);' class="servings" id = 'servings'><i class="fas fa-utensils"></i> Servings:<br>&nbsp&nbsp&nbsp&nbsp`+ recipe.Yield + `</p>
+                                <p style = 'color: rgb(100, 100, 100);' class="level" id = 'level'><i class="fas fa-star"></i> Level:<br>&nbsp&nbsp&nbsp&nbsp&nbsp`+ recipe['Level:'] + `</p>
                                 <button class="view-recipe-btn" id = 'view-recipe' onclick = "viewRecipeClicked(`+ recipe.id +`)"> View Recipe </button>
                             </div>` + 
                             inner_list +
