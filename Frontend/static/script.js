@@ -20,7 +20,7 @@ const itemsPerPage = 10;
 let currentPage = 1;
 
 // Create the pagination links
-let paginationHTML = "<div class = 'row' class = 'paginations'>";
+let paginationHTML = "<div class = 'row' class = 'paginations' style = 'display: flex; justify-content: center;'>";
 paginationHTML += `<button href = "#TOP_OF_PAGE" id="pagination-link-prev" onclick = 'prev()'>Prev</button>`;
 paginationHTML += `<button  id="pagination-link-next" onclick = 'next()'>Next</button>`;
 paginationHTML += "</div>";
@@ -330,6 +330,7 @@ searchInput.addEventListener('input', () => {
 
     if(searchText == '') { // go back to default display
         categories.forEach(category => {
+            category.style.display = 'block';
             const ingredients = category.querySelectorAll('.ingredient');
             const firstfive = Array.prototype.slice.call(ingredients, 0, 5); // get the first five
             const extras = Array.prototype.slice.call(ingredients, 5); // get all except the first 5

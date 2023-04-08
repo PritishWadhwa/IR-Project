@@ -45,7 +45,7 @@ body {
 .page1 {
 	width: 30%;
 	float: left;
-	background-color: #c2b1a0;
+	background-color: #c2c0a0;
 }
 
 .page2 {
@@ -99,12 +99,12 @@ body {
 	margin-bottom: 10px;
 	cursor: pointer;
 
-	background-color: #c1c9ca;
+	background-color: #a1b330;
 
 	font-family: Tahoma, sans-serif;
 	font-size: 12px;
 	line-height: 1.5;
-	color: #333;
+	color: #f2eeee;
 }
 
 .clear-all-button {
@@ -117,12 +117,64 @@ body {
 	cursor: pointer;
 
 	width: 80px;
-	background-color: #c1c9ca;
+	background-color: #a1b330;
 
 	font-family: Tahoma, sans-serif;
 	font-size: 12px;
 	line-height: 1.5;
-	color: #333;
+	color: #f2eeee;
+}
+
+#pagination-link-prev {
+	display: inline-block;
+	
+	padding: 4px 5px;
+	border: 1px solid #8f8d8d;
+	border-radius: 10px;
+	margin-right: 5px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	cursor: pointer;
+
+	width: 40px;
+	background-color: #a1b330;
+
+	font-family: Tahoma, sans-serif;
+	font-size: 12px;
+	line-height: 1.5;
+	color: #f2eeee;
+}
+
+#pagination-link-next {
+	display: inline-block;
+	
+	padding: 4px 5px;
+	border: 1px solid #8f8d8d;
+	border-radius: 10px;
+	margin-right: 5px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	cursor: pointer;
+
+	width: 40px;
+	background-color: #a1b330;
+
+	font-family: Tahoma, sans-serif;
+	font-size: 12px;
+	line-height: 1.5;
+	color: #f2eeee;
+}
+
+#pagination-link-prev:disabled {
+  background-color: #7e7e7e;
+  color: white;
+  cursor: not-allowed;
+}
+
+#pagination-link-next:disabled {
+  background-color: #7e7e7e;
+  color: white;
+  cursor: not-allowed;
 }
 
 .selected {
@@ -218,7 +270,7 @@ body {
 }
 
 .green {
-	background-color: #39b54a;
+	background-color: #839f87;
 	color: #fff;
 }
 
