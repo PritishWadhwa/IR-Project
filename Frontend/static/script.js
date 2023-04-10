@@ -595,7 +595,7 @@ async function generation() {
                             </div>`;
                 generatedRecipes.innerHTML = generatedText;
 
-                // const result = await get_image(generationPrompt);
+                const result = await get_image(generationPrompt);
 
             }
         }

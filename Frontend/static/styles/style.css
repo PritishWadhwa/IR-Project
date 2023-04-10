@@ -1,16 +1,29 @@
+:root {
+    --dark-brown:#361e15;
+	--brown: #683B2B;
+	--pink: #D49E8D;
+	--ded: #aa9f8e;
+	--white: #ffffff;
+	--off-white: #FAF6F2;
+	--mustard:  #a37a14;
+	--dark-pink: #cc7458;
+	--ded-light: #DED1BD;
+}
+
+
 body {
 	margin: 0;
 	padding: 0;
 	font-family: Arial, sans-serif;
 	font-size: 16px;
 	line-height: 1.5;
-	color: #333;
+	color: var(--brown);
 	overflow: hidden;
 	scrollbar-width: none !important;
 }
 
 .header {
-	background-color: #82bddd;
+	background-color: var(--pink);
 	background-image: url('../banner.jpeg');
 	border-bottom: 2px solid #4b4b4b;
 	
@@ -18,12 +31,13 @@ body {
 	padding: 1px;
 	padding-left: 20px;
 }
+
 .header h1 {
 	align-self: center;
 	width: fit-content;
 	padding: 10px;
 	background-color: rgb(255, 255, 255);
-	color: #000000;
+	color: var(--dark-brown);
 	border-radius: 10px;
 }
 
@@ -45,13 +59,14 @@ body {
 .page1 {
 	width: 30%;
 	float: left;
-	background-color: #c2c0a0;
+	background-color: var(--off-white);
 }
 
 .page2 {
 	width: 70%;
 	float: left;
-	background-color: #e6e6e6;
+	background-color: var(--off-white);
+
 }
 
 .content {
@@ -65,9 +80,9 @@ body {
 .categories {
 	display: flex;
 	flex-direction: column;
-	background-color: #ffffff;
+	background-color: var(--white);
 	border-radius: 15px;
-	border: 1px solid #4b4b4b;
+	border: 1px solid var(--dark-pink);
 	padding: 10px;
 	margin-bottom: 10px;
 }
@@ -83,7 +98,7 @@ body {
 .ingredient {
 	display: inline-block;
 	padding: 5px 7px;
-	border: 1px solid #8f8d8d;
+	border: 1px solid var(--dark-pink);
 	border-radius: 20px;
 	margin-right: 10px;
 	margin-bottom: 10px;
@@ -93,43 +108,43 @@ body {
 .view-more-btn {
 	display: inline-block;
 	padding: 2px 5px;
-	border: 1px solid #8f8d8d;
+	border: 1px solid var(--pink);
 	border-radius: 20px;
 	margin-right: 10px;
 	margin-bottom: 10px;
 	cursor: pointer;
 
-	background-color: #a1b330;
+	background-color: var(--dark-pink);
 
 	font-family: Tahoma, sans-serif;
 	font-size: 12px;
 	line-height: 1.5;
-	color: #f2eeee;
+	color: var(--white);
 }
 
 .clear-all-button {
 	display: inline-block;
 	padding: 2px 5px;
-	border: 1px solid #8f8d8d;
+	border: 1px solid var(--pink);
 	border-radius: 20px;
 	margin-right: 1px;
 	margin-bottom: 5px;
 	cursor: pointer;
 
 	width: 80px;
-	background-color: #a1b330;
+	background-color: var(--dark-pink);
 
 	font-family: Tahoma, sans-serif;
 	font-size: 12px;
 	line-height: 1.5;
-	color: #f2eeee;
+	color: var(--white);
 }
 
 #pagination-link-prev {
 	display: inline-block;
 	
 	padding: 4px 5px;
-	border: 1px solid #8f8d8d;
+	border: 1px solid var(--pink);
 	border-radius: 10px;
 	margin-right: 5px;
 	margin-top: 10px;
@@ -137,19 +152,19 @@ body {
 	cursor: pointer;
 
 	width: 40px;
-	background-color: #a1b330;
+	background-color: var(--dark-pink);
 
 	font-family: Tahoma, sans-serif;
 	font-size: 12px;
 	line-height: 1.5;
-	color: #f2eeee;
+	color: var(--white);
 }
 
 #pagination-link-next {
 	display: inline-block;
 	
 	padding: 4px 5px;
-	border: 1px solid #8f8d8d;
+	border: 1px solid var(--pink);
 	border-radius: 10px;
 	margin-right: 5px;
 	margin-top: 10px;
@@ -157,29 +172,29 @@ body {
 	cursor: pointer;
 
 	width: 40px;
-	background-color: #a1b330;
+	background-color: var(--dark-pink);
 
 	font-family: Tahoma, sans-serif;
 	font-size: 12px;
 	line-height: 1.5;
-	color: #f2eeee;
+	color: var(--white);
 }
 
 #pagination-link-prev:disabled {
-  background-color: #7e7e7e;
-  color: white;
+  background-color: var(--ded);
+  color: var(--white);
   cursor: not-allowed;
 }
 
 #pagination-link-next:disabled {
-  background-color: #7e7e7e;
-  color: white;
+  background-color: var(--ded);
+  color: var(--white);
   cursor: not-allowed;
 }
 
 .selected {
-	background-color: green;
-	color: white;
+	background-color:var(--mustard);
+	color: var(--white);
 }
 
 #selected-ingredients {
@@ -195,7 +210,7 @@ body {
 	width: 100%;
 	padding: 7px;
 	font-size: 16px;
-	border: 1px solid #ccc;
+	border: 1px solid var(--dark-pink);
 	border-radius: 20px;
 	box-sizing: border-box;
 }
@@ -203,11 +218,11 @@ body {
 .recipe-card {
 	display: flex;
 	align-items: center;
-	background-color: #fff;
-	box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+	background-color: var(--white);
+	box-shadow: 0 2px 6px #faf6f2;
 	margin: 1% 0% 0% 0%;
 	padding: 0px;
-	border: 1px solid #ccc;
+	border: 1px solid var(--dark-pink);
 }
 
 .recipe-image {
@@ -270,7 +285,7 @@ body {
 }
 
 .green {
-	background-color: #839f87;
+	background-color: var(--ded);
 	color: #fff;
 }
 
@@ -282,8 +297,8 @@ body {
 .view-recipe-button {
 	display: inline-block;
 	padding: 10px 20px;
-	background-color: #82bddd;
-	color: #fff;
+	background-color: var(--dark-pink);
+	color: var(--white);
 	border-radius: 20px;
 	text-decoration: none;
 	font-size: 1px;
@@ -291,7 +306,7 @@ body {
 }
 
 .view-recipe-btn:hover {
-	background-color: #706926;
+	background-color: var(--pink);
 }
 
 .recipe-details {
@@ -301,8 +316,8 @@ body {
 }
 
 .view-recipe-btn {
-	background-color: #a1b330;
-	color: white;
+	background-color: var(--dark-pink);
+	color: var(--white);
 	border: none;
 	padding: 5px 7px;
 	font-size: 14px;
@@ -321,10 +336,10 @@ select {
 	font-size: 16px;
 	padding: 8px;
 	border-radius: 4px;
-	border: 1px solid #ccc;
+	border: 1px solid var(--dark-pink);
 	appearance: none;
 	-webkit-appearance: none;
-	background-color: #fff;
+	background-color: var(--white);
 	background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="%23ccc" d="M12.6 5.6L8 10.2 3.4 5.6 2 7l6 6 6-6z"/></svg>');
 	background-repeat: no-repeat;
 	background-position: right center;
@@ -333,8 +348,8 @@ select {
 
 select:focus {
 	outline: none;
-	box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
-	border-color: #1e90ff;
+	box-shadow: 0 0 0 2px #361e15;
+	border-color: var(--dark-pink);
 }
 
 .recipe-sort {
@@ -351,10 +366,10 @@ select:focus {
 .recipe-sort select {
 	padding: 5px;
 	border-radius: 3px;
-	background-color: #fff;
-	border: 1px solid #ccc;
+	background-color: var(--white);
+	border: 1px solid var(--dark-pink);
 	font-size: 14px;
-	color: #555;
+	color: var(--brown);
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
@@ -367,7 +382,7 @@ select:focus {
 
 .recipe-sort select:focus {
 	outline: none;
-	box-shadow: 0 0 5px #ccc;
+	box-shadow: 0 0 5px #683b2b;
 }
 
 .content {
@@ -394,9 +409,9 @@ select:focus {
 	padding: 0.5rem;
 	font-size: 1rem;
 	border-radius: 5px;
-	border: none;
-	background-color: #f2f2f2;
-	color: #333;
+	border: 1px solid var(--dark-pink);
+	background-color: var(--white);
+	color: var(--brown);
 }
 
 #sort-by {
@@ -406,9 +421,9 @@ select:focus {
 #sel {
 	display: none;
 /* 	flex-direction: column; */
-	background-color: #e6e6e6;
+	background-color: var(--ded-light);
 	border-radius: 15px;
-	border: 1px solid #4b4b4b;
+	border: 1px solid var(--dark-pink);
 	padding: 10px;
 	margin-bottom: 10px;
 }
@@ -416,22 +431,22 @@ select:focus {
 /* Modal Content/Box */
 .modal-content {
 	display: inline-block;
-	background-color: #f3efeb;
+	background-color: var(--off-white);
 	margin: 8% 8% 8% 8%;
 	padding: 10px;
-	border: 2px solid #585757;
+	border: 2px solid var(--brown);
 }
 
 .speak-button{
 	border-radius: 12px;
-	background-color:  green;
-	color: white;
-	border:  green;
+	background-color:  var(--ded-light);
+	color: var(--brown);
+	border: 1px solid var(--brown);
 	font-family: Arial, sans-serif;
 }
   /* The Close Button */
 .close {
-	color: #aaa;
+	color: var(--dark-brown);
 	float: right;
 	font-size: 28px;
 	font-weight: bold;
@@ -439,14 +454,14 @@ select:focus {
 
 .close:hover,
 .close:focus {
-	color: black;
+	color: var(--dark-brown);
 	text-decoration: none;
 	cursor: pointer;
 }
 /* Style the tab */
 .tab {
 	overflow: hidden;
-	background-color: #7db180;
+	background-color: var(--mustard);
 }
   
   /* Style the buttons that are used to open the tab content */
@@ -460,31 +475,32 @@ select:focus {
 	cursor: pointer;
 	padding: 10px 10px;
 	transition: 0.3s;
+	color: var(--white)
 }
   
 /* Change background color of buttons on hover */
 .tab button:hover {
-	background-color: #ddd;
+	background-color: var(--mustard);
 }
   
 /* Create an active/current tablink class */
 .tab button.active {
-	background-color: #e6e6e6;
+	background-color: var(--off-white);
 	border-top-right-radius: 2px;
 	border-top-left-radius: 2px;
-	border-top: 4px  #585757;
-	border-left: 4px #585757;
-	border-right: 4px #585757;
+	border-top: 4px  var(--mustard);
+	border-left: 4px var(--mustard);
+	border-right: 4px var(--mustard);
 	margin-left: 5px;
-
+	color: var(--brown)
 }
   
   /* Style the tab content */
 .tabcontent {
 	display: none;
 	padding: 5px 5px;
-	border: 1px solid #ccc;
 	border-top: none;
+	border: 1px solid var(--off-white);
 	animation: fadeEffect 0.5s; /* Fading effect takes 0.5s second */
 
 }
