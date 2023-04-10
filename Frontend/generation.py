@@ -29,27 +29,50 @@ def generate_recipe(ingredients):
     print("Started generating recipe")
 
     generation = {}
-    try:
-        output = query({
-            "inputs": ", ".join(ingredients),
-        })
-        print("Started Pretyy send")
-        print(output)
-        for text in output:
-            text = text['generated_text']
-            title = text.split('title:')[1].split('ingredients:')[0]
-            title = title.strip()
-            title = sentence_case(title)
-            ingredients = text.split('ingredients:')[1].split('directions:')[0]
-            directions = text.split('directions:')[1]
-            directions = directions.replace('\n', '')
-            directions = directions.split('. ')
-            directions = [sentence_case(method.strip())
-                          for method in directions]
-            generation["TITLE"] = title
-            generation["INGREDIENTS"] = ingredients
-            generation["METHOD"] = directions
-        print("Ended Pretyy send")
-        return generation
-    except:
-        return "Error"
+
+    output = query({
+        "inputs": ", ".join(ingredients),
+    })
+    print("Started Pretyy send")
+    print(output)
+    for text in output:
+        text = text['generated_text']
+        title = text.split('title:')[1].split('ingredients:')[0]
+        title = title.strip()
+        title = sentence_case(title)
+        ingredients = text.split('ingredients:')[1].split('directions:')[0]
+        directions = text.split('directions:')[1]
+        directions = directions.replace('\n', '')
+        directions = directions.split('. ')
+        directions = [sentence_case(method.strip())
+                        for method in directions]
+        generation["TITLE"] = title
+        generation["INGREDIENTS"] = ingredients
+        generation["METHOD"] = directions
+    print("Ended Pretyy send")
+    return generation
+    
+    # try:
+    #     output = query({
+    #         "inputs": ", ".join(ingredients),
+    #     })
+    #     print("Started Pretyy send")
+    #     print(output)
+    #     for text in output:
+    #         text = text['generated_text']
+    #         title = text.split('title:')[1].split('ingredients:')[0]
+    #         title = title.strip()
+    #         title = sentence_case(title)
+    #         ingredients = text.split('ingredients:')[1].split('directions:')[0]
+    #         directions = text.split('directions:')[1]
+    #         directions = directions.replace('\n', '')
+    #         directions = directions.split('. ')
+    #         directions = [sentence_case(method.strip())
+    #                       for method in directions]
+    #         generation["TITLE"] = title
+    #         generation["INGREDIENTS"] = ingredients
+    #         generation["METHOD"] = directions
+    #     print("Ended Pretyy send")
+    #     return generation
+    # except:
+    #     return "Error"

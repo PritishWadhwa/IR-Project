@@ -31,31 +31,30 @@ document.getElementById("pagination").innerHTML = paginationHTML;
 const paginationLinksPrev = document.getElementById("pagination-link-prev");
 const paginationLinksNext = document.getElementById("pagination-link-next");
 
-
 let max = 1;
 let query_ingredients = [];
 
 // View More buttons
-vmbuttons.forEach(function(button){
-    button.addEventListener('click', function(){
+vmbuttons.forEach(function (button) {
+    button.addEventListener('click', function () {
         const parentDiv = button.parentNode;
-        if(button.textContent === "View More   "){
+        if (button.textContent === "View More   ") {
             const childDivs = parentDiv.querySelectorAll('.ingredient');
             const extras = Array.prototype.slice.call(childDivs, 5); // get all except the first 5
 
-            extras.forEach(function(childDiv){
+            extras.forEach(function (childDiv) {
                 childDiv.style.display = 'inline-block'; // Make visible
             });
             button.innerHTML = '<i class="fas fa-angle-left"></i>   View Less';
-            
+
         }
-        else{
+        else {
             const childDivs = parentDiv.querySelectorAll('.ingredient');
             const extras = Array.prototype.slice.call(childDivs, 5); // get all except the first 5
 
-            extras.forEach(function(childDiv){
+            extras.forEach(function (childDiv) {
                 childDiv.style.display = 'none'; // Make invisible
-            });            
+            });
             button.innerHTML = 'View More   <i class="fas fa-angle-right"></i>';
         }
     });
@@ -75,7 +74,7 @@ ingredients.forEach(ingredient => {
         // Add or remove selected ingredients from the right-hand side
         const selectedIngredientItem = document.createElement('div');
         selectedIngredientItem.classList.add("ingredient", "selected", "selected-ingredients");
-        selectedIngredientItem.addEventListener('click', ()=> {
+        selectedIngredientItem.addEventListener('click', () => {
             ingredient.classList.toggle('selected');
             const selectedIngredientItems = selectedIngredients.querySelectorAll('div');
             selectedIngredientItems.forEach(selectedIngredientItem => {
@@ -84,13 +83,13 @@ ingredients.forEach(ingredient => {
                 }
             });
             query_ingredients.splice(query_ingredients.indexOf(ingredientName), 1);
-            
-            if(query_ingredients.length == 0) {
-                selsel.style.display = 'none'; 
+
+            if (query_ingredients.length == 0) {
+                selsel.style.display = 'none';
                 document.getElementById("zero_recipes").style.display = "block";
                 document.getElementById("TOP_OF_PAGE").style.display = "none";
             }
-            else{
+            else {
                 document.getElementById("zero_recipes").style.display = "None";
                 document.getElementById("TOP_OF_PAGE").style.display = "block";
             }
@@ -100,7 +99,7 @@ ingredients.forEach(ingredient => {
 
             console.log(query_ingredients)
         });
-        selectedIngredientItem.textContent =  ingredientName;
+        selectedIngredientItem.textContent = ingredientName;
 
         if (ingredient.classList.contains('selected')) {
             selectedIngredients.appendChild(selectedIngredientItem);
@@ -114,16 +113,16 @@ ingredients.forEach(ingredient => {
                 }
             });
             query_ingredients.splice(query_ingredients.indexOf(ingredientName), 1);
-            
+
             console.log(query_ingredients)
         }
 
-        if(query_ingredients.length == 0) {
+        if (query_ingredients.length == 0) {
             selsel.style.display = 'none';
             document.getElementById("zero_recipes").style.display = "block";
             document.getElementById("TOP_OF_PAGE").style.display = "none";
         }
-        else{
+        else {
             selsel.style.display = 'inline-block';
             document.getElementById("zero_recipes").style.display = "None";
             document.getElementById("TOP_OF_PAGE").style.display = "block";
@@ -131,59 +130,55 @@ ingredients.forEach(ingredient => {
 
         currentPage = 1
         getRecipes();
-        
+
     });
 });
 
-function getRecipes()
-{
+function getRecipes() {
     // send ingredient name and action (added/deleted) to python
     $.ajax({
         url: "/suggest-recipe",
         type: 'POST',
-        data: JSON.stringify({ingredients: query_ingredients, page: currentPage}),
+        data: JSON.stringify({ ingredients: query_ingredients, page: currentPage }),
         dataType: "json",
         contentType: "application/json; charset=utf-8",
-        success: function(response) {
+        success: function (response) {
             $("#recipes").empty();
-            
-            max = parseInt(response['total']/itemsPerPage) + 1
-            
-            if(currentPage==max)
-            {
+
+            max = parseInt(response['total'] / itemsPerPage) + 1
+
+            if (currentPage == max) {
                 // Disable the next button
                 paginationLinksNext.disabled = true;
             }
-            else
-            {
+            else {
                 paginationLinksNext.disabled = false;
             }
-            if(currentPage==1)
-            {
+            if (currentPage == 1) {
                 // Disable the previous button
                 paginationLinksPrev.disabled = true;
             }
-            else{
+            else {
                 paginationLinksPrev.disabled = false;
             }
             response = response['results']
             // console.log(max)
-            $.each(response, function(index, recipe) {
+            $.each(response, function (index, recipe) {
 
                 // console.log(recipe)
-                let inner_list = 
-                `<div class="recipe-ingredients">
+                let inner_list =
+                    `<div class="recipe-ingredients">
                     <div class="ingredient-set"> <p style = 'display: inline-block; color: rgb(100, 100, 100);'>Matched Ingredients:&nbsp;&nbsp;</p>`;
-                $.each(recipe.common, function(index, ing) {
-                    inner_list+= '<span class="ingredient-bubble green">'+ing + '</span>';
-                });    
-                inner_list+=
-                `   </div>
-                </div>`;   
-                $("#recipes").append(                
+                $.each(recipe.common, function (index, ing) {
+                    inner_list += '<span class="ingredient-bubble green">' + ing + '</span>';
+                });
+                inner_list +=
+                    `   </div>
+                </div>`;
+                $("#recipes").append(
                     `<div class="recipe-card">
                         <div class="recipe-image" id = "recipe-image">
-                            <img src= "` + recipe['Image Link']+ `"
+                            <img src= "` + recipe['Image Link'] + `"
                             alt="Recipe Image">
                         </div>
                         <div class="recipe-info" >
@@ -192,36 +187,35 @@ function getRecipes()
                                 <p style = 'color: rgb(100, 100, 100);' class="prep-time" id = "prep-time"><i class="fas fa-clock"></i> Total Time:<br>&nbsp&nbsp&nbsp&nbsp`+ recipe['Total:'] + `</p>
                                 <p style = 'color: rgb(100, 100, 100);' class="servings" id = 'servings'><i class="fas fa-utensils"></i> Servings:<br>&nbsp&nbsp&nbsp&nbsp`+ recipe.Yield + `</p>
                                 <p style = 'color: rgb(100, 100, 100);' class="level" id = 'level'><i class="fas fa-star"></i> Level:<br>&nbsp&nbsp&nbsp&nbsp&nbsp`+ recipe['Level:'] + `</p>
-                                <button class="view-recipe-btn" id = 'view-recipe' onclick = "viewRecipeClicked(`+ recipe.id +`)"> View Recipe </button>
-                            </div>` + 
-                            inner_list +
-                        `</div>
-                    </div>`);    
+                                <button class="view-recipe-btn" id = 'view-recipe' onclick = "viewRecipeClicked(`+ recipe.id + `)"> View Recipe </button>
+                            </div>` +
+                    inner_list +
+                    `</div>
+                    </div>`);
             });
         },
-        error: function(error) {
+        error: function (error) {
             console.log(error);
         }
     });
 }
 
-function viewRecipeClicked (recipe_id)
-{    
+function viewRecipeClicked(recipe_id) {
     $.ajax({
-        url: '/recipe' ,
+        url: '/recipe',
         method: 'POST',
-        data: { id: recipe_id},
-        success: function(response) {
+        data: { id: recipe_id },
+        success: function (response) {
             let ingredientHtml = "";
             let ingredient_speak = ""
-            $.each(response.ingredients_phrase, function(index, ingredient) {
-                ingredientHtml+= '<li>' + ingredient + '</li>';
+            $.each(response.ingredients_phrase, function (index, ingredient) {
+                ingredientHtml += '<li>' + ingredient + '</li>';
                 ingredient_speak += ingredient + ". ";
             });
             let methodHtml = "";
             let method_speak = ""
-            $.each(response.Method, function(index, method) {
-                methodHtml+= '<li>' + method + '</li>'
+            $.each(response.Method, function (index, method) {
+                methodHtml += '<li>' + method + '</li>'
                 method_speak += method + ". ";
             });
             let nutritionHtml = "";
@@ -233,36 +227,36 @@ function viewRecipeClicked (recipe_id)
             let audio_text1 = response.Name;
             audio_text1 = encodeURIComponent(audio_text1)
             audio_text1 = audio_text1.replace("'", "");
-            let audiobutton1 =  `<button class ="speak-button" onclick="text_to_audio(this,'`+ audio_text1+`')">Speak  <i class = "fas fa-play"></i></button>`
+            let audiobutton1 = `<button class ="speak-button" onclick="text_to_audio(this,'` + audio_text1 + `')">Speak  <i class = "fas fa-play"></i></button>`
 
             let audio_text2 = ingredient_speak;
             audio_text2 = encodeURIComponent(audio_text2)
             audio_text2 = audio_text2.replace("'", "");
-            let audiobutton2 =  `<button class ="speak-button" onclick="text_to_audio(this,'`+ audio_text2+`')">Speak  <i class = "fas fa-play"></i></button>`
+            let audiobutton2 = `<button class ="speak-button" onclick="text_to_audio(this,'` + audio_text2 + `')">Speak  <i class = "fas fa-play"></i></button>`
 
             let audio_text3 = method_speak;
             audio_text3 = encodeURIComponent(audio_text3)
             audio_text3 = audio_text3.replace("'", "");
-            let audiobutton3 =  `<button class ="speak-button" onclick="text_to_audio(this,'`+ audio_text3+`')">Speak  <i class = "fas fa-play"></i></button>`
+            let audiobutton3 = `<button class ="speak-button" onclick="text_to_audio(this,'` + audio_text3 + `')">Speak  <i class = "fas fa-play"></i></button>`
 
 
             $("#myModalShit").empty();
-            let modalShit ="";
-            modalShit+=`<div class="modal-header">
-                <h5 class="recipe-title-modal" id="modal-title">`+ response.Name +`</h5>`
-                +audiobutton1+
+            let modalShit = "";
+            modalShit += `<div class="modal-header">
+                <h5 class="recipe-title-modal" id="modal-title">`+ response.Name + `</h5>`
+                + audiobutton1 +
                 `
             </div>
             <div class="modal-body" id = 'modal-body'>
                 <div class="row">
                     <div class="col-md-6">
-                        <img id = 'recipe-image' src="`+ response['Image Link']+ `" alt="" class="recipe-image-modal">
+                        <img id = 'recipe-image' src="`+ response['Image Link'] + `" alt="" class="recipe-image-modal">
                     </div>
                     <br>
                     <div class="col-md-6">
-                        <p><strong>Total Time:</strong> `+response['Total:'] + `</p>
-                        <p><strong>Yield:</strong> `+response['Yield'] + `</p> 
-                        <p><strong>Difficulty Level:</strong> `+response['Level:'] + `</p>
+                        <p><strong>Total Time:</strong> `+ response['Total:'] + `</p>
+                        <p><strong>Yield:</strong> `+ response['Yield'] + `</p> 
+                        <p><strong>Difficulty Level:</strong> `+ response['Level:'] + `</p>
                     </div>
                 </div>
                 <br>
@@ -277,7 +271,7 @@ function viewRecipeClicked (recipe_id)
                 <div class="row">
                     <div class="col-md-12">
                         <div class = "ingredient-list-modal">
-                            <h2>Ingredients</h2> `+audiobutton2+`
+                            <h2>Ingredients</h2> `+ audiobutton2 + `
                             <ul id ='ingredients' style="column-count: 2;">`+ ingredientHtml + `</ul>
                         </div>
                     </div>
@@ -285,7 +279,7 @@ function viewRecipeClicked (recipe_id)
                 <div class="row">
                     <div class="col-md-12">
                         <div class = "method-list-modal">
-                            <h2>Method</h2> `+audiobutton3+`
+                            <h2>Method</h2> `+ audiobutton3 + `
                             <ol id = 'methods'>`+ methodHtml + `</ol>
                         </div>
                     </div>
@@ -294,16 +288,16 @@ function viewRecipeClicked (recipe_id)
             $("#myModalShit").append(modalShit);
             // When the user clicks the button, open the modal 
             modal.style.display = 'block';
-            
+
         },
-        error: function(xhr, status, error) {
-        alert('Error fetching recipe data');
+        error: function (xhr, status, error) {
+            alert('Error fetching recipe data');
         }
     });
-}   
+}
 
 const span = document.getElementById("close");
-span.onclick = function() {
+span.onclick = function () {
     modal.style.display = "none";
 }
 
@@ -328,20 +322,20 @@ span.onclick = function() {
 searchInput.addEventListener('input', () => {
     const searchText = searchInput.value.toLowerCase().trim();
 
-    if(searchText == '') { // go back to default display
+    if (searchText == '') { // go back to default display
         categories.forEach(category => {
             category.style.display = 'block';
             const ingredients = category.querySelectorAll('.ingredient');
             const firstfive = Array.prototype.slice.call(ingredients, 0, 5); // get the first five
             const extras = Array.prototype.slice.call(ingredients, 5); // get all except the first 5
 
-            firstfive.forEach(function(childDiv){
+            firstfive.forEach(function (childDiv) {
                 childDiv.style.display = 'inline-block'; // Make visible
-            }); 
+            });
 
-            extras.forEach(function(childDiv){
+            extras.forEach(function (childDiv) {
                 childDiv.style.display = 'none'; // Make invisible
-            }); 
+            });
         });
 
         vmbuttons.forEach(button => {
@@ -356,7 +350,7 @@ searchInput.addEventListener('input', () => {
             const ingredients = category.querySelectorAll('.ingredient');
             let isCategoryMatched = categoryName.includes(searchText);
             let isIngredientMatched = false;
-    
+
             ingredients.forEach(ingredient => {
                 const ingredientName = ingredient.textContent.toLowerCase();
                 if (ingredientName.includes(searchText)) {
@@ -366,7 +360,7 @@ searchInput.addEventListener('input', () => {
                     ingredient.style.display = 'none';
                 }
             });
-    
+
             if (isCategoryMatched || isIngredientMatched) {
                 category.style.display = 'block';
             } else {
@@ -386,27 +380,27 @@ searchInput.addEventListener('input', () => {
     }
 });
 
-function clearAll(){
+function clearAll() {
     const selectedIngredientItems = selectedIngredients.querySelectorAll('div');
     selectedIngredientItems.forEach(selectedIngredientItem => {
         selectedIngredientItem.remove();
     });
     ingredients.forEach(ingredient => {
-        if(ingredient.classList.contains('selected')){
+        if (ingredient.classList.contains('selected')) {
             ingredient.classList.toggle('selected');
         }
-        else{
+        else {
             query_ingredients.splice(query_ingredients.indexOf(ingredient.textContent), 1);
         }
     });
 
-    if(query_ingredients.length == 0) {
+    if (query_ingredients.length == 0) {
         selsel.style.display = 'none';
         document.getElementById("zero_recipes").style.display = "block";
         document.getElementById("TOP_OF_PAGE").style.display = "none";
 
     }
-    else{
+    else {
         document.getElementById("zero_recipes").style.display = "None";
         document.getElementById("TOP_OF_PAGE").style.display = "block";
     }
@@ -418,150 +412,175 @@ function clearAll(){
 function openCity(evt, cityName) {
     // Declare all variables
     let i, tabcontent, tablinks;
-  
+
     // Get all elements with class="tabcontent" and hide them
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
-      tabcontent[i].style.display = "none";
+        tabcontent[i].style.display = "none";
     }
-  
+
     // Get all elements with class="tablinks" and remove the class "active"
     tablinks = document.getElementsByClassName("tablinks");
     for (i = 0; i < tablinks.length; i++) {
-      tablinks[i].className = tablinks[i].className.replace(" active", "");
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
-  
+
     // Show the current tab, and add an "active" class to the button that opened the tab
     document.getElementById(cityName).style.display = "block";
     evt.currentTarget.className += " active";
-    if(cityName == "Generation")
-    {
+    if (cityName == "Generation") {
         generateButton.innerHTML = "Start the Generation"
         generatedRecipes.innerHTML = "";
     }
 }
 
 
-function text_to_audio(button, text){
+function text_to_audio(button, text) {
 
     button.innerHTML = "Loading...";
     button.disabled = true;
-    fetch("https://voicerss-text-to-speech.p.rapidapi.com?key=d6ac55a8d1864495bee3b68a22f214d0&src=" + text +"&hl=en-us&r=0&c=mp3&v=Nancy&f=8khz_8bit_stereo",
-    {
-    "method": "GET",
-    "headers": {
-    "x-rapidapi-host": "voicerss-text-to-speech.p.rapidapi.com",
-    "x-rapidapi-key": "9872c7ac76msh345fe172c7cae73p12b10fjsn908d6c305604"
-    }}).then(response => {
-        // Get the readable stream from the response body
-        const stream = response.body;
-      
-        // Create a new MediaSource object
-        const mediaSource = new MediaSource();
-      
-        
-        audio.src = URL.createObjectURL(mediaSource);
-      
-        
-      
-        // Wait for the MediaSource to open
-        mediaSource.addEventListener('sourceopen', () => {
-          // Create a new source buffer
-          const sourceBuffer = mediaSource.addSourceBuffer('audio/mpeg');
-      
-          // Get data from the stream and append it to the source buffer
-          const reader = stream.getReader();
-          function read() {
-            reader.read().then(({ done, value }) => {
-              if (done) {
-                sourceBuffer.addEventListener('updateend', () => {
-                  mediaSource.endOfStream();
-                  audio.play(); // Start playback
-                });
-                sourceBuffer.updating || sourceBuffer.dispatchEvent(new Event('updateend'));
-                return;
-              }
-              sourceBuffer.appendBuffer(value);
-              read();
-            });
-          }
-          read();
+    fetch("https://voicerss-text-to-speech.p.rapidapi.com?key=d6ac55a8d1864495bee3b68a22f214d0&src=" + text + "&hl=en-us&r=0&c=mp3&v=Nancy&f=8khz_8bit_stereo",
+        {
+            "method": "GET",
+            "headers": {
+                "x-rapidapi-host": "voicerss-text-to-speech.p.rapidapi.com",
+                "x-rapidapi-key": "9872c7ac76msh345fe172c7cae73p12b10fjsn908d6c305604"
+            }
+        }).then(response => {
+            // Get the readable stream from the response body
+            const stream = response.body;
 
-            button.innerHTML = "Speak " + '<i class = "fas fa-play"></i>';
-            button.disabled = false;
+            // Create a new MediaSource object
+            const mediaSource = new MediaSource();
+
+
+            audio.src = URL.createObjectURL(mediaSource);
+
+
+
+            // Wait for the MediaSource to open
+            mediaSource.addEventListener('sourceopen', () => {
+                // Create a new source buffer
+                const sourceBuffer = mediaSource.addSourceBuffer('audio/mpeg');
+
+                // Get data from the stream and append it to the source buffer
+                const reader = stream.getReader();
+                function read() {
+                    reader.read().then(({ done, value }) => {
+                        if (done) {
+                            sourceBuffer.addEventListener('updateend', () => {
+                                mediaSource.endOfStream();
+                                audio.play(); // Start playback
+                            });
+                            sourceBuffer.updating || sourceBuffer.dispatchEvent(new Event('updateend'));
+                            return;
+                        }
+                        sourceBuffer.appendBuffer(value);
+                        read();
+                    });
+                }
+                read();
+
+                button.innerHTML = "Speak " + '<i class = "fas fa-play"></i>';
+                button.disabled = false;
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            alert("Error: " + err);
         });
-      })
-      .catch(err => {
-        console.log(err);
-        alert("Error: " + err);
-      });
-      
-      
+
+
 }
 function get_image(text) {
     const generatedImages = document.getElementById("generated-image");
     generatedImages.innerHTML = '<img class = "loading" src = "./static/Loading.gif", alt = "Loading....">';
     $.ajax({
-        url: '/generate_image' ,
+        url: '/generate_image',
         method: 'POST',
-        data: JSON.stringify({text: text}),
+        data: JSON.stringify({ text: text }),
         dataType: "json",
         contentType: "application/json; charset=utf-8",
-        success: function(response) {
+        success: function (response) {
             console.log(response);
-            generatedImages.innerHTML = '<img src ="' + response +'", alt = "Recipe Image">';
+            generatedImages.innerHTML = '<img src ="' + response + '", alt = "Recipe Image">';
         }
     });
 }
 
 async function generation() {
     alert(`Disclaimer: This recipe was generated by an artificial intelligence program and has not been taste-tested or reviewed by a human chef. The ingredients and cooking instructions are provided for informational purposes only and may not result in a tasty or safe dish. Use caution when preparing and consuming this recipe, and make any necessary adjustments based on your own cooking experience and preferences.`)
-    generateButton.style.display= 'None';   
+    generateButton.style.display = 'None';
     generatedRecipes.innerHTML = '<img class = "loading" src = "./static/loading_pan.gif", alt = "Loading....">';
-    if(query_ingredients.length == 0){
+    if (query_ingredients.length == 0) {
         alert("Please Select Ingredients");
         generateButton.style.display = 'block';
-        generateButton.innerHTML = "Regenerate " +  '<i class = "fas fa-sync"></i>';
+        generateButton.innerHTML = "Regenerate " + '<i class = "fas fa-sync"></i>';
         generatedRecipes.innerHTML = "";
         return;
     }
     $.ajax({
-        url: '/generate' ,
+        url: '/generate',
         method: 'POST',
-        data: JSON.stringify({ingredients: query_ingredients}),
+        data: JSON.stringify({ ingredients: query_ingredients }),
         dataType: "json",
         contentType: "application/json; charset=utf-8",
-        success: async function(response) {
+        success: async function (response) {
             let element = response;
             generateButton.style.display = 'block';
             generateButton.innerHTML = 'Regenerate <i class = "fas fa-sync"></i>';
             generatedRecipes.innerHTML = "";
-            if (element == "Error"){             
+            if (element == "Error") {
+                console.log("Erroraaa");
                 alert("OOPS! Could Not Generate Recipe. Please Try Again!");
             }
-            else{
-            let method_text = "";
-            $.each(element.METHOD, function(index, method) {
-                method_text+=  method + ". "
-            });
-            
+            else {
+                let method_text = "";
+                $.each(element.METHOD, function (index, method) {
+                    method_text += method + ". "
+                });
+                let finalIngredientsArray = [];
+                let ingredientsArray = element['INGREDIENTS'].split(" ");
 
-            let audio_text = "TITLE " + element['TITLE'] + ". INGREDIENTS " + element['INGREDIENTS'] + ". METHOD " + method_text;
-            audio_text = encodeURIComponent(audio_text)
-            audio_text = audio_text.replace("'", "");
+                let currIng = "";
+                for (let i = 0; i < ingredientsArray.length; i++) {
+                    if (Number.isInteger(parseInt(ingredientsArray[i][0]))) {
+                        if (currIng.trim() != "") {
+                            finalIngredientsArray.push(currIng.trim());
+                            currIng = "";
+                        }
+                    }
+                    currIng += ingredientsArray[i] + " ";
+                }
+                if (currIng.trim() != "") {
+                    finalIngredientsArray.push(currIng.trim());
+                }
 
-            let audiobutton =  `<button class ="speak-button" onclick="text_to_audio(this,'`+ audio_text+`')">Speak  <i class = "fas fa-play"></i></button>`
+                console.log(finalIngredientsArray);
+                // console.log("INGREDIENTSasfdlajshdflkjadxfjasd: " + element['INGREDIENTS']);
+                let audio_text = "TITLE " + element['TITLE'] + ". INGREDIENTS " + element['INGREDIENTS'] + ". METHOD " + method_text;
+                audio_text = encodeURIComponent(audio_text)
+                audio_text = audio_text.replace("'", "");
 
-            
-            let generatedText = "";
-            generatedText += "<h1>Generated Recipe</h1>";
+                let audiobutton = `<button class ="speak-button" onclick="text_to_audio(this,'` + audio_text + `')">Speak  <i class = "fas fa-play"></i></button>`
 
-            let methodHtml = "";
-            $.each(element.METHOD, function(index, method) {
-                methodHtml+= '<li>' + method + '</li>'});
-            generatedText += audiobutton;
-            let generationPrompt = "'" + element['TITLE'] + "'";
-            generatedText+= `<div class="recipe-card">
+
+                let generatedText = "";
+                generatedText += "<h1>Generated Recipe</h1>";
+
+                let methodHtml = "";
+                $.each(element.METHOD, function (index, method) {
+                    methodHtml += '<li>' + method + '</li>'
+                });
+
+                let ingredientsHtml = "";
+                $.each(finalIngredientsArray, function (index, ingredient) {
+                    ingredientsHtml += '<li>' + ingredient + '</li>'
+                });
+
+                generatedText += audiobutton;
+                let generationPrompt = "'" + element['TITLE'] + "'";
+                generatedText += `<div class="recipe-card">
                                 <div class="recipe-image" id = "generated-image">
                                     <img src= "./static/placeholder.jpg" alt="Recipe Image">
                                 </div>
@@ -569,20 +588,20 @@ async function generation() {
                                     <h2 class="recipe-name" id = "recipe-name">`+ element['TITLE'] + `</h2>
                                     
                                         <h3 class='card-title'> INGREDIENTS </h2>
-                                        <h4 class='card-text'>`+ element['INGREDIENTS'] + `</h4>
+                                        <ul>` + ingredientsHtml + `</ul>  
                                         <h3 class='card-title'> METHOD </h2>
                                         <ul>` + methodHtml + `</ul>       
                                 </div>
-                            </div>`; 
-            generatedRecipes.innerHTML = generatedText;
-            
-            const result = await get_image(generationPrompt);
+                            </div>`;
+                generatedRecipes.innerHTML = generatedText;
+
+                // const result = await get_image(generationPrompt);
 
             }
         }
     });
 }
-function prev(){
+function prev() {
     currentPage = currentPage - 1;
     currentPage = Math.max(currentPage, 1);
     scrollSmoothTo();
@@ -590,20 +609,20 @@ function prev(){
     getRecipes();
 }
 
-function next(){
-    currentPage = currentPage + 1; 
+function next() {
+    currentPage = currentPage + 1;
     currentPage = Math.min(currentPage, max);
     scrollSmoothTo();
     // Call your function to display the items for the current page
     getRecipes();
-    
+
 }
 
 function scrollSmoothTo() {
     let element = document.getElementById("TOP_OF_PAGE");
     element.scrollIntoView({
-      block: 'start',
-      behavior: 'smooth'
+        block: 'start',
+        behavior: 'smooth'
     });
 }
 
