@@ -2,12 +2,20 @@
     --dark-brown:#361e15;
 	--brown: #683B2B;
 	--pink: #D49E8D;
-	--ded: #aa9f8e;
+	--ded: #;
 	--white: #ffffff;
 	--off-white: #FAF6F2;
-	--mustard:  #a37a14;
-	--dark-pink: #cc7458;
+/* 	--mustard:  #a37a14; */
+/* 	--mustard:  #637d21; */
+	--mustard: #609830;
+	--dark-pink: #a04156;
+/* 	--dark-pink: #c63269; */
+/* 	--dark-pink: #9f2c75; */
 	--ded-light: #DED1BD;
+	--border:#d1c8c4;
+	--border-ing:#361e15;
+	--border-button:#361e15;
+	--shadow: #d7cfc6;
 }
 
 
@@ -25,7 +33,7 @@ body {
 .header {
 	background-color: var(--pink);
 	background-image: url('../banner.jpeg');
-	border-bottom: 2px solid #4b4b4b;
+	border-bottom: 2px solid var(--brown);
 	
 	align-items: center;
 	padding: 1px;
@@ -36,7 +44,7 @@ body {
 	align-self: center;
 	width: fit-content;
 	padding: 10px;
-	background-color: rgb(255, 255, 255);
+	background-color: var(--off-white);
 	color: var(--dark-brown);
 	border-radius: 10px;
 }
@@ -82,7 +90,7 @@ body {
 	flex-direction: column;
 	background-color: var(--white);
 	border-radius: 15px;
-	border: 1px solid var(--dark-pink);
+	border: 1px solid var(--border);
 	padding: 10px;
 	margin-bottom: 10px;
 }
@@ -98,7 +106,10 @@ body {
 .ingredient {
 	display: inline-block;
 	padding: 5px 7px;
-	border: 1px solid var(--dark-pink);
+/* 	border: 1px solid var(--border-ing); */
+	box-shadow: 0 2px 4px var(--shadow);
+	background-color: #EDEDED;
+	border-shadow: 1px;
 	border-radius: 20px;
 	margin-right: 10px;
 	margin-bottom: 10px;
@@ -108,14 +119,14 @@ body {
 .view-more-btn {
 	display: inline-block;
 	padding: 2px 5px;
-	border: 1px solid var(--pink);
+	border: none;
+	/* border: 1px solid var(--border-button); */
+	box-shadow: 0 2px 4px var(--shadow);
 	border-radius: 20px;
 	margin-right: 10px;
 	margin-bottom: 10px;
 	cursor: pointer;
-
 	background-color: var(--dark-pink);
-
 	font-family: Tahoma, sans-serif;
 	font-size: 12px;
 	line-height: 1.5;
@@ -125,7 +136,9 @@ body {
 .clear-all-button {
 	display: inline-block;
 	padding: 2px 5px;
-	border: 1px solid var(--pink);
+/* 	border: 1px solid var(--border-button); */
+	border: none;
+	box-shadow: 0 2px 4px var(--shadow);
 	border-radius: 20px;
 	margin-right: 1px;
 	margin-bottom: 5px;
@@ -144,7 +157,9 @@ body {
 	display: inline-block;
 	
 	padding: 4px 5px;
-	border: 1px solid var(--pink);
+/* 	border: 1px solid var(--border-button); */
+	border: none;
+	box-shadow: 0 2px 4px var(--shadow);
 	border-radius: 10px;
 	margin-right: 5px;
 	margin-top: 10px;
@@ -164,7 +179,9 @@ body {
 	display: inline-block;
 	
 	padding: 4px 5px;
-	border: 1px solid var(--pink);
+/* 	border: 1px solid var(--border-button); */
+	border: none;
+	box-shadow: 0 2px 4px var(--shadow);
 	border-radius: 10px;
 	margin-right: 5px;
 	margin-top: 10px;
@@ -181,13 +198,13 @@ body {
 }
 
 #pagination-link-prev:disabled {
-  background-color: var(--ded);
+  background-color: var(--ded-light);
   color: var(--white);
   cursor: not-allowed;
 }
 
 #pagination-link-next:disabled {
-  background-color: var(--ded);
+  background-color: var(--ded-light);
   color: var(--white);
   cursor: not-allowed;
 }
@@ -210,7 +227,7 @@ body {
 	width: 100%;
 	padding: 7px;
 	font-size: 16px;
-	border: 1px solid var(--dark-pink);
+	border: 1px solid var(--border);
 	border-radius: 20px;
 	box-sizing: border-box;
 }
@@ -219,10 +236,11 @@ body {
 	display: flex;
 	align-items: center;
 	background-color: var(--white);
+	border-radius: 10px;
 	box-shadow: 0 2px 6px #faf6f2;
 	margin: 1% 0% 0% 0%;
 	padding: 0px;
-	border: 1px solid var(--dark-pink);
+	border: 1px solid var(--border);
 }
 
 .recipe-image {
@@ -285,8 +303,8 @@ body {
 }
 
 .green {
-	background-color: var(--ded);
-	color: #fff;
+	background-color: var(--ded-light);
+	color: var(--dark-pink);
 }
 
 .red {
@@ -306,7 +324,7 @@ body {
 }
 
 .view-recipe-btn:hover {
-	background-color: var(--pink);
+	background-color: var(--brown);
 }
 
 .recipe-details {
@@ -318,6 +336,7 @@ body {
 .view-recipe-btn {
 	background-color: var(--dark-pink);
 	color: var(--white);
+	box-shadow: 0 4px 4px var(--shadow);
 	border: none;
 	padding: 5px 7px;
 	font-size: 14px;
@@ -336,7 +355,7 @@ select {
 	font-size: 16px;
 	padding: 8px;
 	border-radius: 4px;
-	border: 1px solid var(--dark-pink);
+	border: 1px solid var(--border);
 	appearance: none;
 	-webkit-appearance: none;
 	background-color: var(--white);
@@ -349,7 +368,7 @@ select {
 select:focus {
 	outline: none;
 	box-shadow: 0 0 0 2px #361e15;
-	border-color: var(--dark-pink);
+	border-color: var(--border);
 }
 
 .recipe-sort {
@@ -367,7 +386,7 @@ select:focus {
 	padding: 5px;
 	border-radius: 3px;
 	background-color: var(--white);
-	border: 1px solid var(--dark-pink);
+	border: 1px solid var(--border);
 	font-size: 14px;
 	color: var(--brown);
 	-webkit-appearance: none;
@@ -409,7 +428,7 @@ select:focus {
 	padding: 0.5rem;
 	font-size: 1rem;
 	border-radius: 5px;
-	border: 1px solid var(--dark-pink);
+	border: 1px solid var(--border);
 	background-color: var(--white);
 	color: var(--brown);
 }
@@ -421,9 +440,9 @@ select:focus {
 #sel {
 	display: none;
 /* 	flex-direction: column; */
-	background-color: var(--ded-light);
+	background-color: var(--white);
 	border-radius: 15px;
-	border: 1px solid var(--dark-pink);
+	border: 1px solid var(--border);
 	padding: 10px;
 	margin-bottom: 10px;
 }
@@ -516,12 +535,12 @@ select:focus {
 .button-17 {
   align-items: center;
   appearance: none;
-  background-color: #fff;
+  background-color: var(--dark-pink);
   border-radius: 24px;
   border-style: none;
   box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
   box-sizing: border-box;
-  color: #3c4043;
+  color: var(--white);
   cursor: pointer;
   display: inline-flex;
   fill: currentcolor;
@@ -535,6 +554,9 @@ select:focus {
   max-width: 100%;
   overflow: visible;
   padding: 2px 24px;
+	margin-left: 50px;
+	margin-top: 50px;
+	align-self: center;
   position: relative;
   text-align: center;
   text-transform: none;
@@ -547,10 +569,10 @@ select:focus {
   z-index: 0;
 }
 
-.button-17:hover {
-  background: #F6F9FE;
-  color: #174ea6;
-}
+/* .button-17:hover {
+  background: var(--ded-light);
+  color: var(--brown);
+} */
 
 .button-17:active {
   box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%), 0 8px 12px 6px rgb(60 64 67 / 15%);
@@ -559,7 +581,7 @@ select:focus {
 
 .button-17:focus {
   outline: none;
-  border: 2px solid #4285f4;
+  border: 2px solid var(--brown);
 }
 
 
