@@ -58,7 +58,6 @@ vmbuttons.forEach(function (button) {
     });
 });
 
-// selecting ingredients
 ingredients.forEach(ingredient => {
     ingredient.addEventListener('click', () => {
 
@@ -69,11 +68,23 @@ ingredients.forEach(ingredient => {
         const category = ingredient.parentNode.parentNode.querySelector('.category-name').textContent;
         const ingredientName = ingredient.textContent;
 
-        // Add or remove selected ingredients from the right-hand side
+        ingredients.forEach(ing => {
+            if(ing.textContent===ingredientName){
+                ing.classList.toggle('selected');
+            }
+        });
+
+        
         const selectedIngredientItem = document.createElement('div');
         selectedIngredientItem.classList.add("ingredient", "selected", "selected-ingredients");
-        selectedIngredientItem.addEventListener('click', () => {
+        // Add or remove selected ingredients from the right-hand side
+        selectedIngredientItem.addEventListener('click', ()=> {
             ingredient.classList.toggle('selected');
+            ingredients.forEach(ing => {
+                if(ing.textContent===ingredientName){
+                    ing.classList.toggle('selected');
+                }
+            });
             const selectedIngredientItems = selectedIngredients.querySelectorAll('div');
             selectedIngredientItems.forEach(selectedIngredientItem => {
                 if (selectedIngredientItem.textContent === ingredientName) {
@@ -81,13 +92,13 @@ ingredients.forEach(ingredient => {
                 }
             });
             query_ingredients.splice(query_ingredients.indexOf(ingredientName), 1);
-
-            if (query_ingredients.length == 0) {
-                selsel.style.display = 'none';
+            
+            if(query_ingredients.length == 0) {
+                selsel.style.display = 'none'; 
                 document.getElementById("zero_recipes").style.display = "block";
                 document.getElementById("TOP_OF_PAGE").style.display = "none";
             }
-            else {
+            else{
                 document.getElementById("zero_recipes").style.display = "None";
                 document.getElementById("TOP_OF_PAGE").style.display = "block";
             }
@@ -97,7 +108,7 @@ ingredients.forEach(ingredient => {
 
             console.log(query_ingredients)
         });
-        selectedIngredientItem.textContent = ingredientName;
+        selectedIngredientItem.textContent =  ingredientName;
 
         if (ingredient.classList.contains('selected')) {
             selectedIngredients.appendChild(selectedIngredientItem);
@@ -110,17 +121,22 @@ ingredients.forEach(ingredient => {
                     selectedIngredientItem.remove();
                 }
             });
+            ingredients.forEach(ing => {
+                if(ing.textContent===ingredientName){
+                    ing.classList.toggle('selected');
+                }
+            });
             query_ingredients.splice(query_ingredients.indexOf(ingredientName), 1);
-
+            
             console.log(query_ingredients)
         }
 
-        if (query_ingredients.length == 0) {
+        if(query_ingredients.length == 0) {
             selsel.style.display = 'none';
             document.getElementById("zero_recipes").style.display = "block";
             document.getElementById("TOP_OF_PAGE").style.display = "none";
         }
-        else {
+        else{
             selsel.style.display = 'inline-block';
             document.getElementById("zero_recipes").style.display = "None";
             document.getElementById("TOP_OF_PAGE").style.display = "block";
@@ -128,7 +144,7 @@ ingredients.forEach(ingredient => {
 
         currentPage = 1
         getRecipes();
-
+        
     });
 });
 
@@ -380,27 +396,29 @@ searchInput.addEventListener('input', () => {
     }
 });
 
-function clearAll() {
+function clearAll(){
     const selectedIngredientItems = selectedIngredients.querySelectorAll('div');
     selectedIngredientItems.forEach(selectedIngredientItem => {
         selectedIngredientItem.remove();
     });
     ingredients.forEach(ingredient => {
-        if (ingredient.classList.contains('selected')) {
+        if(ingredient.classList.contains('selected')){
             ingredient.classList.toggle('selected');
         }
-        else {
-            query_ingredients.splice(query_ingredients.indexOf(ingredient.textContent), 1);
+        else{
+            if(query_ingredients.indexOf(ingredient.textContent)!=-1){
+                query_ingredients.splice(query_ingredients.indexOf(ingredient.textContent), 1);
+            }
         }
     });
 
-    if (query_ingredients.length == 0) {
+    if(query_ingredients.length == 0) {
         selsel.style.display = 'none';
         document.getElementById("zero_recipes").style.display = "block";
         document.getElementById("TOP_OF_PAGE").style.display = "none";
 
     }
-    else {
+    else{
         document.getElementById("zero_recipes").style.display = "None";
         document.getElementById("TOP_OF_PAGE").style.display = "block";
     }
