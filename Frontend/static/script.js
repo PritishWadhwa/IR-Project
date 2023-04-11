@@ -8,10 +8,8 @@ const selsel = document.getElementById("sel");
 document.getElementById("default").click();
 const generatedRecipes = document.getElementById('generated-recipes');
 const generateButton = document.getElementById('gen-button');
-// Create an audio element and set its src attribute to the MediaSource URL
-const audio = document.createElement('audio');
-// Add the audio element to the HTML page
-document.body.appendChild(audio);
+// Find the audio element
+const audio = document.getElementById('audioPlayer')
 
 
 
@@ -168,7 +166,7 @@ function getRecipes() {
                 // console.log(recipe)
                 let inner_list =
                     `<div class="recipe-ingredients">
-                    <div class="ingredient-set"> <p style = 'display: inline-block; color: rgb(100, 100, 100);'>Matched Ingredients:&nbsp;&nbsp;</p>`;
+                    <div class="ingredient-set display-card-text"> <p style = 'display: inline-block;'>Matched Ingredients:&nbsp;&nbsp;</p>`;
                 $.each(recipe.common, function (index, ing) {
                     inner_list += '<span class="ingredient-bubble green">' + ing + '</span>';
                 });
@@ -184,9 +182,9 @@ function getRecipes() {
                         <div class="recipe-info" >
                             <h2 class="recipe-name" id = "recipe-name">`+ recipe.Name + `</h2>
                             <div class="recipe-details">
-                                <p style = 'color: rgb(100, 100, 100);' class="prep-time" id = "prep-time"><i class="fas fa-clock"></i> Total Time:<br>&nbsp&nbsp&nbsp&nbsp`+ recipe['Total:'] + `</p>
-                                <p style = 'color: rgb(100, 100, 100);' class="servings" id = 'servings'><i class="fas fa-utensils"></i> Servings:<br>&nbsp&nbsp&nbsp&nbsp`+ recipe.Yield + `</p>
-                                <p style = 'color: rgb(100, 100, 100);' class="level" id = 'level'><i class="fas fa-star"></i> Level:<br>&nbsp&nbsp&nbsp&nbsp&nbsp`+ recipe['Level:'] + `</p>
+                                <p class="display-card-text prep-time" id = "prep-time"><i class="fas fa-clock"></i> Total Time:<br>&nbsp&nbsp&nbsp&nbsp`+ recipe['Total:'] + `</p>
+                                <p class="display-card-text servings" id = 'servings'><i class="fas fa-utensils"></i> Servings:<br>&nbsp&nbsp&nbsp&nbsp`+ recipe.Yield + `</p>
+                                <p class="display-card-text level" id = 'level'><i class="fas fa-star"></i> Level:<br>&nbsp&nbsp&nbsp&nbsp&nbsp`+ recipe['Level:'] + `</p>
                                 <button class="view-recipe-btn" id = 'view-recipe' onclick = "viewRecipeClicked(`+ recipe.id + `)"> View Recipe </button>
                             </div>` +
                     inner_list +
@@ -300,6 +298,8 @@ const span = document.getElementById("close");
 span.onclick = function () {
     modal.style.display = "none";
 }
+
+
 
 // search input
 // searchInput.addEventListener('input', () => {
@@ -434,7 +434,10 @@ function openCity(evt, cityName) {
     }
 }
 
-
+function stop_audio(){
+    audio.pause();
+    audio.currentTime = 0;
+}
 function text_to_audio(button, text) {
 
     button.innerHTML = "Loading...";
