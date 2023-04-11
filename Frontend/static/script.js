@@ -447,12 +447,13 @@ function openCity(evt, cityName) {
     document.getElementById(cityName).style.display = "block";
     evt.currentTarget.className += " active";
     if (cityName == "Generation") {
-        generateButton.innerHTML = "Start the Generation"
+        generateButton.innerHTML = "Start the Generation";
         generatedRecipes.innerHTML = "";
+        generateButton.style.display = "block";
     }
 }
 
-function stop_audio(){
+function stop_audio() {
     audio.pause();
     audio.currentTime = 0;
 }
