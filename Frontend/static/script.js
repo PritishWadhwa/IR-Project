@@ -62,7 +62,7 @@ ingredients.forEach(ingredient => {
     ingredient.addEventListener('click', () => {
 
         // Make the selected bubble green
-        ingredient.classList.toggle('selected');
+//         ingredient.classList.toggle('selected');
 
         // Get the category name and selected ingredients for the selected bubble
         const category = ingredient.parentNode.parentNode.querySelector('.category-name').textContent;
@@ -79,7 +79,7 @@ ingredients.forEach(ingredient => {
         selectedIngredientItem.classList.add("ingredient", "selected", "selected-ingredients");
         // Add or remove selected ingredients from the right-hand side
         selectedIngredientItem.addEventListener('click', ()=> {
-            ingredient.classList.toggle('selected');
+//             ingredient.classList.toggle('selected');
             ingredients.forEach(ing => {
                 if(ing.textContent===ingredientName){
                     ing.classList.toggle('selected');
@@ -119,11 +119,6 @@ ingredients.forEach(ingredient => {
             selectedIngredientItems.forEach(selectedIngredientItem => {
                 if (selectedIngredientItem.textContent === ingredientName) {
                     selectedIngredientItem.remove();
-                }
-            });
-            ingredients.forEach(ing => {
-                if(ing.textContent===ingredientName){
-                    ing.classList.toggle('selected');
                 }
             });
             query_ingredients.splice(query_ingredients.indexOf(ingredientName), 1);
