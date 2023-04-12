@@ -29,12 +29,12 @@ def generate():
     return jsonify(generationResult)
 
 
-@app.route('/text-to-audio', methods=['POST'])
-def text_to_audio():
-    text = request.form.get('text')
-    print("In app.py", text)
-    url = audio.text_to_audio(text)
-    return jsonify(url)
+# @app.route('/text-to-audio', methods=['POST'])
+# def text_to_audio():
+#     text = request.form.get('text')
+#     print("In app.py", text)
+#     url = audio.text_to_audio(text)
+#     return jsonify(url)
 
 
 @app.route('/suggest-recipe', methods=['POST'])
@@ -42,9 +42,10 @@ def suggest_recipe():
     data = request.get_json()
     list_ingredients = data['ingredients']
     page = data['page']
+    sortingParam = data['sortingParam']
     # For pagination, do not check anything, continue with the same list of ingredients
     # Querying database of recipes using index
-    recipes = query.fetchRecipes(list_ingredients, page)
+    recipes = query.fetchRecipes(list_ingredients, page, sortingParam)
     return jsonify(recipes)
 
 

@@ -18,8 +18,13 @@ def query(payload):
     print("Started function")
     status = 400
     while (status != 200):
-        response = requests.post(API_URL, headers=headers, json=payload)
+        try: 
+            response = requests.post(API_URL, headers=headers, json=payload)
+        except Exception as e:
+            print(e)
+            return "Error"
         status = response.status_code
+        print(status)
         time.sleep(2.0)
     print("Ended function")
     return response.json()
@@ -34,45 +39,45 @@ def generate_recipe(ingredients):
         "inputs": ", ".join(ingredients),
     })
     print("Started Pretyy send")
-    print(output)
-    for text in output:
-        text = text['generated_text']
-        title = text.split('title:')[1].split('ingredients:')[0]
-        title = title.strip()
-        title = sentence_case(title)
-        ingredients = text.split('ingredients:')[1].split('directions:')[0]
-        directions = text.split('directions:')[1]
-        directions = directions.replace('\n', '')
-        directions = directions.split('. ')
-        directions = [sentence_case(method.strip())
-                        for method in directions]
-        generation["TITLE"] = title
-        generation["INGREDIENTS"] = ingredients
-        generation["METHOD"] = directions
-    print("Ended Pretyy send")
-    return generation
+    # print(output)
+    # for text in output:
+    #     text = text['generated_text']
+    #     title = text.split('title:')[1].split('ingredients:')[0]
+    #     title = title.strip()
+    #     title = sentence_case(title)
+    #     ingredients = text.split('ingredients:')[1].split('directions:')[0]
+    #     directions = text.split('directions:')[1]
+    #     directions = directions.replace('\n', '')
+    #     directions = directions.split('. ')
+    #     directions = [sentence_case(method.strip())
+    #                     for method in directions]
+    #     generation["TITLE"] = title
+    #     generation["INGREDIENTS"] = ingredients
+    #     generation["METHOD"] = directions
+    # print("Ended Pretyy send")
+    # return generation
     
-    # try:
-    #     output = query({
-    #         "inputs": ", ".join(ingredients),
-    #     })
-    #     print("Started Pretyy send")
-    #     print(output)
-    #     for text in output:
-    #         text = text['generated_text']
-    #         title = text.split('title:')[1].split('ingredients:')[0]
-    #         title = title.strip()
-    #         title = sentence_case(title)
-    #         ingredients = text.split('ingredients:')[1].split('directions:')[0]
-    #         directions = text.split('directions:')[1]
-    #         directions = directions.replace('\n', '')
-    #         directions = directions.split('. ')
-    #         directions = [sentence_case(method.strip())
-    #                       for method in directions]
-    #         generation["TITLE"] = title
-    #         generation["INGREDIENTS"] = ingredients
-    #         generation["METHOD"] = directions
-    #     print("Ended Pretyy send")
-    #     return generation
-    # except:
-    #     return "Error"
+    try:
+        output = query({
+            "inputs": ", ".join(ingredients),
+        })
+        print("Started Pretyy send")
+        print(output)
+        for text in output:
+            text = text['generated_text']
+            title = text.split('title:')[1].split('ingredients:')[0]
+            title = title.strip()
+            title = sentence_case(title)
+            ingredients = text.split('ingredients:')[1].split('directions:')[0]
+            directions = text.split('directions:')[1]
+            directions = directions.replace('\n', '')
+            directions = directions.split('. ')
+            directions = [sentence_case(method.strip())
+                          for method in directions]
+            generation["TITLE"] = title
+            generation["INGREDIENTS"] = ingredients
+            generation["METHOD"] = directions
+        print("Ended Pretyy send")
+        return generation
+    except:
+        return "Error"

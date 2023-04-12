@@ -12,10 +12,10 @@ const generateButton = document.getElementById('gen-button');
 const audio = document.getElementById('audioPlayer')
 
 
-
 // Set the number of items per page and the initial page
 const itemsPerPage = 10;
 let currentPage = 1;
+let sortKarwaDo = "num-selected-ingredients";
 
 // Create the pagination links
 let paginationHTML = "<div class = 'row' class = 'paginations' style = 'display: flex; justify-content: center;'>";
@@ -31,6 +31,14 @@ const paginationLinksNext = document.getElementById("pagination-link-next");
 
 let max = 1;
 let query_ingredients = [];
+
+function sortKardoPleaseBas() {
+    // Get the value of the input field with id="search-input"
+    let input = document.getElementById("sort-by").value;
+    sortKarwaDo = input;
+    currentPage = 1;
+    getRecipes();
+}
 
 // View More buttons
 vmbuttons.forEach(function (button) {
@@ -62,26 +70,26 @@ ingredients.forEach(ingredient => {
     ingredient.addEventListener('click', () => {
 
         // Make the selected bubble green
-//         ingredient.classList.toggle('selected');
+        //         ingredient.classList.toggle('selected');
 
         // Get the category name and selected ingredients for the selected bubble
         const category = ingredient.parentNode.parentNode.querySelector('.category-name').textContent;
         const ingredientName = ingredient.textContent;
 
         ingredients.forEach(ing => {
-            if(ing.textContent===ingredientName){
+            if (ing.textContent === ingredientName) {
                 ing.classList.toggle('selected');
             }
         });
 
-        
+
         const selectedIngredientItem = document.createElement('div');
         selectedIngredientItem.classList.add("ingredient", "selected", "selected-ingredients");
         // Add or remove selected ingredients from the right-hand side
-        selectedIngredientItem.addEventListener('click', ()=> {
-//             ingredient.classList.toggle('selected');
+        selectedIngredientItem.addEventListener('click', () => {
+            //             ingredient.classList.toggle('selected');
             ingredients.forEach(ing => {
-                if(ing.textContent===ingredientName){
+                if (ing.textContent === ingredientName) {
                     ing.classList.toggle('selected');
                 }
             });
@@ -92,13 +100,13 @@ ingredients.forEach(ingredient => {
                 }
             });
             query_ingredients.splice(query_ingredients.indexOf(ingredientName), 1);
-            
-            if(query_ingredients.length == 0) {
-                selsel.style.display = 'none'; 
+
+            if (query_ingredients.length == 0) {
+                selsel.style.display = 'none';
                 document.getElementById("zero_recipes").style.display = "block";
                 document.getElementById("TOP_OF_PAGE").style.display = "none";
             }
-            else{
+            else {
                 document.getElementById("zero_recipes").style.display = "None";
                 document.getElementById("TOP_OF_PAGE").style.display = "block";
             }
@@ -108,7 +116,7 @@ ingredients.forEach(ingredient => {
 
             console.log(query_ingredients)
         });
-        selectedIngredientItem.textContent =  ingredientName;
+        selectedIngredientItem.textContent = ingredientName;
 
         if (ingredient.classList.contains('selected')) {
             selectedIngredients.appendChild(selectedIngredientItem);
@@ -122,16 +130,16 @@ ingredients.forEach(ingredient => {
                 }
             });
             query_ingredients.splice(query_ingredients.indexOf(ingredientName), 1);
-            
+
             console.log(query_ingredients)
         }
 
-        if(query_ingredients.length == 0) {
+        if (query_ingredients.length == 0) {
             selsel.style.display = 'none';
             document.getElementById("zero_recipes").style.display = "block";
             document.getElementById("TOP_OF_PAGE").style.display = "none";
         }
-        else{
+        else {
             selsel.style.display = 'inline-block';
             document.getElementById("zero_recipes").style.display = "None";
             document.getElementById("TOP_OF_PAGE").style.display = "block";
@@ -139,7 +147,7 @@ ingredients.forEach(ingredient => {
 
         currentPage = 1
         getRecipes();
-        
+
     });
 });
 
@@ -148,7 +156,7 @@ function getRecipes() {
     $.ajax({
         url: "/suggest-recipe",
         type: 'POST',
-        data: JSON.stringify({ ingredients: query_ingredients, page: currentPage }),
+        data: JSON.stringify({ ingredients: query_ingredients, page: currentPage, sortingParam: sortKarwaDo }),
         dataType: "json",
         contentType: "application/json; charset=utf-8",
         success: function (response) {
@@ -391,29 +399,27 @@ searchInput.addEventListener('input', () => {
     }
 });
 
-function clearAll(){
+function clearAll() {
     const selectedIngredientItems = selectedIngredients.querySelectorAll('div');
     selectedIngredientItems.forEach(selectedIngredientItem => {
         selectedIngredientItem.remove();
     });
     ingredients.forEach(ingredient => {
-        if(ingredient.classList.contains('selected')){
+        if (ingredient.classList.contains('selected')) {
             ingredient.classList.toggle('selected');
         }
-        else{
-            if(query_ingredients.indexOf(ingredient.textContent)!=-1){
-                query_ingredients.splice(query_ingredients.indexOf(ingredient.textContent), 1);
-            }
+        else {
+            query_ingredients.splice(query_ingredients.indexOf(ingredient.textContent), 1);
         }
     });
 
-    if(query_ingredients.length == 0) {
+    if (query_ingredients.length == 0) {
         selsel.style.display = 'none';
         document.getElementById("zero_recipes").style.display = "block";
         document.getElementById("TOP_OF_PAGE").style.display = "none";
 
     }
-    else{
+    else {
         document.getElementById("zero_recipes").style.display = "None";
         document.getElementById("TOP_OF_PAGE").style.display = "block";
     }

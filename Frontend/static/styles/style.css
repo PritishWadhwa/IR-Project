@@ -1,23 +1,22 @@
 :root {
-    --dark-brown:#361e15;
-	--brown: #683B2B;
-	--pink: #D49E8D;
+	--dark-brown: #361e15;
+	--brown: #683b2b;
+	--pink: #d49e8d;
 	--ded: #;
 	--white: #ffffff;
-	--off-white: #FAF6F2;
-/* 	--mustard:  #a37a14; */
-/* 	--mustard:  #637d21; */
+	--off-white: #faf6f2;
+	/* 	--mustard:  #a37a14; */
+	/* 	--mustard:  #637d21; */
 	--mustard: #609830;
 	--dark-pink: #a04156;
-/* 	--dark-pink: #c63269; */
-/* 	--dark-pink: #9f2c75; */
-	--ded-light: #DED1BD;
-	--border:#d1c8c4;
-	--border-ing:#361e15;
-	--border-button:#361e15;
+	/* 	--dark-pink: #c63269; */
+	/* 	--dark-pink: #9f2c75; */
+	--ded-light: #ded1bd;
+	--border: #d1c8c4;
+	--border-ing: #361e15;
+	--border-button: #361e15;
 	--shadow: #d7cfc6;
 }
-
 
 body {
 	margin: 0;
@@ -32,9 +31,9 @@ body {
 
 .header {
 	background-color: var(--pink);
-	background-image: url('../banner.jpeg');
+	background-image: url("../banner.jpeg");
 	border-bottom: 2px solid var(--brown);
-	
+
 	align-items: center;
 	padding: 1px;
 	padding-left: 20px;
@@ -74,7 +73,6 @@ body {
 	width: 70%;
 	float: left;
 	background-color: var(--off-white);
-
 }
 
 .content {
@@ -106,9 +104,9 @@ body {
 .ingredient {
 	display: inline-block;
 	padding: 5px 7px;
-/* 	border: 1px solid var(--border-ing); */
+	/* 	border: 1px solid var(--border-ing); */
 	box-shadow: 0 2px 4px var(--shadow);
-	background-color: #EDEDED;
+	background-color: #ededed;
 	border-shadow: 1px;
 	border-radius: 20px;
 	margin-right: 10px;
@@ -136,7 +134,7 @@ body {
 .clear-all-button {
 	display: inline-block;
 	padding: 2px 5px;
-/* 	border: 1px solid var(--border-button); */
+	/* 	border: 1px solid var(--border-button); */
 	border: none;
 	box-shadow: 0 2px 4px var(--shadow);
 	border-radius: 20px;
@@ -155,9 +153,9 @@ body {
 
 #pagination-link-prev {
 	display: inline-block;
-	
+
 	padding: 4px 5px;
-/* 	border: 1px solid var(--border-button); */
+	/* 	border: 1px solid var(--border-button); */
 	border: none;
 	box-shadow: 0 2px 4px var(--shadow);
 	border-radius: 10px;
@@ -177,9 +175,9 @@ body {
 
 #pagination-link-next {
 	display: inline-block;
-	
+
 	padding: 4px 5px;
-/* 	border: 1px solid var(--border-button); */
+	/* 	border: 1px solid var(--border-button); */
 	border: none;
 	box-shadow: 0 2px 4px var(--shadow);
 	border-radius: 10px;
@@ -198,19 +196,19 @@ body {
 }
 
 #pagination-link-prev:disabled {
-  background-color: var(--ded-light);
-  color: var(--white);
-  cursor: not-allowed;
+	background-color: var(--ded-light);
+	color: var(--white);
+	cursor: not-allowed;
 }
 
 #pagination-link-next:disabled {
-  background-color: var(--ded-light);
-  color: var(--white);
-  cursor: not-allowed;
+	background-color: var(--ded-light);
+	color: var(--white);
+	cursor: not-allowed;
 }
 
 .selected {
-	background-color:var(--mustard);
+	background-color: var(--mustard);
 	color: var(--white);
 }
 
@@ -238,7 +236,7 @@ body {
 	background-color: var(--white);
 	border-radius: 10px;
 	box-shadow: 0 2px 6px #faf6f2;
-	margin: 1% 0% 0% 0%;
+	margin: 1% 0% 2% 0%;
 	padding: 0px;
 	border: 1px solid var(--border);
 }
@@ -434,19 +432,20 @@ select:focus {
 }
 
 #sort-by {
-	width: 150px;
+	/* width: 150px; */
+	padding-right: 15px;
 }
 
 #sel {
 	display: none;
-/* 	flex-direction: column; */
+	/* 	flex-direction: column; */
 	background-color: var(--white);
 	border-radius: 15px;
 	border: 1px solid var(--border);
 	padding: 10px;
 	margin-bottom: 10px;
 }
-  
+
 /* Modal Content/Box */
 .modal-content {
 	display: inline-block;
@@ -456,14 +455,14 @@ select:focus {
 	border: 2px solid var(--brown);
 }
 
-.speak-button{
+.speak-button {
 	border-radius: 12px;
-	background-color:  var(--ded-light);
+	background-color: var(--ded-light);
 	color: var(--brown);
 	border: 1px solid var(--brown);
 	font-family: Arial, sans-serif;
 }
-  /* The Close Button */
+/* The Close Button */
 .close {
 	color: var(--dark-brown);
 	float: right;
@@ -482,8 +481,8 @@ select:focus {
 	overflow: hidden;
 	background-color: var(--mustard);
 }
-  
-  /* Style the buttons that are used to open the tab content */
+
+/* Style the buttons that are used to open the tab content */
 .tab button {
 	font-size: large;
 	font-family: Arial, sans-serif;
@@ -494,78 +493,82 @@ select:focus {
 	cursor: pointer;
 	padding: 10px 10px;
 	transition: 0.3s;
-	color: var(--white)
+	color: var(--white);
 }
-  
+
 /* Change background color of buttons on hover */
 .tab button:hover {
 	background-color: var(--mustard);
 }
-  
+
 /* Create an active/current tablink class */
 .tab button.active {
 	background-color: var(--off-white);
 	border-top-right-radius: 2px;
 	border-top-left-radius: 2px;
-	border-top: 4px  var(--mustard);
+	border-top: 4px var(--mustard);
 	border-left: 4px var(--mustard);
 	border-right: 4px var(--mustard);
 	margin-left: 5px;
-	color: var(--brown)
+	color: var(--brown);
 }
-  
-  /* Style the tab content */
+
+/* Style the tab content */
 .tabcontent {
 	display: none;
 	padding: 5px 5px;
 	border-top: none;
 	border: 1px solid var(--off-white);
 	animation: fadeEffect 0.5s; /* Fading effect takes 0.5s second */
-
 }
-  
+
 /* Go from zero to full opacity */
 @keyframes fadeEffect {
-	from {opacity: 0;}
-	to {opacity: 1;}
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
 }
-  
 
 /* CSS */
 .button-17 {
-  align-items: center;
-  background-color: var(--dark-pink);
-  border-radius: 24px;
-  border-style: none;
-  box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
-  box-sizing: border-box;
-  color: var(--white);
-  cursor: pointer;
-  display: inline-flex;
-  fill: currentcolor;
-  font-family: "Google Sans",Roboto,Arial,sans-serif;
-  font-size: 14px;
-  font-weight: 500;
-  height: 48px;
-  justify-content: center;
-  letter-spacing: .25px;
-  line-height: normal;
-  max-width: 100%;
-  overflow: visible;
-  padding: 2px 24px;
-	margin-left: 50px;
-	margin-top: 50px;
+	align-items: center;
+	background-color: var(--dark-pink);
+	border-radius: 24px;
+	border-style: none;
+	box-shadow: rgba(0, 0, 0, 0.2) 0 3px 5px -1px,
+		rgba(0, 0, 0, 0.14) 0 6px 10px 0, rgba(0, 0, 0, 0.12) 0 1px 18px 0;
+	box-sizing: border-box;
+	color: var(--white);
+	cursor: pointer;
+	display: inline-flex;
+	fill: currentcolor;
+	font-family: "Google Sans", Roboto, Arial, sans-serif;
+	font-size: 14px;
+	font-weight: 500;
+	height: 48px;
+	justify-content: center;
+	letter-spacing: 0.25px;
+	line-height: normal;
+	max-width: 100%;
+	overflow: visible;
+	padding: 2px 24px;
+	margin-left: 40%;
+	margin-top: 15px;
 	align-self: center;
-  position: relative;
-  text-align: center;
-  text-transform: none;
-  transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1),opacity 15ms linear 30ms,transform 270ms cubic-bezier(0, 0, .2, 1) 0ms;
-  user-select: none;
-  -webkit-user-select: none;
-  touch-action: manipulation;
-  width: auto;
-  will-change: transform,opacity;
-  z-index: 0;
+	position: relative;
+	text-align: center;
+	text-transform: none;
+	transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1),
+		opacity 15ms linear 30ms, transform 270ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+	user-select: none;
+	-webkit-user-select: none;
+	touch-action: manipulation;
+	width: auto;
+	will-change: transform, opacity;
+	z-index: 0;
 }
 
 /* .button-17:hover {
@@ -574,20 +577,19 @@ select:focus {
 } */
 
 .button-17:active {
-  box-shadow: 0 4px 4px var(--shadow);
-  outline: none;
+	box-shadow: 0 4px 4px var(--shadow);
+	outline: none;
 }
-
 
 .loading {
-  display: inline-block;
-  position: relative;
-  width: 100%;
-  height: 100%;
-  align-items: center;
+	display: inline-block;
+	position: relative;
+	width: 100%;
+	height: 100%;
+	align-items: center;
 }
 
-.generated-recipe{
+.generated-recipe {
 	background-color: #f2f2f2;
 	border-radius: 5px;
 	padding: 10px;
@@ -595,7 +597,6 @@ select:focus {
 	border-width: 1px;
 }
 
-.display-card-text{
-	color: var(--brown)
-
+.display-card-text {
+	color: var(--brown);
 }

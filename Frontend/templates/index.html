@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
-    
+
     <head>
         <title>DISH DETECTIVE</title>
-        <link rel="icon" href="{{ url_for('static',filename='logo.png') }}">
+        <link rel="icon"
+              href="{{ url_for('static',filename='logo.png') }}">
         <link rel="stylesheet"
               type="text/css"
               href="{{ url_for('static',filename='styles/style.css') }}">
@@ -13,37 +14,45 @@
         <div class="header">
             <h1>Dish Detective</h1>
         </div>
-        <audio id="audioPlayer" src="" autoplay="autoplay"></audio>
+        <audio id="audioPlayer"
+               src=""
+               autoplay="autoplay"></audio>
 
         <link rel="stylesheet"
-            type="text/css"
-            href="{{ url_for('static',filename='styles/modal.css') }}">
+              type="text/css"
+              href="{{ url_for('static',filename='styles/modal.css') }}">
 
-        <div id="myModal" class="modal" style="display: none">
+        <div id="myModal"
+             class="modal"
+             style="display: none">
             <!-- Modal content -->
             <div class="modal-content">
-                <div class = "col-md-2">
-                    <span class="close" id = 'close'>&times;</span>
-                    <div id = 'myModalShit'></div>
+                <div class="col-md-2">
+                    <span class="close"
+                          id='close'>&times;</span>
+                    <div id='myModalShit'></div>
                 </div>
             </div>
         </div>
 
         <div class="page page1">
 
-            <div class="content" style = "border-right: 2px solid var(--brown);">
-                <h1 style = 'color: var(--brown);'>Ingredients</h1>
+            <div class="content"
+                 style="border-right: 2px solid var(--brown);">
+                <h1 style='color: var(--brown);'>Ingredients</h1>
                 <div class="search">
                     <input type="text"
                            id="search-input"
                            placeholder="Search ingredients...">
                 </div>
 
-                <div id = "sel">
-                    <h2 style = 'margin-top: 0;'>Selected Ingredients</h2>
-                    <div class="category-ingredients" id="selectedings">
+                <div id="sel">
+                    <h2 style='margin-top: 0;'>Selected Ingredients</h2>
+                    <div class="category-ingredients"
+                         id="selectedings">
                     </div>
-                    <button class="clear-all-button" onclick="clearAll(event, 'Generation')">Clear All  <i class="far fa-trash-can"></i></button>
+                    <button class="clear-all-button"
+                            onclick="clearAll(event, 'Generation')">Clear All <i class="far fa-trash-can"></i></button>
                 </div>
 
                 {% for category in categories %}
@@ -52,57 +61,72 @@
                         <h2 class="category-name">{{ category.name }}</h2>
                         <div class="category-ingredients">
                             {% for ingredient in category.ingredients[:5] %}
-                                <div class="ingredient">{{ ingredient }}</div>
+                            <div class="ingredient">{{ ingredient }}</div>
                             {%endfor%}
 
                             {% for ingredient in category.ingredients[5:] %}
-                                <div class="ingredient" style="display: none;">{{ ingredient }}</div>
+                            <div class="ingredient"
+                                 style="display: none;">{{ ingredient }}</div>
                             {%endfor%}
 
-                            <button class="view-more-btn">View More   <i class="fas fa-angle-right"></i></button>
+                            <button class="view-more-btn">View More <i class="fas fa-angle-right"></i></button>
 
                         </div>
                     </div>
                 </div>
                 {%endfor%}
-         
+
             </div>
         </div>
         <div class="page page2">
-            
+
             <div class="tab">
-                <button id = "default" class="tablinks" onclick="openCity(event, 'Retrieval')">Retrieval</button>
-                <button class="tablinks" onclick="openCity(event, 'Generation')">Generation</button>
+                <button id="default"
+                        class="tablinks"
+                        onclick="openCity(event, 'Retrieval')">Retrieval</button>
+                <button class="tablinks"
+                        onclick="openCity(event, 'Generation')">Generation</button>
             </div>
-            
+
             <!-- Tab content -->
-            <div id="Retrieval" class="tabcontent">
-            
-                <div class = "content" id = "zero_recipes" style="display: block">
+            <div id="Retrieval"
+                 class="tabcontent">
+
+                <div class="content"
+                     id="zero_recipes"
+                     style="display: block">
                     <h1>Sorry, no recipes found!</h1>
                 </div>
-                <div class="content" id = "TOP_OF_PAGE" style="display: none">
+                <div class="content"
+                     id="TOP_OF_PAGE"
+                     style="display: none">
                     <div class="recipe-header">
                         <h1>Recipes</h1>
                         <div class="recipe-sort">
                             <label for="sort-by">Sort by:</label>
-                            <select id="sort-by">
+                            <select id="sort-by"
+                                    onchange="sortKardoPleaseBas()">
                                 <option value="num-selected-ingredients">Ingredients</option>
-                                <option value="servings">Servings</option>
-                                <option value="time">Time</option>
+                                <option value="level-asc">Difficulty Level (Noob to Pro)</option>
+                                <option value="level-desc">Difficulty Level (Pro to Noob)</option>
+                                <option value="time-asc">Time (Short to Long)</option>
+                                <option value="time-desc">Time (Long to Short)</option>
                             </select>
                         </div>
                     </div>
-                    <div id ='recipes'></div>
+                    <div id='recipes'></div>
                     <div id="pagination"></div>
                 </div>
             </div>
-            
-            <div id="Generation" class="tabcontent">
+
+            <div id="Generation"
+                 class="tabcontent">
 
                 <div>
-                <button id = "gen-button" class = "button-17" onclick="generation()">Start the Generation</button>
-            </div>
+                    <button id="gen-button"
+                            class="button-17"
+                            onclick="generation()">Start the Generation</button>
+                </div>
                 <div id="generated-recipes"></div>
             </div>
         </div>
