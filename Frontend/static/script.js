@@ -316,6 +316,7 @@ function viewRecipeClicked(recipe_id) {
 const span = document.getElementById("close");
 span.onclick = function () {
     modal.style.display = "none";
+    stop_audio();
 }
 
 
@@ -452,6 +453,7 @@ function openCity(evt, cityName) {
         generatedRecipes.innerHTML = "";
         generateButton.style.display = "block";
     }
+    stop_audio();
 }
 
 function stop_audio() {
