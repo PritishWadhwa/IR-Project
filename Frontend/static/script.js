@@ -204,7 +204,7 @@ function getRecipes() {
                                 <p class="display-card-text prep-time" id = "prep-time"><i class="fas fa-clock"></i> Total Time:<br>&nbsp&nbsp&nbsp&nbsp`+ recipe['Total:'] + `</p>
                                 <p class="display-card-text servings" id = 'servings'><i class="fas fa-utensils"></i> Servings:<br>&nbsp&nbsp&nbsp&nbsp`+ recipe.Yield + `</p>
                                 <p class="display-card-text level" id = 'level'><i class="fas fa-star"></i> Level:<br>&nbsp&nbsp&nbsp&nbsp&nbsp`+ recipe['Level:'] + `</p>
-                                <button class="view-recipe-btn" id = 'view-recipe' onclick = "viewRecipeClicked(`+ recipe.id + `)"> View Recipe </button>
+                                <button class="view-recipe-btn" id = 'view-recipe' onclick = "viewRecipeClicked(`+ recipe.id + `)"> View Recipe <i class="fa-solid fa-magnifying-glass"></i></button>
                             </div>` +
                     inner_list +
                     `</div>
@@ -260,7 +260,7 @@ function viewRecipeClicked(recipe_id) {
             $("#myModalShit").empty();
             let modalShit = "";
             modalShit += `<div class="modal-header">
-                <h5 class="recipe-title-modal" id="modal-title">`+ response.Name + `</h5>`
+                <h5 class="recipe-title-modal" id="modal-title" style="display: inline-block;">`+ response.Name + `</h5>`
                 + audiobutton1 +
                 `
             </div>
@@ -288,7 +288,7 @@ function viewRecipeClicked(recipe_id) {
                 <div class="row">
                     <div class="col-md-12">
                         <div class = "ingredient-list-modal">
-                            <h2>Ingredients</h2> `+ audiobutton2 + `
+                            <h2 style="display: inline-block;">Ingredients</h2> `+ audiobutton2 + `
                             <ul id ='ingredients' style="column-count: 2;">`+ ingredientHtml + `</ul>
                         </div>
                     </div>
@@ -296,7 +296,7 @@ function viewRecipeClicked(recipe_id) {
                 <div class="row">
                     <div class="col-md-12">
                         <div class = "method-list-modal">
-                            <h2>Method</h2> `+ audiobutton3 + `
+                            <h2 style="display: inline-block;">Method</h2> `+ audiobutton3 + `
                             <ol id = 'methods'>`+ methodHtml + `</ol>
                         </div>
                     </div>
@@ -591,7 +591,7 @@ async function generation() {
 
 
                 let generatedText = "";
-                generatedText += "<h1>Generated Recipe</h1>";
+                generatedText += "<h1 style = 'display: inline-block;'>Generated Recipe</h1>";
 
                 let methodHtml = "";
                 $.each(element.METHOD, function (index, method) {

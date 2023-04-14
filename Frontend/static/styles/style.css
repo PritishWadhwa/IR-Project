@@ -456,6 +456,11 @@ select:focus {
 }
 
 .speak-button {
+	display: inline-block; 
+	margin-left: 20px; 
+	margin-bottom: 9px;
+	line-height: 20px;
+	vertical-align: middle;
 	border-radius: 12px;
 	background-color: var(--ded-light);
 	color: var(--brown);
