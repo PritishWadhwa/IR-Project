@@ -11,5 +11,6 @@ def get_image_url(text):
             headers={'api-key': 'quickstart-QUdJIGlzIGNvbWluZy4uLi4K'}
         )
         return r.json()['output_url']
-    except:
+    except Exception as e:
+        print(e)
         return "https://i.imgur.com/5YQZ2Zb.jpg"
