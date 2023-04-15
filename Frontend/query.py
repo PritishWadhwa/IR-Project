@@ -23,7 +23,7 @@ dataframe['ingredients'] = dataframe['ingredients'].apply(
 dataframe = dataframe[dataframe['Level:'] != "None"]
 dataframe.fillna(fn, inplace=True)
 # dataframe.to_csv("hello.csv", index=False)
-with open('../Backend/Saved/ingredients_supercook_for_flask', 'rb') as f:
+with open('./Data/ingredients_supercook_for_flask', 'rb') as f:
     categories = pickle.load(f)
 
 for cat_dict in categories:
