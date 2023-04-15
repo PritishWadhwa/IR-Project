@@ -3,11 +3,9 @@ import query
 from flask import Flask, render_template, request
 from flask import request, jsonify
 import generation
-import pickle
 import image
 imported = None
 
-sys.path.insert(0, '../Backend')  # Add the path to the query python code
 categories = query.categories
 app = Flask(__name__)
 

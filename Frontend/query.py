@@ -8,10 +8,10 @@ import os
 import ast
 import numpy as np
 fn = "https://food.fnr.sndimg.com/content/dam/images/food/editorial/homepage/fn-feature.jpg.rend.hgtvcom.826.620.suffix/1474463768097.jpeg"
-with open('../Backend/Saved/unigramIndex.pickle', 'rb') as f:
+with open('./Data/unigramIndex.pickle', 'rb') as f:
     unigramIndex = pickle.load(f)
 
-with open('../Backend/Saved/finaldf.pickle', 'rb') as f:
+with open('./Data/finaldf.pickle', 'rb') as f:
     dataframe = pickle.load(f)
 
 dataframe = dataframe.drop_duplicates(
@@ -20,7 +20,7 @@ dataframe = dataframe.drop_duplicates(
 dataframe['ingredients'] = dataframe['ingredients'].apply(
     lambda x: x.split(", "))
 
-dataframe = dataframe[dataframe['Level:']!= "None"]
+dataframe = dataframe[dataframe['Level:'] != "None"]
 dataframe.fillna(fn, inplace=True)
 # dataframe.to_csv("hello.csv", index=False)
 with open('../Backend/Saved/ingredients_supercook_for_flask', 'rb') as f:
@@ -76,6 +76,7 @@ def fetchRecipe(recipe_id):
         recipe['ingredients_phrase'])
     return recipe
 
+
 def putLevel(stringName):
     if stringName == "Advanced":
         return 2
@@ -83,7 +84,8 @@ def putLevel(stringName):
         return 1
     elif stringName == "Easy":
         return 0
-    
+
+
 def calculateTime(time):
     words = time.lower().split()
     curr = 0
@@ -97,6 +99,7 @@ def calculateTime(time):
         else:
             print("khatra khatra khatra", time)
     return curr
+
 
 def fetchRecipes(queryIngs, page, chhantneKaParam):
 
@@ -136,7 +139,8 @@ def fetchRecipes(queryIngs, page, chhantneKaParam):
         finalAns = finalAns.sort_values(by=['number'], ascending=False)
 
     # Drop the columns not neede to reduce the size of the response
-    finalAns = finalAns.drop(columns=['ingredients', 'number', 'Level:', 'Total:', 'levelNum', 'totalTime'])
+    finalAns = finalAns.drop(
+        columns=['ingredients', 'number', 'Level:', 'Total:', 'levelNum', 'totalTime'])
 
     # Reset the index
     finalAns = finalAns.reset_index(drop=True)
@@ -168,7 +172,7 @@ def fetchRecipes(queryIngs, page, chhantneKaParam):
         finaldf = finaldf.sort_values(by=['totalTime'], ascending=False)
     else:
         finaldf = finaldf.sort_values(by=['number'], ascending=False)
-        
+
     finaldf = finaldf.reset_index(drop=True)
     # Drop the columns not neede to reduce the size of the response
     finaldf = finaldf.drop(
