@@ -39,4 +39,4 @@ def get_image_url(text):
 
     except Exception as e:
         print(e)
-        return "https://i.imgur.com/5YQZ2Zb.jpg"
+        return "Error"

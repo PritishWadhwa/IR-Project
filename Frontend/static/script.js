@@ -539,7 +539,14 @@ function get_image(text) {
     .then(response => response.json())
     .then(data => {
         console.log(data);
+        if(data.img_b64 == "Error"){
+            alert("Error: Could not generate image");
+            generatedImages.innerHTML = '<img src ="./static/placeholder.jpg">';
+
+        }
+        else{
         generatedImages.innerHTML = '<img src ="data:image/png;base64,' + data.img_b64 + '", alt = "Recipe Image">';
+        }
     })
     .catch(error => console.error(error));
 }
