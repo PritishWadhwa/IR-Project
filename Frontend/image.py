@@ -10,6 +10,7 @@ def get_image_url(text):
             },
             headers={'api-key': 'quickstart-QUdJIGlzIGNvbWluZy4uLi4K'}
         )
+        print(r.json())
         return r.json()['output_url']
     except Exception as e:
         print(e)
