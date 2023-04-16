@@ -520,17 +520,28 @@ function text_to_audio(button, text) {
 function get_image(text) {
     const generatedImages = document.getElementById("generated-image");
     generatedImages.innerHTML = '<img class = "loading" src = "./static/Loading.gif", alt = "Loading....">';
-    $.ajax({
-        url: '/generate_image',
+    // $.ajax({
+    //     url: '/generate_image',
+    //     method: 'POST',
+    //     data: JSON.stringify({ text: text }),
+    //     dataType: "json",
+    //     contentType: "application/json; charset=utf-8",
+    //     success: function (response) {
+    //         console.log(response);
+    //         generatedImages.innerHTML = '<img src ="' + response + '", alt = "Recipe Image">';
+    //     }
+    // });
+
+    fetch('/generate_image', {
         method: 'POST',
-        data: JSON.stringify({ text: text }),
-        dataType: "json",
-        contentType: "application/json; charset=utf-8",
-        success: function (response) {
-            console.log(response);
-            generatedImages.innerHTML = '<img src ="' + response + '", alt = "Recipe Image">';
-        }
-    });
+        body: text,
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log(data);
+        generatedImages.innerHTML = '<img src ="data:image/png;base64,' + data.img_b64 + '", alt = "Recipe Image">';
+    })
+    .catch(error => console.error(error));
 }
 
 async function generation() {

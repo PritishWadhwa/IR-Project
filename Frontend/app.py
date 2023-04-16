@@ -4,6 +4,7 @@ from flask import Flask, render_template, request
 from flask import request, jsonify
 import generation
 import image
+import json
 imported = None
 
 categories = query.categories
@@ -49,10 +50,11 @@ def suggest_recipe():
 
 @app.route('/generate_image', methods=['POST'])
 def generate_image():
-    data = request.get_json()
-    text = data['text']
+    text = request.data.decode('utf-8')
+    print(text)
     url = image.get_image_url(text)
-    return jsonify(url)
+    print("here")
+    return json.dumps({'img_b64': url})
 
 
 @app.route('/recipe', methods=['POST'])
