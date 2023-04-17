@@ -5,12 +5,8 @@
 	--ded: #;
 	--white: #ffffff;
 	--off-white: #faf6f2;
-	/* 	--mustard:  #a37a14; */
-	/* 	--mustard:  #637d21; */
 	--mustard: #609830;
 	--dark-pink: #a04156;
-	/* 	--dark-pink: #c63269; */
-	/* 	--dark-pink: #9f2c75; */
 	--ded-light: #ded1bd;
 	--border: #d1c8c4;
 	--border-ing: #361e15;
@@ -49,13 +45,31 @@ body {
 }
 
 .page {
+    /*height: 100vh;*/
+
 	height: calc(100vh - 80px);
+	/*flex = 1;*/
 	/* margin-top: 80px; */
 	overflow: scroll;
 	scrollbar-width: none;
 	/* Hide default scrollbar in Firefox */
 	-ms-overflow-style: none;
 	/* Hide default scrollbar in IE and Edge */
+}
+
+@media only screen and (max-device-width: 480px) {
+.page {
+    /*height: 100vh;*/
+
+	height: calc(100vh - 220px);
+	/*flex = 1;*/
+	/* margin-top: 80px; */
+	overflow: scroll;
+	scrollbar-width: none;
+	/* Hide default scrollbar in Firefox */
+	-ms-overflow-style: none;
+	/* Hide default scrollbar in IE and Edge */
+}
 }
 
 .page::-webkit-scrollbar {
@@ -456,8 +470,8 @@ select:focus {
 }
 
 .speak-button {
-	display: inline-block; 
-	margin-left: 20px; 
+	display: inline-block;
+	margin-left: 20px;
 	margin-bottom: 9px;
 	line-height: 20px;
 	vertical-align: middle;
