@@ -23,10 +23,13 @@ from PIL import Image
 
 API_URL = "https://api-inference.huggingface.co/models/cloudqi/cqi_text_to_image_pt_v0"
 headers = {"Authorization": "Bearer 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"}
+invalid = "eyJlcnJvciI6Ik1vZGVsIGNsb3VkcWkvY3FpX3RleHRfdG9faW1hZ2VfcHRfdjAgaXMgY3VycmVudGx5IGxvYWRpbmciLCJlc3RpbWF0ZWRfdGltZSI6MjAuMH0="
 
 
-def get_image_url(text):
+def get_image_url(text, count):
     try:
+        if (count == 0):
+            return "Error"
         print("Started Image Generation")
         payload = {"inputs": text, }
         print("zero")
@@ -35,6 +38,8 @@ def get_image_url(text):
         img_bytes = response.content
         print('two')
         img_b64 = base64.b64encode(img_bytes).decode('utf-8')
+        if (img_b64 == invalid):
+            get_image_url(text, count - 1)
         return img_b64
 
     except Exception as e:
