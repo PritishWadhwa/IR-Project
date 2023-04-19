@@ -8,7 +8,7 @@ To run it on your system:
 4. Run: `cd Frontend`
 5. Run: `set FLASK_APP=app.py`
 6. Run: `flask run`
-7. Open local host to run the website. 
+7. Open [localhost](http://127.0.0.1:5000/) to run the website. 
 ---
 Commits for different deadlines:
 
