@@ -88,15 +88,11 @@ headers = {"Authorization": "Bearer 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"}
 
 
 def query(payload):
-    response = requests.post(API_URL, headers=headers, json=payload)
-    return response.json()
-
-
-def query(payload):
     status = 400
     count = 0
     while (status != 200 and count < 15):
         try:
+            print("Try recipe generation")
             response = requests.post(API_URL, headers=headers, json=payload)
         except Exception as e:
             print(e)

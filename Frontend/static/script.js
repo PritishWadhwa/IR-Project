@@ -520,35 +520,41 @@ function text_to_audio(button, text) {
 function get_image(text) {
     const generatedImages = document.getElementById("generated-image");
     generatedImages.innerHTML = '<img class = "loading" src = "./static/Loading.gif", alt = "Loading....">';
-    // $.ajax({
-    //     url: '/generate_image',
-    //     method: 'POST',
-    //     data: JSON.stringify({ text: text }),
-    //     dataType: "json",
-    //     contentType: "application/json; charset=utf-8",
-    //     success: function (response) {
-    //         console.log(response);
-    //         generatedImages.innerHTML = '<img src ="' + response + '", alt = "Recipe Image">';
-    //     }
-    // });
-
-    fetch('/generate_image', {
+    $.ajax({
+        url: '/generate_image',
         method: 'POST',
-        body: text,
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log(data);
-        if(data.img_b64 == "Error"){
-            alert("Error: Could not generate image");
-            generatedImages.innerHTML = '<img src ="./static/placeholder.jpg">';
+        data: JSON.stringify({ text: text }),
+        dataType: "json",
+        contentType: "application/json; charset=utf-8",
+        success: function (response) {
+            console.log(response);
+            if(response == "Error"){
+                alert("Error: Could not generate image");
+                generatedImages.innerHTML = '<img src ="./static/placeholder.jpg">';
+            }
+            else{
+            generatedImages.innerHTML = '<img src ="' + response.img_b64 + '", alt = "Recipe Image">';
+            }
+        }
+    });
 
-        }
-        else{
-        generatedImages.innerHTML = '<img src ="data:image/png;base64,' + data.img_b64 + '", alt = "Recipe Image">';
-        }
-    })
-    .catch(error => console.error(error));
+    // fetch('/generate_image', {
+    //     method: 'POST',
+    //     body: text,
+    // })
+    // .then(response => response.json())
+    // .then(data => {
+    //     console.log(data);
+    //     if(data.img_b64 == "Error"){
+    //         alert("Error: Could not generate image");
+    //         generatedImages.innerHTML = '<img src ="./static/placeholder.jpg">';
+
+    //     }
+    //     else{
+    //     generatedImages.innerHTML = '<img src ="data:image/png;base64,' + data.img_b64 + '", alt = "Recipe Image">';
+    //     }
+    // })
+    // .catch(error => console.error(error));
 }
 
 async function generation() {

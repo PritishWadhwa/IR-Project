@@ -51,8 +51,8 @@ def suggest_recipe():
 @app.route('/generate_image', methods=['POST'])
 def generate_image():
     text = request.data.decode('utf-8')
-    print(text)
-    url = image.get_image_url(text, 8)
+    url = image.get_image_url(text, 2)
+    print("Url from deep ai", url)
     return json.dumps({'img_b64': url})
 
 
