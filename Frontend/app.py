@@ -52,8 +52,7 @@ def suggest_recipe():
 def generate_image():
     text = request.data.decode('utf-8')
     print(text)
-    url = image.get_image_url(text, 5)
-    print("here")
+    url = image.get_image_url(text, 8)
     return json.dumps({'img_b64': url})
 
 

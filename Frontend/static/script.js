@@ -574,7 +574,7 @@ async function generation() {
             generateButton.innerHTML = 'Regenerate <i class = "fas fa-sync"></i>';
             generatedRecipes.innerHTML = "";
             if (element == "Error") {
-                console.log("Erroraaa");
+                // console.log("Erroraaa");
                 alert("OOPS! Could Not Generate Recipe. Please Try Again!");
             }
             else {

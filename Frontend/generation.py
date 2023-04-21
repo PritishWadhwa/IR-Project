@@ -93,37 +93,26 @@ def query(payload):
 
 
 def query(payload):
-    print("Started function")
     status = 400
-    while (status != 200):
+    count = 0
+    while (status != 200 and count < 15):
         try:
             response = requests.post(API_URL, headers=headers, json=payload)
         except Exception as e:
             print(e)
             return "Error"
         status = response.status_code
-        print(status)
         time.sleep(2.0)
-    print("Ended function")
+        count += 1
     return response.json()
 
 
 def generate_recipe(ingredients):
-    print("Started generating recipe")
-
     generation = {}
-
-    output = query({
-        "inputs": ", ".join(ingredients),
-    })
-
-    print("Started Pretyy send")
     try:
         output = query({
             "inputs": ", ".join(ingredients),
         })
-        print("Started Pretyy send")
-        print(output)
         for text in output:
             text = text['generated_text']
             title = text.split('title:')[1].split('ingredients:')[0]
@@ -138,7 +127,6 @@ def generate_recipe(ingredients):
             generation["TITLE"] = title
             generation["INGREDIENTS"] = ingredients
             generation["METHOD"] = directions
-        print("Ended Pretyy send")
         return generation
     except:
         return "Error"
