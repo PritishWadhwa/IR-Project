@@ -28,16 +28,16 @@ with open('./Data/ingredients_supercook_for_flask', 'rb') as f:
 
 # ingredients_all = set()
 # categories_all = set()
-# for cat_dict in categories:
-#     to_remove = []
-#     for ing in cat_dict['ingredients']:
-#         if ing not in set(unigramIndex.keys()):
-#             to_remove.append(ing)
-#     for ing in to_remove:
-#         cat_dict['ingredients'].remove(ing)
-#     # Add multiple elements to a set
-#     ingredients_all.update(cat_dict['ingredients'])
-#     categories_all.add(cat_dict['name'])
+for cat_dict in categories:
+    to_remove = []
+    for ing in cat_dict['ingredients']:
+        if ing not in set(unigramIndex.keys()):
+            to_remove.append(ing)
+    for ing in to_remove:
+        cat_dict['ingredients'].remove(ing)
+    # Add multiple elements to a set
+    # ingredients_all.update(cat_dict['ingredients'])
+    # categories_all.add(cat_dict['name'])
 
 # print(len(ingredients_all))
 # print(len(categories_all))
