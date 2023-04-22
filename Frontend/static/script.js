@@ -528,7 +528,7 @@ function get_image(text) {
         contentType: "application/json; charset=utf-8",
         success: function (response) {
             console.log(response);
-            if(response == "Error"){
+            if(response.img_b64 == "Error"){
                 alert("Error: Could not generate image");
                 generatedImages.innerHTML = '<img src ="./static/placeholder.jpg">';
             }
